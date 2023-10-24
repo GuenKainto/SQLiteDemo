@@ -142,6 +142,12 @@ namespace SQLiteDemo.MVVM.ViewModels
         public FacultyManagerViewModel()
         {
             Init_Command();
+            Init_Model();
+        }
+
+        private void Init_Model()
+        {
+            ListFaculty = facDB.GetAllFac();
         }
 
         private void Init_Command()
