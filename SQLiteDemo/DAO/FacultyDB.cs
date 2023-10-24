@@ -14,12 +14,32 @@ namespace SQLiteDemo.DAO
     {
         private static DatabaseConnection dtc = new DatabaseConnection();
 
-        public ObservableCollection<Faculty> ListFac()
+        public ObservableCollection<Faculty> GetAllFac()
         {
             ObservableCollection<Faculty> temp = new ObservableCollection<Faculty>();
-            
 
-            
+            try
+            {
+                dtc.createConection();
+
+                string querry = "SELECT * FROM Faculty";
+                SQLiteCommand cmd = new SQLiteCommand(querry, dtc._con);
+                cmd.CommandText = querry;
+                using (SQLiteDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        string fac = reader.GetString(0);
+                        Faculty item = new Faculty(fac);
+                        temp.Add(item);
+                    }
+                }
+                dtc.closeConnection();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error_login :" + ex.Message);
+            }
             return temp;
         } 
 
