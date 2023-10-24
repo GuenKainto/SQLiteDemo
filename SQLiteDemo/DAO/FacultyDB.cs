@@ -1,0 +1,155 @@
+﻿using SQLiteDemo.MVVM.Models;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Data.SQLite;
+using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace SQLiteDemo.DAO
+{
+    internal class FacultyDB
+    {
+        private static DatabaseConnection dtc = new DatabaseConnection();
+
+        public ObservableCollection<Faculty> ListFac()
+        {
+            ObservableCollection<Faculty> temp = new ObservableCollection<Faculty>();
+            
+
+            
+            return temp;
+        } 
+
+        public bool CreateFaculty(string fac)
+        {
+            bool rs = false;
+            try
+            {
+                dtc.createConection();
+
+                string querry = "INSERT INTO Faculty VALUES ( @fac )";
+                SQLiteCommand cmd = new SQLiteCommand(querry, dtc._con);
+                cmd.CommandText = querry;
+                cmd.Parameters.AddWithValue("@fac",fac);
+                cmd.ExecuteNonQuery();
+                dtc.closeConnection();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error_login :" + ex.Message);
+            }
+            return rs;
+        }
+
+        public bool DeleteFaculty(string fac)
+        {
+            bool rs = false;
+            try
+            {
+                dtc.createConection();
+
+                string querry = "DELETE INTO Faculty WHERE Fac = @fac";
+                SQLiteCommand cmd = new SQLiteCommand(querry, dtc._con);
+                cmd.CommandText = querry;
+                cmd.Parameters.AddWithValue("@fac", fac);
+                cmd.ExecuteNonQuery();
+                dtc.closeConnection();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error_login :" + ex.Message);
+            }
+            return rs;
+        }
+
+        public int GetNoClass(string fac)
+        {
+            int rs = 0;
+            try
+            {
+                dtc.createConection();
+
+                string querry = "SELECT COUNT(*) FROM Class WHERE Faculty = @fac";
+                SQLiteCommand cmd = new SQLiteCommand(querry, dtc._con);
+                cmd.CommandText = querry;
+                cmd.Parameters.AddWithValue("@fac", fac);
+
+                using (SQLiteDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        rs = reader.GetInt32(0);
+                    }
+                }
+                dtc.closeConnection();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error_login :" + ex.Message);
+            }
+            return rs;
+        }
+
+        public int GetNoTeacher(string fac)
+        {
+            int rs = 0;
+            try
+            {
+                dtc.createConection();
+
+                string querry = "SELECT COUNT(*) FROM Teacher WHERE Faculty = @fac";
+                SQLiteCommand cmd = new SQLiteCommand(querry, dtc._con);
+                cmd.CommandText = querry;
+                cmd.Parameters.AddWithValue("@fac", fac);
+
+                using (SQLiteDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        rs = reader.GetInt32(0);
+                    }
+                }
+                dtc.closeConnection();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error_login :" + ex.Message);
+            }
+            return rs;
+        }
+
+        public int GetNoStudent(string fac)
+        {
+            int rs = 0;
+            try
+            {
+                dtc.createConection();
+
+                string querry = "SELECT COUNT(*) " +
+                                "FROM Student JOIN Class ON Student.SClass = Class.SClass " +
+                                "JOIN Faculty ON Faculty.Fac = Class.Faculty " +
+                                "WHERE Class.Faculty = @fac";
+                SQLiteCommand cmd = new SQLiteCommand(querry, dtc._con);
+                cmd.CommandText = querry;
+                cmd.Parameters.AddWithValue("@fac", fac);
+
+                using (SQLiteDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        rs = reader.GetInt32(0);
+                    }
+                }
+                dtc.closeConnection();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error_login :" + ex.Message);
+            }
+            return rs;
+        }
+    }
+}

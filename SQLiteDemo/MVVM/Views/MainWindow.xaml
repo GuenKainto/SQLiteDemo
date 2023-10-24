@@ -1,0 +1,173 @@
+﻿<Window x:Class="SQLiteDemo.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SQLiteDemo"
+        xmlns:viewModels="clr-namespace:SQLiteDemo.MVVM.ViewModels"
+        xmlns:views="clr-namespace:SQLiteDemo.MVVM.Views"
+        xmlns:behaviors="http://schemas.microsoft.com/xaml/behaviors"
+        mc:Ignorable="d" x:Name="_this" FontSize="20"
+        WindowStartupLocation="CenterScreen"
+        Title="SQLiteDemo" Height="720" Width="1280">
+    <Window.DataContext>
+        <viewModels:MainWindowViewModel/>
+    </Window.DataContext>
+
+    
+    <Window.Resources>
+        <!--TextBox-->
+        <Style x:Key="TextBoxWithBorder" TargetType="TextBox">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Border Background="White" BorderBrush="Black"
+                        BorderThickness="2" CornerRadius="10">
+                            <ScrollViewer x:Name="PART_ContentHost" />
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!--Button Style-->
+        <Style x:Key="ButtonWithBorder" TargetType="Button">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="White" BorderBrush="Black" 
+                        BorderThickness="3" CornerRadius="10">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="MinHeight" Value="50"/>
+            <Setter Property="MinWidth" Value="200"/>
+        </Style>
+
+        <!--Button no border-->
+        <Style x:Key="NoBorderButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <ContentPresenter />
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+
+        <DataTemplate DataType = "{x:Type viewModels:FacultyManagerViewModel}">
+            <views:FacultyManagerView/>
+        </DataTemplate>
+        <DataTemplate DataType = "{x:Type viewModels:ClassManagerViewModel}">
+            <views:ClassManagerView/>
+        </DataTemplate>
+        <DataTemplate DataType = "{x:Type viewModels:TeacherManagerViewModel}">
+            <views:TeacherManagerView/>
+        </DataTemplate>
+    </Window.Resources>
+
+    <behaviors:Interaction.Triggers>
+
+        <behaviors:EventTrigger EventName="Loaded">
+            <behaviors:InvokeCommandAction Command="{Binding LoadedCommand}"
+                                           CommandParameter="{Binding ElementName=_this}">
+            </behaviors:InvokeCommandAction>
+        </behaviors:EventTrigger>
+
+    </behaviors:Interaction.Triggers>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="4*"/>
+        </Grid.ColumnDefinitions>
+
+        <!--MENU-->
+        <Grid Grid.Column="0" Background="LightGray">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="3.5*"/>
+                <RowDefinition Height="5*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <!--avata + UserName-->
+            <StackPanel Grid.Row="0" 
+                        HorizontalAlignment="Center" 
+                        VerticalAlignment="Top">
+                <Border  BorderBrush="Black"
+                         BorderThickness="2" Margin="40 40 40 0"
+                         CornerRadius="30" ClipToBounds="True"
+                         MinHeight="150" MinWidth="150">
+                    <Border.Background>
+                        <ImageBrush Stretch="Fill" 
+                                    ImageSource="/Images/Avata/smallest.jpg"/>
+                    </Border.Background>
+                </Border>
+                
+                <!--<Ellipse Width="50" Height="50">
+                    <Ellipse.Fill>
+                        <ImageBrush ImageSource="http://chriscavanagh.files.wordpress.com/2006/12/chriss-blog-banner.jpg" />
+                    </Ellipse.Fill>
+                </Ellipse>-->
+
+                <Label Content="{Binding UserName}" 
+                       Height="auto" Width="auto"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"/>
+            </StackPanel>
+
+            <!--Button-->
+            <Grid Grid.Row="1"
+                  HorizontalAlignment="Center">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <Button Grid.Row="0"
+                        Style="{StaticResource ButtonWithBorder}"
+                        Content="Faculty Manager" 
+                        Margin="20"
+                        Command="{Binding NavigateCommand}"
+                            CommandParameter="Faculty"/>
+                <Button Grid.Row="1"
+                        Style="{StaticResource ButtonWithBorder}"
+                        Content="Class Manager" 
+                        Margin="20"
+                        Command="{Binding NavigateCommand}"
+                            CommandParameter="Class"/>
+                <Button Grid.Row="2"
+                        Style="{StaticResource ButtonWithBorder}"
+                        Content="Teacher Manager" 
+                        Margin="20"
+                        Command="{Binding NavigateCommand}"
+                            CommandParameter="Teacher"/>
+            </Grid>
+
+            <!--Log out-->
+            <Grid Grid.Row="2" 
+                  HorizontalAlignment="Center" 
+                  VerticalAlignment="Center">
+                <Button Style="{StaticResource NoBorderButtonStyle}" 
+                        Content="Log out"
+                        FontWeight="Bold"
+                        Command="{Binding LogOutCommand}"
+                            CommandParameter="{Binding ElementName=_this}"/>
+            </Grid>
+        </Grid>
+        
+        <!--MainConntent-->
+        <Grid Grid.Column="1">
+            <ContentControl Content="{Binding CurrentViewModel}"/>
+        </Grid>
+    </Grid>
+</Window>
