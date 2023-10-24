@@ -109,10 +109,8 @@ namespace SQLiteDemo.MVVM.ViewModels
         public VfxCommand AddCommand { get; set; }
         private void OnAdd(object obj)
         {
-            MessageBox.Show(Faculty_tb);
             if (obj is Views.FacultyManagerView)
             {
-                MessageBox.Show(Faculty_tb);
                 if (facDB.CreateFaculty(Faculty_tb))
                 {
                     MessageBox.Show("Create Successful", "Message", MessageBoxButton.OK, MessageBoxImage.Information);
