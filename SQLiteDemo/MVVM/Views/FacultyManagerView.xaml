@@ -14,13 +14,11 @@
     </UserControl.DataContext>
 
     <behaviors:Interaction.Triggers>
-
         <behaviors:EventTrigger EventName="Loaded">
             <behaviors:InvokeCommandAction Command="{Binding LoadedCommand}"
                                        CommandParameter="{Binding ElementName=_this}">
             </behaviors:InvokeCommandAction>
         </behaviors:EventTrigger>
-
     </behaviors:Interaction.Triggers>
 
     <UserControl.Resources>

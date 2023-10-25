@@ -98,8 +98,8 @@
 
                     <!--UserName textBox-->
                     <StackPanel Grid.Row="0"
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Center">
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center">
                         <Label Content="User Name"/>
                         <Grid>
                             <TextBox  Style="{StaticResource TextBoxWithBorder}"
