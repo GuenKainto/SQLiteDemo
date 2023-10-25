@@ -11,7 +11,7 @@ using System.Windows;
 
 namespace SQLiteDemo.DAO
 {
-    internal class FacultyDB
+    internal class FacultyDB // using query
     {
         private static DatabaseConnection dtc = new DatabaseConnection();
 

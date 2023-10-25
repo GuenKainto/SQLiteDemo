@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace SQLiteDemo.DAO
 {
-    internal class LoginDB
+    internal class LoginDB // using query
     {  
         private static DatabaseConnection dtc = new DatabaseConnection();
         public bool CheckLogin(string userName, string passWord)

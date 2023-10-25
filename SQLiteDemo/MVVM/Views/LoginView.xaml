@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SQLiteDemo.MVVM.Views"
         xmlns:viewModels="clr-namespace:SQLiteDemo.MVVM.ViewModels"
+        xmlns:behaviors="http://schemas.microsoft.com/xaml/behaviors"
         x:Name="_this" WindowStartupLocation="CenterScreen"
         mc:Ignorable="d" FontSize="20" 
         Title="LoginView" Height="720" Width="1280">
@@ -20,6 +21,20 @@
                     <ControlTemplate TargetType="TextBox">
                         <Border Background="White" BorderBrush="Black"
                         BorderThickness="2" CornerRadius="10">
+                            <ScrollViewer x:Name="PART_ContentHost" />
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!--PasswordBox-->
+        <Style x:Key="PasswordBoxWithBorder" TargetType="PasswordBox">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="PasswordBox">
+                        <Border Background="White" BorderBrush="Black"
+                                BorderThickness="2" CornerRadius="10">
                             <ScrollViewer x:Name="PART_ContentHost" />
                         </Border>
                     </ControlTemplate>
@@ -106,8 +121,8 @@
                                         <Setter Property="Visibility" Value="Collapsed"/>
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding Text, 
-                                                               ElementName=_username}" 
-                                                     Value="">
+                                                         ElementName=_username}" 
+                                                         Value="">
                                                 <Setter Property="Visibility" Value="Visible"/>
                                             </DataTrigger>
                                         </Style.Triggers>
@@ -123,32 +138,26 @@
                             VerticalAlignment="Center">
                         <Label Content="Password"/>
                         <Grid>
-                            <TextBox  Style="{StaticResource TextBoxWithBorder}"
-                                  Width="300"  Height="40"
-                                  VerticalAlignment="Center"
-                                  HorizontalAlignment="Left" 
-                                  x:Name="_password" 
-                                  Margin="5"
-                                  Text="{Binding PassWord, Mode=TwoWay,
-                                         UpdateSourceTrigger=PropertyChanged}"/>
+                            <PasswordBox Style="{StaticResource PasswordBoxWithBorder}"
+                                         Width="300"  Height="40"
+                                         VerticalAlignment="Center"
+                                         HorizontalAlignment="Left" 
+                                         x:Name="_password" 
+                                         Margin="5">
+                                <behaviors:Interaction.Triggers>
+                                    <behaviors:EventTrigger EventName="PasswordChanged">
+                                        <behaviors:InvokeCommandAction Command="{Binding PasswordChangedCommand}"
+                                                               CommandParameter="{Binding ElementName=_this}"/>
+                                    </behaviors:EventTrigger>
+                                </behaviors:Interaction.Triggers>
+                            </PasswordBox>
                             <TextBlock IsHitTestVisible="False" 
-                                   Text="Password" 
-                                   VerticalAlignment="Center" 
-                                   HorizontalAlignment="Left" 
-                                   Margin="10,0,0,0" 
-                                   Foreground="DarkGray">
-                                <TextBlock.Style>
-                                    <Style TargetType="{x:Type TextBlock}">
-                                        <Setter Property="Visibility" Value="Collapsed"/>
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding Text, 
-                                                   ElementName=_password}" 
-                                         Value="">
-                                                <Setter Property="Visibility" Value="Visible"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </TextBlock.Style>
+                                       Text="Password" 
+                                       Name="_placeholder_tblock"
+                                       VerticalAlignment="Center" 
+                                       HorizontalAlignment="Left" 
+                                       Margin="10,0,0,0" 
+                                       Foreground="DarkGray">
                             </TextBlock>
                         </Grid>
 

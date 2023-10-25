@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Security;
+using System.Windows;
 using SQLiteDemo.DAO;
 using SQLiteDemo.MVVM.Command;
 using SQLiteDemo.MVVM.Models;
@@ -50,34 +51,51 @@ namespace SQLiteDemo.MVVM.ViewModels
             if (obj is Views.LoginView loginWd)
             {
                 lg = new LoginDB();
-                if (lg.CheckLogin(UserName, PassWord))
-                {
-                    loginWd.Hide();
-                    MainWindow mainWindow = new MainWindow();
-                    mainWindow.Tag = UserName;
-                    mainWindow.ShowDialog();
-                }
+                PassWord = loginWd._password.Password;
+                if (PassWord == "") 
+                    MessageBox.Show("Please enter password !", "Message", MessageBoxButton.OK, MessageBoxImage.Information);
                 else
                 {
-                    MessageBox.Show("Username or password incorrect", "Message", MessageBoxButton.OK, MessageBoxImage.Information);
+                    if (lg.CheckLogin(UserName, PassWord))
+                    {
+                        loginWd.Hide();
+                        MainWindow mainWindow = new MainWindow();
+                        mainWindow.Tag = UserName;
+                        mainWindow.ShowDialog();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Username or password incorrect", "Message", MessageBoxButton.OK, MessageBoxImage.Information);
+                    }
                 }
             }
         }
         private bool CanLogin()
         {
-            return UserName != null && PassWord != null;
+            return UserName != null;
         }
 
         public VfxCommand ResetCommand { get; set; }
         private void OnReset(object obj)
         {
-            if(obj is Views.LoginView)
+            if(obj is Views.LoginView loginWd)
             {
                 UserName = "";
-                PassWord = "";
+                loginWd._password.Password = "";
+            }
+        }
+
+        public VfxCommand PasswordChangedCommand {  get; set; }
+        private void OnPasswordChanged(object obj)
+        {
+            if(obj is Views.LoginView loginWd)
+            {
+                if (loginWd._password.Password == "") loginWd._placeholder_tblock.Visibility = Visibility.Visible;
+                else loginWd._placeholder_tblock.Visibility = Visibility.Collapsed;
             }
         }
         #endregion
+
         public LoginViewModel() 
         {
             Init_Command();
@@ -85,6 +103,7 @@ namespace SQLiteDemo.MVVM.ViewModels
 
         private void Init_Command()
         {
+            PasswordChangedCommand = new VfxCommand(OnPasswordChanged, () => true);
             LoginCommand = new VfxCommand(OnLogin, CanLogin);
             ResetCommand = new VfxCommand(OnReset, ()=>true);
         }
