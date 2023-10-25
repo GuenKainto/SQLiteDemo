@@ -39,10 +39,38 @@ namespace SQLiteDemo.DAO
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Error_login :" + ex.Message);
+                Console.WriteLine("Error_Get_All_Faculty :" + ex.Message);
             }
             return temp;
         } 
+
+        public bool CheckExist(string fac)
+        {
+            bool rs = false;
+            try
+            {
+                dtc.createConection();
+
+                string querry = "SELECT * FROM Faculty WHERE Fac = @fac";
+                SQLiteCommand cmd = new SQLiteCommand(querry, dtc._con);
+                cmd.CommandText = querry;
+                cmd.Parameters.AddWithValue("@fac", fac);
+
+                using (SQLiteDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        string temp = reader.GetString(0);
+                        rs = true;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error_Create_Faculty :" + ex.Message);
+            }
+            return rs;
+        }
 
         public bool CreateFaculty(string fac)
         {
@@ -57,10 +85,11 @@ namespace SQLiteDemo.DAO
                 cmd.Parameters.AddWithValue("@fac",fac);
                 cmd.ExecuteNonQuery();
                 dtc.closeConnection();
+                rs = true;
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Error_login :" + ex.Message);
+                Console.WriteLine("Error_Create_Faculty :" + ex.Message);
             }
             return rs;
         }
@@ -72,16 +101,17 @@ namespace SQLiteDemo.DAO
             {
                 dtc.createConection();
 
-                string querry = "DELETE INTO Faculty WHERE Fac = @fac";
+                string querry = "DELETE FROM Faculty WHERE Fac = @fac";
                 SQLiteCommand cmd = new SQLiteCommand(querry, dtc._con);
                 cmd.CommandText = querry;
                 cmd.Parameters.AddWithValue("@fac", fac);
                 cmd.ExecuteNonQuery();
                 dtc.closeConnection();
+                rs= true;
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Error_login :" + ex.Message);
+                Console.WriteLine("Error_Delete_Faculty :" + ex.Message);
             }
             return rs;
         }
@@ -109,7 +139,7 @@ namespace SQLiteDemo.DAO
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Error_login :" + ex.Message);
+                Console.WriteLine("Error_GetNoClass :" + ex.Message);
             }
             return rs;
         }
@@ -137,7 +167,7 @@ namespace SQLiteDemo.DAO
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Error_login :" + ex.Message);
+                Console.WriteLine("Error_GetNoTeacher :" + ex.Message);
             }
             return rs;
         }
@@ -168,7 +198,7 @@ namespace SQLiteDemo.DAO
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Error_login :" + ex.Message);
+                Console.WriteLine("Error_GetNoStudent :" + ex.Message);
             }
             return rs;
         }

@@ -83,6 +83,7 @@ namespace SQLiteDemo.MVVM.ViewModels
                 {
                     _selectedFaculty = value;
                     OnPropertyChanged(nameof(SelectedFaculty));
+                    DeleteCommand.RaiseCanExecuteChanged();
                 }
             }
         }
@@ -97,11 +98,12 @@ namespace SQLiteDemo.MVVM.ViewModels
                 {
                     _faculty_tb = value;
                     OnPropertyChanged(nameof(Faculty_tb));
+                    AddCommand.RaiseCanExecuteChanged();
                 }
             }
         }
 
-        private FacultyDB facDB = new FacultyDB();
+        private FacultyDB facDB;
         public ObservableCollection<Faculty> ListFaculty { get; set; }
         #endregion
 
@@ -111,47 +113,89 @@ namespace SQLiteDemo.MVVM.ViewModels
         {
             if (obj is Views.FacultyManagerView)
             {
-                if (facDB.CreateFaculty(Faculty_tb))
+                if (facDB.CheckExist(Faculty_tb))
                 {
-                    MessageBox.Show("Create Successful", "Message", MessageBoxButton.OK, MessageBoxImage.Information);
+                    MessageBox.Show(Faculty_tb + " is already available on the database", "Message", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
                 else
                 {
-                    MessageBox.Show("Can't Create Faculty", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    if (facDB.CreateFaculty(Faculty_tb))
+                    {
+                        Faculty_tb = null;
+                        loadData();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Can't Create Faculty", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
                 }
+                
             }
         }
         private bool CanAdd()
         {
-            return true;
+            return Faculty_tb != null;
         }
         public VfxCommand DeleteCommand { get; set; }
         private void OnDelete(object obj)
         {
-            
+            if (obj is Views.FacultyManagerView)
+            {
+                MessageBoxResult rs = MessageBox.Show("Are you sure you want to delete "+SelectedFaculty.Fac,"Message",MessageBoxButton.YesNo,MessageBoxImage.Question);
+                if(rs == MessageBoxResult.Yes)
+                {
+                    if(facDB.DeleteFaculty(SelectedFaculty.Fac))
+                    {
+                        MessageBox.Show("Delete Successful", "Message", MessageBoxButton.OK, MessageBoxImage.Information);
+                        loadData();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Can't Delete Faculty", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                }
+            }
         }
         private bool CanDelete()
         {
-            return true;
+            return SelectedFaculty != null && SelectedFaculty.NoTeacher == 0 && SelectedFaculty.NoClass == 0 && SelectedFaculty.NoStudent == 0;
         }
 
+        public VfxCommand LoadedCommand { get; set; }
+        private void OnLoaded(object obj)
+        {
+            if(obj is Views.FacultyManagerView)
+            {
+                loadData();
+            }
+        }
         #endregion
 
         public FacultyManagerViewModel()
         {
             Init_Model();
-            Init_Command();  
+            Init_Command();
         }
 
         private void Init_Model()
         {
-            ListFaculty = facDB.GetAllFac();
+            facDB = new FacultyDB();
+            ListFaculty = new ObservableCollection<Faculty>();
         }
 
         private void Init_Command()
         {
+            LoadedCommand = new VfxCommand(OnLoaded, () => true);
             AddCommand = new VfxCommand(OnAdd, CanAdd);
             DeleteCommand = new VfxCommand(OnDelete, CanDelete);
+        }
+
+        private void loadData()
+        {
+            Faculty_tb = "";
+            ListFaculty.Clear();
+            ListFaculty = facDB.GetAllFac();
+            OnPropertyChanged("ListFaculty");
         }
     }
 }
