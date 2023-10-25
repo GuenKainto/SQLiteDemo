@@ -102,7 +102,7 @@ namespace SQLiteDemo.MVVM.ViewModels
         }
 
         private FacultyDB facDB = new FacultyDB();
-        public ObservableCollection<Faculty> ListFaculty = new ObservableCollection<Faculty>();
+        public ObservableCollection<Faculty> ListFaculty { get; set; }
         #endregion
 
         #region command
@@ -139,8 +139,8 @@ namespace SQLiteDemo.MVVM.ViewModels
 
         public FacultyManagerViewModel()
         {
-            Init_Command();
             Init_Model();
+            Init_Command();  
         }
 
         private void Init_Model()

@@ -109,7 +109,7 @@
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Faculty" 
                                             Width="1.5*"
-                                            Binding="{Binding Faculty}"/>
+                                            Binding="{Binding Fac}"/>
                         <DataGridTextColumn Header="Class"
                                             Width="*"
                                             Binding="{Binding NoClass}"/>
