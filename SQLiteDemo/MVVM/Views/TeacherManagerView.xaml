@@ -5,12 +5,21 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:SQLiteDemo.MVVM.Views"
              xmlns:viewModels="clr-namespace:SQLiteDemo.MVVM.ViewModels"
+             xmlns:behaviors="http://schemas.microsoft.com/xaml/behaviors"
              mc:Ignorable="d" Background="White" 
-             FontSize="20"
+             FontSize="20" x:Name="_this"
              d:DesignHeight="720" d:DesignWidth="1024">
     <UserControl.DataContext>
         <viewModels:TeacherManagerViewModel/>
     </UserControl.DataContext>
+
+    <behaviors:Interaction.Triggers>
+        <behaviors:EventTrigger EventName="Loaded">
+            <behaviors:InvokeCommandAction Command="{Binding LoadedCommand}"
+                                   CommandParameter="{Binding ElementName=_this}">
+            </behaviors:InvokeCommandAction>
+        </behaviors:EventTrigger>
+    </behaviors:Interaction.Triggers>
 
     <UserControl.Resources>
         <!--TextBox-->
@@ -54,7 +63,7 @@
 
         <!--Label-->
         <Label Grid.Row="0"
-                Content="Faculty Manager"/>
+               Content="Faculty Manager"/>
         
         <!--Form-->
         <Grid Grid.Row="1">
@@ -75,25 +84,25 @@
                              HorizontalAlignment="Left"
                              Style="{StaticResource TextBoxWithBorder}"
                              Text="{Binding Search_tb}"/>
-                    <TextBlock IsHitTestVisible="False" 
-                               Text="Enter faculty,ID or name..." 
-                               VerticalAlignment="Center" 
-                               HorizontalAlignment="Left" 
-                               Margin="10,0,0,0" 
-                               Foreground="DarkGray">
-                        <TextBlock.Style>
-                            <Style TargetType="{x:Type TextBlock}">
-                                <Setter Property="Visibility" Value="Collapsed"/>
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding Text, 
-                                                 ElementName=_search_tb}" 
-                                                 Value="">
-                                        <Setter Property="Visibility" Value="Visible"/>
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </TextBlock.Style>
-                    </TextBlock>
+                        <TextBlock IsHitTestVisible="False" 
+                                   Text="Enter faculty,ID or name..." 
+                                   VerticalAlignment="Center" 
+                                   HorizontalAlignment="Left" 
+                                   Margin="10,0,0,0" 
+                                   Foreground="DarkGray">
+                            <TextBlock.Style>
+                                <Style TargetType="{x:Type TextBlock}">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Text, 
+                                                     ElementName=_search_tb}" 
+                                                     Value="">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
                     </Grid>
 
                     <Button Margin="5"
@@ -161,7 +170,5 @@
             </DataGrid>
         </Grid>
         
-        
-
     </Grid>
 </UserControl>

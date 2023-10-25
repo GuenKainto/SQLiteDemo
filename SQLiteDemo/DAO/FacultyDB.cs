@@ -67,7 +67,7 @@ namespace SQLiteDemo.DAO
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Error_Create_Faculty :" + ex.Message);
+                Console.WriteLine("Error_Check_Exist :" + ex.Message);
             }
             return rs;
         }

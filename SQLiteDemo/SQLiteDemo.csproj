@@ -100,6 +100,7 @@
     <Compile Include="DAO\DatabaseConnection.cs" />
     <Compile Include="DAO\FacultyDB.cs" />
     <Compile Include="DAO\LoginDB.cs" />
+    <Compile Include="DAO\TeacherDB.cs" />
     <Compile Include="MVVM\Command\VfxCommand.cs" />
     <Compile Include="MVVM\Models\BaseNotifyPropertyChanged.cs" />
     <Compile Include="MVVM\Models\Class.cs" />
