@@ -35,8 +35,8 @@ namespace SQLiteDemo.MVVM.Models
             }
         }
 
-        private string _tFaculty;
-        public string TFaculty
+        private Faculty _tFaculty;
+        public Faculty TFaculty
         {
             get => _tFaculty;
             set
@@ -93,7 +93,7 @@ namespace SQLiteDemo.MVVM.Models
 
         public Teacher() { }
 
-        public Teacher(string tID, string tName, string tFaculty, string tDOB, string tAddress, string tPhone)
+        public Teacher(string tID, string tName, Faculty tFaculty, string tDOB, string tAddress, string tPhone)
         {
             TID = tID;
             TName = tName;

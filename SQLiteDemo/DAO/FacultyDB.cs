@@ -18,14 +18,13 @@ namespace SQLiteDemo.DAO
         public ObservableCollection<Faculty> GetAllFac()
         {
             ObservableCollection<Faculty> temp = new ObservableCollection<Faculty>();
-
             try
             {
                 dtc.createConection();
 
                 string querry = "SELECT * FROM Faculty";
                 SQLiteCommand cmd = new SQLiteCommand(querry, dtc._con);
-                cmd.CommandText = querry;
+               
                 using (SQLiteDataReader reader = cmd.ExecuteReader())
                 {
                     while (reader.Read())
@@ -64,6 +63,7 @@ namespace SQLiteDemo.DAO
                         rs = true;
                     }
                 }
+                dtc.closeConnection();
             }
             catch (Exception ex)
             {
@@ -86,6 +86,7 @@ namespace SQLiteDemo.DAO
                 cmd.ExecuteNonQuery();
                 dtc.closeConnection();
                 rs = true;
+                dtc.closeConnection();
             }
             catch (Exception ex)
             {
@@ -108,6 +109,7 @@ namespace SQLiteDemo.DAO
                 cmd.ExecuteNonQuery();
                 dtc.closeConnection();
                 rs= true;
+                dtc.closeConnection();
             }
             catch (Exception ex)
             {

@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SQLiteDemo.MVVM.Views"
         xmlns:viewModels="clr-namespace:SQLiteDemo.MVVM.ViewModels"
+        xmlns:behaviors="http://schemas.microsoft.com/xaml/behaviors"
         mc:Ignorable="d" FontSize="20" x:Name="_this"
         WindowStartupLocation="CenterScreen"
         Title="Add/Update Teacher" Height="400" Width="600">
@@ -46,6 +47,14 @@
 
     </Window.Resources>
 
+    <behaviors:Interaction.Triggers>
+        <behaviors:EventTrigger EventName="Loaded">
+            <behaviors:InvokeCommandAction Command="{Binding LoadedCommand}"
+                                   CommandParameter="{Binding ElementName=_this}">
+            </behaviors:InvokeCommandAction>
+        </behaviors:EventTrigger>
+    </behaviors:Interaction.Triggers>
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="5*"/>
@@ -68,35 +77,38 @@
 
                 <StackPanel Grid.Row="0">
                     <Label VerticalAlignment="Center"
-                   Content="Teacher ID : "/>
-                    <TextBox Width="200" Height="40"
-                     VerticalAlignment="Center"
-                     HorizontalAlignment="Left"
-                     Style="{StaticResource TextBoxWithBorder}"
-                     Text="{Binding TID_tb}"
-                     IsReadOnly="True"/>
+                           Content="Teacher ID : "/>
+                    <TextBox Name="tID_tb"
+                             Width="200" Height="40"
+                             VerticalAlignment="Center"
+                             HorizontalAlignment="Left"
+                             Style="{StaticResource TextBoxWithBorder}"
+                             Text="{Binding TID_tb}"/>
                 </StackPanel>
 
                 <StackPanel Grid.Row="1">
                     <Label VerticalAlignment="Center"
-                   Content="Teacher name : "/>
-                    <TextBox Width="200" Height="40"
-                     VerticalAlignment="Center"
-                     HorizontalAlignment="Left"
-                     Style="{StaticResource TextBoxWithBorder}"
-                     Text="{Binding TName_tb}"
-                     IsReadOnly="True"/>
+                           Content="Teacher name : "/>
+                    <TextBox Name="tName_tb"
+                             Width="200" Height="40"
+                             VerticalAlignment="Center"
+                             HorizontalAlignment="Left"
+                             Style="{StaticResource TextBoxWithBorder}"
+                             Text="{Binding TName_tb}"/>
                 </StackPanel>
 
                 <StackPanel Grid.Row="2">
                     <Label VerticalAlignment="Center"
-                   Content="Faculty : "/>
-                    <TextBox Width="200" Height="40"
-                     VerticalAlignment="Center"
-                     HorizontalAlignment="Left"
-                     Style="{StaticResource TextBoxWithBorder}"
-                     Text="{Binding TFaculty_tb}"
-                     IsReadOnly="True"/>
+                           Content="Faculty : "/>
+                    <Border BorderBrush="Black" BorderThickness="2" 
+                            CornerRadius="10"
+                            Width="200" Height="40" >
+                        <ComboBox Name="tFaculty_cb"
+                                  Width="200" Height="40" 
+                                  ItemsSource="{Binding ListFaculty_cb}"
+                                  DisplayMemberPath="Fac"
+                                  SelectedItem="{Binding SelectedFaculty}"/>
+                    </Border>
                 </StackPanel>
 
             </Grid>
@@ -110,36 +122,35 @@
 
                 <StackPanel Grid.Row="0">
                     <Label VerticalAlignment="Center"
-                   Content="Date of birth : "/>
-                    <TextBox Width="200" Height="40"
-                     VerticalAlignment="Center"
-                     HorizontalAlignment="Left"
-                     Style="{StaticResource TextBoxWithBorder}"
-                     Text="{Binding TID_tb}"
-                     IsReadOnly="True"/>
-
+                           Content="Date of birth : "/>
+                    <Border BorderBrush="Black" BorderThickness="2" 
+                            CornerRadius="10">
+                        <DatePicker Name="tDOB_dp"
+                                    Width="200" Height="40" 
+                                    SelectedDate="{Binding TDOB_dp}" />
+                    </Border>
                 </StackPanel>
 
                 <StackPanel Grid.Row="1">
                     <Label VerticalAlignment="Center"
-                   Content="Address : "/>
-                    <TextBox Width="200" Height="40"
-                     VerticalAlignment="Center"
-                     HorizontalAlignment="Left"
-                     Style="{StaticResource TextBoxWithBorder}"
-                     Text="{Binding TName_tb}"
-                     IsReadOnly="True"/>
+                           Content="Address : "/>
+                    <TextBox Name="tAddress_tb"
+                             Width="200" Height="40"
+                             VerticalAlignment="Center"
+                             HorizontalAlignment="Left"
+                             Style="{StaticResource TextBoxWithBorder}"
+                             Text="{Binding TAddress_tb}"/>
                 </StackPanel>
 
                 <StackPanel Grid.Row="2">
                     <Label VerticalAlignment="Center"
-                   Content="Phone : "/>
-                    <TextBox Width="200" Height="40"
-                     VerticalAlignment="Center"
-                     HorizontalAlignment="Left"
-                     Style="{StaticResource TextBoxWithBorder}"
-                     Text="{Binding TFaculty_tb}"
-                     IsReadOnly="True"/>
+                           Content="Phone : "/>
+                    <TextBox Name="tPhone_tb"
+                             Width="200" Height="40"
+                             VerticalAlignment="Center"
+                             HorizontalAlignment="Left"
+                             Style="{StaticResource TextBoxWithBorder}"
+                             Text="{Binding TPhone_tb}"/>
                 </StackPanel>
 
             </Grid>
@@ -147,7 +158,8 @@
 
         <!--Button-->
         <Grid Grid.Row="1" HorizontalAlignment="Center">
-            <StackPanel Orientation="Horizontal">
+            <StackPanel Name="Add_Update_Buttones"
+                        Orientation="Horizontal">
                 <Button Content="Save" Width="90" Height="40"
                         Margin="0 0 10 0"
                         Style="{StaticResource ButtonWithBorder}"
@@ -159,7 +171,14 @@
                         Command="{Binding CloseWindowCommand}"
                         CommandParameter="{Binding ElementName=_this}"/>
             </StackPanel>
-            
+
+            <Grid Grid.Row="1" Name="Show_Button">
+                <Button Content="Ok" Width="90" Height="40"
+                        Style="{StaticResource ButtonWithBorder}"
+                        Command="{Binding CloseWindowCommand}"
+                        CommandParameter="{Binding ElementName=_this}"/>
+            </Grid>
+
         </Grid>
 
     </Grid>

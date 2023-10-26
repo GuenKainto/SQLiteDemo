@@ -156,7 +156,7 @@
                                         Binding="{Binding TName}"/>
                     <DataGridTextColumn Header="Faculty"
                                         Width="3*"
-                                        Binding="{Binding TFaculty}"/>
+                                        Binding="{Binding TFaculty.Fac}"/>
                     <DataGridTextColumn Header="Date of birth"
                                         Width="3*"
                                         Binding="{Binding TDOB}"/>

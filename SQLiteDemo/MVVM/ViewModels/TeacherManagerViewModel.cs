@@ -82,6 +82,7 @@ namespace SQLiteDemo.MVVM.ViewModels
             if (obj is Views.TeacherManagerView)
             {
                 AddUpdateTeacherView addWd = new AddUpdateTeacherView();
+                addWd.Tag = "Add";
                 addWd.ShowDialog();
             }
         }
@@ -104,7 +105,9 @@ namespace SQLiteDemo.MVVM.ViewModels
         {
             if (obj is Views.TeacherManagerView)
             {
-
+                AddUpdateTeacherView addWd = new AddUpdateTeacherView();
+                addWd.Tag = "Show|" + SelectedTeacher.TID;
+                addWd.ShowDialog();
             }
         }
         private bool CanShow()
@@ -117,7 +120,9 @@ namespace SQLiteDemo.MVVM.ViewModels
         {
             if (obj is Views.TeacherManagerView)
             {
-
+                AddUpdateTeacherView addWd = new AddUpdateTeacherView();
+                addWd.Tag = "Update|" + SelectedTeacher.TID;
+                addWd.ShowDialog();
             }
         }
         private bool CanUpdate()
