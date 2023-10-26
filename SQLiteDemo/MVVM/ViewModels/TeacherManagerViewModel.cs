@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
+using System.Data.Entity.Core.Metadata.Edm;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -97,7 +98,19 @@ namespace SQLiteDemo.MVVM.ViewModels
         {
             if (obj is Views.TeacherManagerView)
             {
-
+                MessageBoxResult rs = MessageBox.Show("Are you sure you want to delete " + SelectedTeacher.TID + " " + SelectedTeacher.TName, "Message", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                if (rs == MessageBoxResult.Yes)
+                {
+                    if (teacherDBConnecter.DeleteTeacher(SelectedTeacher))
+                    {
+                        MessageBox.Show("Delete Successful", "Message", MessageBoxButton.OK, MessageBoxImage.Information);
+                        LoadData();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Can't Delete Faculty", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                }
             }
         }
         private bool CanDelete()

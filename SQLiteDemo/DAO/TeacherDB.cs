@@ -182,7 +182,7 @@ namespace SQLiteDemo.DAO
             {
                 dtc.createConection();
 
-                string querry = "UPDATE Teacher SET TName = @tname , TFaculty = @faculty , TDOB = @tdob , TAddress = @taddress , TPhone = @tphone  WHERE TID = @tid ";
+                string querry = "UPDATE Teacher SET TName = @tname , Faculty = @faculty , TDOB = @tdob , TAddress = @taddress , TPhone = @tphone  WHERE TID = @tid ";
                 SQLiteCommand cmd = new SQLiteCommand(querry, dtc._con);
                 cmd.CommandText = querry;
                 cmd.Parameters.AddWithValue("@tid", teacher.TID);
