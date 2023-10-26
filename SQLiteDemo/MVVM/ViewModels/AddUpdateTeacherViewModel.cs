@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data.Entity.Core.Metadata.Edm;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -162,8 +163,7 @@ namespace SQLiteDemo.MVVM.ViewModels
         public VfxCommand SaveCommand { get; set; }
         private void OnSave(object obj)
         {
-            MessageBox.Show("Test");
-            if(obj is Views.AddUpdateTeacherView wd)
+            if (obj is Views.AddUpdateTeacherView wd)
             {
                 if (Mode == "Add")
                 {
@@ -178,6 +178,7 @@ namespace SQLiteDemo.MVVM.ViewModels
                         if (teacherDBConnecter.CreateTeacher(item))
                         {
                             MessageBox.Show("Save Succseccful", "Message", MessageBoxButton.OK, MessageBoxImage.Information);
+                            wd.Tag = "Save";
                             wd.Close();
                         }
                         else
@@ -195,6 +196,7 @@ namespace SQLiteDemo.MVVM.ViewModels
                         if (teacherDBConnecter.UpdateTeacher(item))
                         {
                             MessageBox.Show("Save Succseccful", "Message", MessageBoxButton.OK, MessageBoxImage.Information);
+                            wd.Tag = "Save";
                             wd.Close();
                         }
                         else
@@ -248,10 +250,20 @@ namespace SQLiteDemo.MVVM.ViewModels
         private void loadData(string sTID)
         {
             Teacher temp = teacherDBConnecter.GetTeacher(sTID);
+
             TID_tb = temp.TID;
             TName_tb = temp.TName;
-            SelectedFaculty = temp.TFaculty;
-            TDOB_dp = DateTime.Parse(temp.TDOB);
+
+            if(ListFaculty_cb.Count > 0)
+            {
+                SelectedFaculty = ListFaculty_cb.Where(s=>s.Fac == temp.TFaculty.Fac).ToList().SingleOrDefault();
+            }
+
+            if (DateTime.TryParseExact(temp.TDOB, "dd-MM-yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime result))
+            {
+                TDOB_dp = result;
+            }
+            else Console.WriteLine("Can convert String to DateTime.");
             TAddress_tb = temp.TAddress;
             TPhone_tb = temp.TPhone;
         }

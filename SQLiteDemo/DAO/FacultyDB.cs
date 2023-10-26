@@ -31,15 +31,16 @@ namespace SQLiteDemo.DAO
                     {
                         string fac = reader.GetString(0);
                         Faculty item = new Faculty(fac);
+                        item.SetNumber();
                         temp.Add(item);
                     }
                 }
-                dtc.closeConnection();
             }
             catch (Exception ex)
             {
                 Console.WriteLine("Error_Get_All_Faculty :" + ex.Message);
             }
+            finally { dtc.closeConnection(); }
             return temp;
         } 
 
@@ -63,12 +64,12 @@ namespace SQLiteDemo.DAO
                         rs = true;
                     }
                 }
-                dtc.closeConnection();
             }
             catch (Exception ex)
             {
                 Console.WriteLine("Error_Check_Exist :" + ex.Message);
             }
+            finally { dtc.closeConnection(); }
             return rs;
         }
 
@@ -86,12 +87,12 @@ namespace SQLiteDemo.DAO
                 cmd.ExecuteNonQuery();
                 dtc.closeConnection();
                 rs = true;
-                dtc.closeConnection();
             }
             catch (Exception ex)
             {
                 Console.WriteLine("Error_Create_Faculty :" + ex.Message);
             }
+            finally { dtc.closeConnection(); }
             return rs;
         }
 
@@ -109,12 +110,12 @@ namespace SQLiteDemo.DAO
                 cmd.ExecuteNonQuery();
                 dtc.closeConnection();
                 rs= true;
-                dtc.closeConnection();
             }
             catch (Exception ex)
             {
                 Console.WriteLine("Error_Delete_Faculty :" + ex.Message);
             }
+            finally { dtc.closeConnection(); }
             return rs;
         }
 
@@ -137,12 +138,12 @@ namespace SQLiteDemo.DAO
                         rs = reader.GetInt32(0);
                     }
                 }
-                dtc.closeConnection();
             }
             catch (Exception ex)
             {
                 Console.WriteLine("Error_GetNoClass :" + ex.Message);
             }
+            finally { dtc.closeConnection(); }
             return rs;
         }
 
@@ -165,12 +166,12 @@ namespace SQLiteDemo.DAO
                         rs = reader.GetInt32(0);
                     }
                 }
-                dtc.closeConnection();
             }
             catch (Exception ex)
             {
                 Console.WriteLine("Error_GetNoTeacher :" + ex.Message);
             }
+            finally { dtc.closeConnection(); }
             return rs;
         }
 
@@ -196,12 +197,12 @@ namespace SQLiteDemo.DAO
                         rs = reader.GetInt32(0);
                     }
                 }
-                dtc.closeConnection();
             }
             catch (Exception ex)
             {
                 Console.WriteLine("Error_GetNoStudent :" + ex.Message);
             }
+            finally { dtc.closeConnection(); }
             return rs;
         }
     }

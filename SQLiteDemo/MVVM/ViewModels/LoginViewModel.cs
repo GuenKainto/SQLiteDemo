@@ -58,9 +58,9 @@ namespace SQLiteDemo.MVVM.ViewModels
                 {
                     if (lg.CheckLogin(UserName, PassWord))
                     {
-                        loginWd.Hide();
                         MainWindow mainWindow = new MainWindow();
                         mainWindow.Tag = UserName;
+                        loginWd.Close();
                         mainWindow.ShowDialog();
                     }
                     else

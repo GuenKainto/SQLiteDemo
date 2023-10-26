@@ -24,36 +24,39 @@ namespace SQLiteDemo.MVVM.Models
                 }
             }
         }
-        private int _noStudent;
+        private int _noStudent = 0;
         public int NoStudent
         {
             get => _noStudent;
             set
             {
-                _noStudent = facDB.GetNoStudent(Fac);
+                _noStudent = value;
                 RaisePropertyChanged(nameof(NoStudent));
             }
         }
 
-        private int _noTeacher;
+        private int _noTeacher = 0;
         public int NoTeacher
         {
             get => _noTeacher;
             set
             {
-                _noTeacher = facDB.GetNoTeacher(Fac);
+                _noTeacher = value;
                 RaisePropertyChanged(nameof(NoTeacher));
             }
         }
 
-        private int _noClass;
+        private int _noClass = 0;
         public int NoClass
         {
             get => _noClass;
             set
             {
-                _noClass = facDB.GetNoClass(Fac);
-                RaisePropertyChanged(nameof(NoClass));
+                if(value != _noClass)
+                {
+                    _noClass = value;
+                    RaisePropertyChanged(nameof(NoClass));
+                }
             }
         }
 
@@ -61,6 +64,13 @@ namespace SQLiteDemo.MVVM.Models
         public Faculty(string fac)
         {
             Fac = fac;
+        }
+
+        public void SetNumber()
+        {
+            NoClass = facDB.GetNoClass(Fac);
+            NoTeacher = facDB.GetNoTeacher(Fac);
+            NoStudent = facDB.GetNoStudent(Fac);
         }
     }
 }

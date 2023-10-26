@@ -165,17 +165,18 @@
 
                     <!--Button-->
                     <StackPanel Orientation="Horizontal" 
-                            Grid.Row="2"
-                            HorizontalAlignment="Center">
+                                Grid.Row="2"
+                                HorizontalAlignment="Center">
                         <Button Style="{StaticResource ButtonWithBorder}"
-                            Content="Log in" Margin="20" 
-                            Height="40" Width="80"
-                            Command="{Binding LoginCommand}"
+                                Content="Log in" Margin="20"
+                                IsDefault="True"
+                                Height="40" Width="80"
+                                Command="{Binding LoginCommand}"
                                 CommandParameter="{Binding ElementName=_this}"/>
                         <Button Style="{StaticResource ButtonWithBorder}"
-                            Content="Reset" Margin="20"
-                            Height="40" Width="80"
-                            Command="{Binding ResetCommand}"
+                                Content="Reset" Margin="20"
+                                Height="40" Width="80"
+                                Command="{Binding ResetCommand}"
                                 CommandParameter="{Binding ElementName=_this}"/>
                     </StackPanel>
                 </Grid>

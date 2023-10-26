@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace SQLiteDemo.DAO
 {
     internal class LoginDB // using query
-    {  
+    {
         private static DatabaseConnection dtc = new DatabaseConnection();
         public bool CheckLogin(string userName, string passWord)
         {
@@ -17,9 +17,9 @@ namespace SQLiteDemo.DAO
             try
             {
                 dtc.createConection();
-            
+
                 string querry = "SELECT * FROM Account WHERE UserName = @userName AND Password = @passWord";
-                SQLiteCommand cmd = new SQLiteCommand(querry,dtc._con);
+                SQLiteCommand cmd = new SQLiteCommand(querry, dtc._con);
                 cmd.CommandText = querry;
                 cmd.Parameters.AddWithValue("@userName", userName);
                 cmd.Parameters.AddWithValue("@passWord", passWord);
@@ -33,13 +33,16 @@ namespace SQLiteDemo.DAO
                         rs = true;
                     }
                 }
-                dtc.closeConnection();
             }
             catch (Exception ex)
             {
                 Console.WriteLine("Error_login :" + ex.Message);
-            }    
+            }
+            finally { dtc.closeConnection(); }
+
             return rs;
         }
+
+        //update Validate input 
     }
 }

@@ -107,7 +107,7 @@
                                   Width="200" Height="40" 
                                   ItemsSource="{Binding ListFaculty_cb}"
                                   DisplayMemberPath="Fac"
-                                  SelectedItem="{Binding SelectedFaculty}"/>
+                                  SelectedItem="{Binding SelectedFaculty, Mode=TwoWay}"/>
                     </Border>
                 </StackPanel>
 
@@ -162,6 +162,7 @@
                         Orientation="Horizontal">
                 <Button Content="Save" Width="90" Height="40"
                         Margin="0 0 10 0"
+                        IsDefault="True"
                         Style="{StaticResource ButtonWithBorder}"
                         Command="{Binding SaveCommand}"
                         CommandParameter="{Binding ElementName=_this}"/>

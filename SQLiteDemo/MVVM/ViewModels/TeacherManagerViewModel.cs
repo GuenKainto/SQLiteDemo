@@ -5,6 +5,7 @@ using SQLiteDemo.MVVM.Views;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -84,6 +85,10 @@ namespace SQLiteDemo.MVVM.ViewModels
                 AddUpdateTeacherView addWd = new AddUpdateTeacherView();
                 addWd.Tag = "Add";
                 addWd.ShowDialog();
+                if (addWd.Tag.ToString() == "Save") 
+                {
+                    LoadData();
+                }
             }
         }
 
@@ -123,6 +128,10 @@ namespace SQLiteDemo.MVVM.ViewModels
                 AddUpdateTeacherView addWd = new AddUpdateTeacherView();
                 addWd.Tag = "Update|" + SelectedTeacher.TID;
                 addWd.ShowDialog();
+                if (addWd.Tag.ToString() == "Save") // After Add/update success, set tag = "Save" to reload data
+                {
+                    LoadData();
+                }
             }
         }
         private bool CanUpdate()
