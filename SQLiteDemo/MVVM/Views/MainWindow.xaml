@@ -71,6 +71,9 @@
         <DataTemplate DataType = "{x:Type viewModels:TeacherManagerViewModel}">
             <views:TeacherManagerView/>
         </DataTemplate>
+        <DataTemplate DataType = "{x:Type viewModels:StudentManagerViewModel}">
+            <views:StudentManagerView/>
+        </DataTemplate>
     </Window.Resources>
 
     <behaviors:Interaction.Triggers>
@@ -151,6 +154,12 @@
                         Margin="20"
                         Command="{Binding NavigateCommand}"
                             CommandParameter="Teacher"/>
+                <Button Grid.Row="3"
+                        Style="{StaticResource ButtonWithBorder}"
+                        Content="Student Manager" 
+                        Margin="20"
+                        Command="{Binding NavigateCommand}"
+                            CommandParameter="Student"/>
             </Grid>
 
             <!--Log out-->

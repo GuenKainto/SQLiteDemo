@@ -110,6 +110,7 @@
     <Compile Include="MVVM\ViewModels\AddUpdateTeacherViewModel.cs" />
     <Compile Include="MVVM\ViewModels\ClassManagerViewModel.cs" />
     <Compile Include="MVVM\ViewModels\FacultyManagerViewModel.cs" />
+    <Compile Include="MVVM\ViewModels\StudentManagerViewModel.cs" />
     <Compile Include="MVVM\ViewModels\TeacherManagerViewModel.cs" />
     <Compile Include="MVVM\Views\AddUpdateTeacherView.xaml.cs">
       <DependentUpon>AddUpdateTeacherView.xaml</DependentUpon>
@@ -128,6 +129,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="MVVM\Views\StudentManagerView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MVVM\Views\TeacherManagerView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -139,6 +144,9 @@
     <Compile Include="MVVM\ViewModels\MainWindowViewModel.cs" />
     <Compile Include="MVVM\Views\LoginView.xaml.cs">
       <DependentUpon>LoginView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MVVM\Views\StudentManagerView.xaml.cs">
+      <DependentUpon>StudentManagerView.xaml</DependentUpon>
     </Compile>
     <Compile Include="MVVM\Views\TeacherManagerView.xaml.cs">
       <DependentUpon>TeacherManagerView.xaml</DependentUpon>

@@ -9,7 +9,7 @@ namespace SQLiteDemo.MVVM.ViewModels
     {
         #region properties
         private string _username;
-        public String UserName
+        public string UserName
         {
             get => _username;
             set
@@ -31,6 +31,7 @@ namespace SQLiteDemo.MVVM.ViewModels
         private FacultyManagerViewModel _facultyManagerViewModel = new FacultyManagerViewModel();
         private ClassManagerViewModel _classManagerViewModel = new ClassManagerViewModel();
         private TeacherManagerViewModel _teacherManagerViewModel = new TeacherManagerViewModel();
+        private StudentManagerViewModel _studentManagerViewModel = new StudentManagerViewModel();
         #endregion
 
         #region command
@@ -54,8 +55,11 @@ namespace SQLiteDemo.MVVM.ViewModels
                 case "Class":
                     CurrentViewModel = _classManagerViewModel;
                     break;
-                default:
+                case "Teacher":
                     CurrentViewModel = _teacherManagerViewModel;
+                    break;
+                default:
+                    CurrentViewModel = _studentManagerViewModel;
                     break;
             }
         }
@@ -74,6 +78,12 @@ namespace SQLiteDemo.MVVM.ViewModels
         public MainWindowViewModel()
         {
             Init_Command();
+            Init_Model();
+        }
+
+        private void Init_Model()
+        {
+            CurrentViewModel = _studentManagerViewModel;
         }
 
         private void Init_Command()

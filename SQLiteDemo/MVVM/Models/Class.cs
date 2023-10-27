@@ -22,8 +22,8 @@ namespace SQLiteDemo.MVVM.Models
             }
         }
 
-        private string _sFaculty;
-        public string SFaculty //Class.Faculty  in db
+        private Faculty _sFaculty;
+        public Faculty SFaculty //Class.Faculty  in db
         {
             get => _sFaculty;
             set
@@ -38,7 +38,7 @@ namespace SQLiteDemo.MVVM.Models
 
         public Class(){}
 
-        public Class(string sClass, string sFaculty)
+        public Class(string sClass, Faculty sFaculty)
         {
             SClass = sClass;
             SFaculty = sFaculty;
