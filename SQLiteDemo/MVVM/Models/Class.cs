@@ -1,13 +1,16 @@
-﻿using System;
+﻿using SQLiteDemo.DAO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
 
 namespace SQLiteDemo.MVVM.Models
 {
     internal class Class : BaseNotifyPropertyChanged
     {
+        private ClassDB classDB = new ClassDB();
         private string _sClass;
         public string SClass
         {
@@ -36,12 +39,31 @@ namespace SQLiteDemo.MVVM.Models
             }
         }
 
+        private int _noStudent = 0;
+        public int NoStudent
+        {
+            get => _noStudent;
+            set
+            {
+                if (value != _noStudent)
+                {
+                    _noStudent = value;
+                    RaisePropertyChanged(nameof(NoStudent));
+                }
+            }
+        }
+
         public Class(){}
 
         public Class(string sClass, Faculty sFaculty)
         {
             SClass = sClass;
             SFaculty = sFaculty;
+        }
+
+        public void SetNoStudent()
+        {
+            NoStudent = classDB.GetNoStudent(SClass);
         }
     }
 }

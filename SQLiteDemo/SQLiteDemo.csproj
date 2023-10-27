@@ -97,6 +97,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="DAO\ClassDB.cs" />
     <Compile Include="DAO\DatabaseConnection.cs" />
     <Compile Include="DAO\FacultyDB.cs" />
     <Compile Include="DAO\LoginDB.cs" />

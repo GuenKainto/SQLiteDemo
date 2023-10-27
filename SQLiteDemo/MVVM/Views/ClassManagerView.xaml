@@ -5,14 +5,153 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:SQLiteDemo.MVVM.Views"
              xmlns:viewModels="clr-namespace:SQLiteDemo.MVVM.ViewModels"
+             xmlns:behaviors="http://schemas.microsoft.com/xaml/behaviors"
              mc:Ignorable="d" Background="White" 
-             FontSize="20"
+             FontSize="20" Name="_this"
              d:DesignHeight="720" d:DesignWidth="1024">
     <UserControl.DataContext>
         <viewModels:ClassManagerViewModel/>
     </UserControl.DataContext>
-    
+
+    <behaviors:Interaction.Triggers>
+        <behaviors:EventTrigger EventName="Loaded">
+            <behaviors:InvokeCommandAction Command="{Binding LoadedCommand}"
+                                   CommandParameter="{Binding ElementName=_this}">
+            </behaviors:InvokeCommandAction>
+        </behaviors:EventTrigger>
+    </behaviors:Interaction.Triggers>
+
+    <UserControl.Resources>
+        <!--TextBox-->
+        <Style x:Key="TextBoxWithBorder" TargetType="TextBox">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Border Background="White" BorderBrush="Black"
+                BorderThickness="2" CornerRadius="10">
+                            <ScrollViewer x:Name="PART_ContentHost" />
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!--Button Style-->
+        <Style x:Key="ButtonWithBorder" TargetType="Button">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="White" BorderBrush="Black" 
+                BorderThickness="3" CornerRadius="10">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+        </Style>
+
+    </UserControl.Resources>
+
     <Grid>
-        <Label Content="Class"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Label Grid.Row="0"
+        Content="Class Manager"/>
+
+        <Grid Grid.Row="1" Margin="30">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="1.5*"/>
+            </Grid.ColumnDefinitions>
+
+            <!--Right-->
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="7*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <Grid Grid.Row="1">
+
+                    <StackPanel Orientation="Horizontal" 
+                                HorizontalAlignment="Center">
+                        <StackPanel Margin="10">
+                            <StackPanel Orientation="Horizontal"
+                                        HorizontalAlignment="Center"
+                                        Margin="10">
+                                <Label Content="Class name  :"/>
+                                <TextBox x:Name="sclass_tb"
+                                         Width="200"
+                                         Style="{StaticResource TextBoxWithBorder}"
+                                         Text="{Binding SClass_tb}"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal"
+                                            HorizontalAlignment="Center"
+                                            Margin="10">
+                                <Label Content="Faculty         :"/>
+                                <Border BorderBrush="Black" BorderThickness="2"
+                                            CornerRadius="10">
+                                    <ComboBox Width="200"
+                                              ItemsSource="{Binding ListFaculty_cb}"
+                                              SelectedItem="{Binding SelectedFaculty_cb , Mode=TwoWay}"
+                                              DisplayMemberPath="Fac">
+                                    </ComboBox>
+                                </Border>
+                            </StackPanel>
+                        </StackPanel>
+
+                        <StackPanel Margin="10">
+                            <Button Content="Add" Width="150" Margin="10"
+                                        Style="{StaticResource ButtonWithBorder}"
+                                        Command="{Binding AddCommand}"
+                                            CommandParameter="{Binding ElementName=_this}"/>
+                            <Button Content="Delete" Width="150" Margin="10"
+                                        Style="{StaticResource ButtonWithBorder}"
+                                        Command="{Binding DeleteCommand}"
+                                            CommandParameter="{Binding ElementName=_this}"/>
+                            <Button Content="List Student" Width="150" Margin="10"
+                                    Style="{StaticResource ButtonWithBorder}"
+                                    Command="{Binding ShowCommand}"
+                                        CommandParameter="{Binding ElementName=_this}"/>
+                        </StackPanel>
+                    </StackPanel>
+
+                </Grid>
+            </Grid>
+
+            <!--Left-->
+            <Grid Grid.Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="7*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <!--DataGrid-->
+                <DataGrid Grid.Row="1" 
+                  ItemsSource="{Binding ListClass}"
+                  SelectedItem="{Binding SelectedClass}"
+                  AutoGenerateColumns="False"
+                  IsReadOnly="True">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Class" 
+                                            Width="*"
+                                            Binding="{Binding SClass}"/>
+                        <DataGridTextColumn Header="Faculty"
+                                            Width="*"
+                                            Binding="{Binding SFaculty.Fac}"/>
+                        <DataGridTextColumn Header="No.Student"
+                                            Width="1.5*"
+                                            Binding="{Binding NoStudent}"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Grid>
+        </Grid>
     </Grid>
 </UserControl>
