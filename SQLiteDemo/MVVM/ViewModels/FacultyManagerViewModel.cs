@@ -144,21 +144,28 @@ namespace SQLiteDemo.MVVM.ViewModels
                 MessageBoxResult rs = MessageBox.Show("Are you sure you want to delete "+SelectedFaculty.Fac,"Message",MessageBoxButton.YesNo,MessageBoxImage.Question);
                 if(rs == MessageBoxResult.Yes)
                 {
-                    if(facDB.DeleteFaculty(SelectedFaculty.Fac))
+                    if (SelectedFaculty.NoTeacher == 0 && SelectedFaculty.NoClass == 0 && SelectedFaculty.NoStudent == 0)
                     {
-                        MessageBox.Show("Delete Successful", "Message", MessageBoxButton.OK, MessageBoxImage.Information);
-                        loadData();
+                        MessageBox.Show("There are still students, classes, teachers in the faculty", "Warning", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                     else
                     {
-                        MessageBox.Show("Can't Delete Faculty", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        if (facDB.DeleteFaculty(SelectedFaculty.Fac))
+                        {
+                            MessageBox.Show("Delete Successful", "Message", MessageBoxButton.OK, MessageBoxImage.Information);
+                            loadData();
+                        }
+                        else
+                        {
+                            MessageBox.Show("Can't Delete Faculty", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        }
                     }
                 }
             }
         }
         private bool CanDelete()
         {
-            return SelectedFaculty != null && SelectedFaculty.NoTeacher == 0 && SelectedFaculty.NoClass == 0 && SelectedFaculty.NoStudent == 0;
+            return SelectedFaculty != null;
         }
 
         public VfxCommand LoadedCommand { get; set; }

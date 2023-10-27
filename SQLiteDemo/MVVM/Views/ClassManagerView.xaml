@@ -66,7 +66,7 @@
         <Grid Grid.Row="1" Margin="30">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="1.5*"/>
+                <ColumnDefinition Width="1.2*"/>
             </Grid.ColumnDefinitions>
 
             <!--Right-->
@@ -100,7 +100,8 @@
                                     <ComboBox Width="200"
                                               ItemsSource="{Binding ListFaculty_cb}"
                                               SelectedItem="{Binding SelectedFaculty_cb , Mode=TwoWay}"
-                                              DisplayMemberPath="Fac">
+                                              DisplayMemberPath="Fac"
+                                              IsEditable="True">
                                     </ComboBox>
                                 </Border>
                             </StackPanel>
@@ -133,12 +134,47 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
+                <Grid Grid.Row="0" VerticalAlignment="Center">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="4*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Orientation="Horizontal" Grid.Column="0" 
+                                HorizontalAlignment="Left">
+                        <Label Content="Class:"/>
+                        <TextBox Height="35" Width="100"
+                                 Style="{StaticResource TextBoxWithBorder}"
+                                 Text="{Binding SearchClass_tb}"/>
+
+                        <Label Content="Faculty:" Margin="0,0,0,0"/>
+                        <Border BorderBrush="Black" BorderThickness="2"
+                                CornerRadius="10" Height="35">
+                            <ComboBox Width="100" Height="35"
+                                      ItemsSource="{Binding ListFaculty_cb}"
+                                      SelectedItem="{Binding SearchFaculty_cb , Mode=TwoWay}"
+                                      DisplayMemberPath="Fac"
+                                      IsEditable="True">
+                            </ComboBox>
+                        </Border>
+                    </StackPanel>
+
+                    <Button Grid.Column="1" Width="40" Height="40"
+                            HorizontalAlignment="Right"
+                            Style="{StaticResource ButtonWithBorder}"
+                            Command="{Binding SearchCommand}"
+                            CommandParameter="{Binding ElementName=_this}">
+                        <Image Source="/Images/Icons/search.png" 
+                               Width="24" Height="24" />
+                    </Button>
+                </Grid>
+
                 <!--DataGrid-->
                 <DataGrid Grid.Row="1" 
-                  ItemsSource="{Binding ListClass}"
-                  SelectedItem="{Binding SelectedClass}"
-                  AutoGenerateColumns="False"
-                  IsReadOnly="True">
+                          ItemsSource="{Binding ListClass}"
+                          SelectedItem="{Binding SelectedClass}"
+                          AutoGenerateColumns="False"
+                          IsReadOnly="True">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Class" 
                                             Width="*"

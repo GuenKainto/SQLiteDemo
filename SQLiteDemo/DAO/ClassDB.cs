@@ -38,42 +38,37 @@ namespace SQLiteDemo.DAO
             return temp;
         }
 
-        public ObservableCollection<Class> SearchClass (string searchText)
+        public ObservableCollection<Class> SearchClass (string sClass, Faculty sFaculty)
         {
             ObservableCollection< Class> temp = new ObservableCollection<Class>();
-            if (searchText != null)
-            {
-                try
-                {
-                    dtc.createConection();
 
-                    string querry = "SELECT * FROM Class WHERE SClass LIKE @searchText OR Faculty LIKE @searchText";
-                    SQLiteCommand cmd = new SQLiteCommand(querry, dtc._con);
-                    cmd.CommandText = querry;
-                    cmd.Parameters.AddWithValue("@searchText", "%" + searchText + "%");
-                    using (SQLiteDataReader reader = cmd.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            string sclass = reader.GetString(0);
-                            string fac = reader.GetString(1);
-                            Faculty sfaculty = new Faculty(fac);
-                            Class item = new Class(sclass,sfaculty);
-                            temp.Add(item);
-                        }
-                    }
-                    dtc.closeConnection();
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine("Error_Search_Class :" + ex.Message);
-                }
-                return temp;
-            }
-            else
+            try
             {
-                return GetAllClass();
+                dtc.createConection();
+
+                string querry = "SELECT * FROM Class WHERE SClass LIKE @sClass AND Faculty LIKE @sFaculty";
+                SQLiteCommand cmd = new SQLiteCommand(querry, dtc._con);
+                cmd.CommandText = querry;   
+                cmd.Parameters.AddWithValue("@sClass", "%" + sClass + "%");
+                cmd.Parameters.AddWithValue("@sFaculty", "%" + sFaculty + "%");
+                using (SQLiteDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        string sclass = reader.GetString(0);
+                        string fac = reader.GetString(1);
+                        Faculty sfaculty = new Faculty(fac);
+                        Class item = new Class(sclass,sfaculty);
+                        temp.Add(item);
+                    }
+                }
+                dtc.closeConnection();
             }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error_Search_Class :" + ex.Message);
+            }
+            return temp;
         }
 
         public bool CheckExist(Class item)

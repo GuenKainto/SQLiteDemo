@@ -1,6 +1,7 @@
 ﻿using SQLiteDemo.DAO;
 using SQLiteDemo.MVVM.Command;
 using SQLiteDemo.MVVM.Models;
+using System;
 using System.Collections.ObjectModel;
 using System.Windows;
 
@@ -38,6 +39,34 @@ namespace SQLiteDemo.MVVM.ViewModels
                 {
                     _selectedFaculty_cb = value;
                     OnPropertyChanged(nameof(SelectedFaculty_cb));
+                }
+            }
+        }
+
+        private string _searchClasss_tb;
+        public string SearchClasss_tb
+        {
+            get => _searchClasss_tb;
+            set
+            {
+                if(_searchClasss_tb != value)
+                {
+                    _searchClasss_tb = value;
+                    OnPropertyChanged(nameof(SearchClasss_tb));
+                }
+            }
+        }
+
+        private Faculty _searchFaculty_cb;
+        public Faculty SearchFaculty_cb
+        {
+            get => _searchFaculty_cb;
+            set
+            {
+                if(_searchFaculty_cb != value)
+                {
+                    _searchFaculty_cb = value;
+                    OnPropertyChanged(nameof(_searchFaculty_cb));
                 }
             }
         }
@@ -99,21 +128,38 @@ namespace SQLiteDemo.MVVM.ViewModels
                 }
                 else
                 {
-                    if(SelectedClass.NoStudent != 0)
+                    MessageBoxResult rs = MessageBox.Show("Are you sure you want to delete " + SelectedClass.SClass + " in " + SelectedClass.SFaculty.Fac, "Message", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                    if (rs == MessageBoxResult.Yes)
                     {
-                        MessageBox.Show("There are still students in the class, please delete the list of students in the class before deleting the class", "Warning", MessageBoxButton.OK, MessageBoxImage.Error);
-                    }
-                    else
-                    {
-                        if (ClassDBConnecter.DeleteClass(SelectedClass))
+                        if (SelectedClass.NoStudent != 0)
                         {
-                            MessageBox.Show("Successful", "Message", MessageBoxButton.OK, MessageBoxImage.Information);
-                            loadData();
+                            MessageBox.Show("There are still students in the class, please delete the list of students in the class before deleting the class", "Warning", MessageBoxButton.OK, MessageBoxImage.Error);
                         }
-                        else MessageBox.Show("Can't delete this class", "Message", MessageBoxButton.OK, MessageBoxImage.Error);
+                        else
+                        {
+                            if (ClassDBConnecter.DeleteClass(SelectedClass))
+                            {
+                                MessageBox.Show("Successful", "Message", MessageBoxButton.OK, MessageBoxImage.Information);
+                                loadData();
+                            }
+                            else MessageBox.Show("Can't delete this class", "Message", MessageBoxButton.OK, MessageBoxImage.Error);
+                        }
                     }
                 }
             }
+        }
+
+        public VfxCommand SearchCommand { get; set; }
+        private void OnSearch(object obj)
+        {
+            ListClass.Clear();
+            ListClass = ClassDBConnecter.SearchClass(SearchClasss_tb, SelectedFaculty_cb);
+            Console.WriteLine(SearchClasss_tb + SelectedFaculty_cb.Fac +  ListClass.Count.ToString());
+            OnPropertyChanged(nameof(ListClass));
+        }
+        private bool CanSearch()
+        {
+            return true;
         }
 
         public VfxCommand ShowCommand { get; set; }
@@ -159,6 +205,7 @@ namespace SQLiteDemo.MVVM.ViewModels
             DeleteCommand = new VfxCommand(OnDelete, () => true);
             ShowCommand = new VfxCommand(OnShow, () => true);
             LoadedCommand = new VfxCommand(OnLoaded, () => true);
+            SearchCommand = new VfxCommand(OnSearch, CanSearch);
         }
 
         private void InitModel()
@@ -175,6 +222,7 @@ namespace SQLiteDemo.MVVM.ViewModels
             ListClass.Clear();
             ListClass = ClassDBConnecter.GetAllClass();
             OnPropertyChanged(nameof(ListClass));
+
         }
     }
 }
