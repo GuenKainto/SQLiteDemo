@@ -55,7 +55,7 @@ namespace SQLiteDemo.DAO
                     string querry = "SELECT * FROM Teacher WHERE TID = @searchText OR TName LIKE @searchText OR Faculty LIKE @searchText ";
                     SQLiteCommand cmd = new SQLiteCommand(querry, dtc._con);
                     cmd.CommandText = querry;
-                    cmd.Parameters.AddWithValue("@searchText", searchText);
+                    cmd.Parameters.AddWithValue("@searchText", "%" + searchText + "%");
                     using (SQLiteDataReader reader = cmd.ExecuteReader())
                     {
                         while (reader.Read())

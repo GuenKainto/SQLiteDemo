@@ -31,7 +31,7 @@ namespace SQLiteDemo.MVVM.ViewModels
                 {
                     _search_tb = value;
                     OnPropertyChanged(nameof(Search_tb));
-                    SearchCommand.RaiseCanExecuteChanged();
+                    SearchCommand.RaiseCanExecuteChanged(); ///BUG
                 } 
             }
         }
@@ -68,9 +68,11 @@ namespace SQLiteDemo.MVVM.ViewModels
         public VfxCommand SearchCommand { get; set; }
         private void OnSearch(object obj)
         {
-            if(obj is Views.TeacherManagerView)
+            if (obj is Views.TeacherManagerView)
             {
-
+                ListTeacher.Clear();
+                ListTeacher = teacherDBConnecter.SearchTeacher(Search_tb);
+                OnPropertyChanged("ListTeacher");
             }
         }
         private bool CanSearch()
@@ -151,7 +153,6 @@ namespace SQLiteDemo.MVVM.ViewModels
         {
             return SelectedTeacher != null;
         }
-
         #endregion
 
         public TeacherManagerViewModel() 
@@ -169,6 +170,7 @@ namespace SQLiteDemo.MVVM.ViewModels
         private void Init_Command()
         {
             LoadedCommand = new VfxCommand(OnLoad, () => true);
+            SearchCommand = new VfxCommand(OnSearch, () => true);
             AddCommand = new VfxCommand(OnAdd, ()=> true);
             DeleteCommand = new VfxCommand(OnDelete,CanDelete);
             ShowCommand = new VfxCommand (OnShow, CanShow);

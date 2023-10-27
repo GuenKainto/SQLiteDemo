@@ -107,6 +107,7 @@
 
                     <Button Margin="5"
                             Width="40" Height="40"
+                            IsDefault="True"
                             Style="{StaticResource ButtonWithBorder}"
                             Command="{Binding SearchCommand}"
                             CommandParameter="{Binding ElementName=_this}">
