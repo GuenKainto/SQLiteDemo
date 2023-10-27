@@ -20,13 +20,16 @@ namespace SQLiteDemo.DAO
             ObservableCollection<Faculty> temp = new ObservableCollection<Faculty>();
             try
             {
-                dtc.createConection();
-
+                if(dtc._con.State == System.Data.ConnectionState.Closed)
+                {
+                    dtc.createConection();
+                }
                 string querry = "SELECT * FROM Faculty";
                 SQLiteCommand cmd = new SQLiteCommand(querry, dtc._con);
                
                 using (SQLiteDataReader reader = cmd.ExecuteReader())
                 {
+                    
                     while (reader.Read())
                     {
                         string fac = reader.GetString(0);
@@ -124,7 +127,10 @@ namespace SQLiteDemo.DAO
             int rs = 0;
             try
             {
-                dtc.createConection();
+                if (dtc._con.State == System.Data.ConnectionState.Closed)
+                {
+                    dtc.createConection();
+                }
 
                 string querry = "SELECT COUNT(*) FROM Class WHERE Faculty = @fac";
                 SQLiteCommand cmd = new SQLiteCommand(querry, dtc._con);
@@ -152,7 +158,10 @@ namespace SQLiteDemo.DAO
             int rs = 0;
             try
             {
-                dtc.createConection();
+                if (dtc._con.State == System.Data.ConnectionState.Closed)
+                {
+                    dtc.createConection();
+                }
 
                 string querry = "SELECT COUNT(*) FROM Teacher WHERE Faculty = @fac";
                 SQLiteCommand cmd = new SQLiteCommand(querry, dtc._con);
@@ -180,7 +189,10 @@ namespace SQLiteDemo.DAO
             int rs = 0;
             try
             {
-                dtc.createConection();
+                if (dtc._con.State == System.Data.ConnectionState.Closed)
+                {
+                    dtc.createConection();
+                }
 
                 string querry = "SELECT COUNT(*) " +
                                 "FROM Student JOIN Class ON Student.SClass = Class.SClass " +
