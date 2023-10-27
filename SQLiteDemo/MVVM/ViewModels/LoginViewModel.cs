@@ -50,22 +50,29 @@ namespace SQLiteDemo.MVVM.ViewModels
         {
             if (obj is Views.LoginView loginWd)
             {
-                lg = new LoginDB();
-                PassWord = loginWd._password.Password;
-                if (PassWord == "") 
-                    MessageBox.Show("Please enter password !", "Message", MessageBoxButton.OK, MessageBoxImage.Information);
+                if(loginWd._password.Password == null)
+                {
+                    MessageBox.Show("Please enter the Password","Message",MessageBoxButton.OK, MessageBoxImage.Information);
+                }
                 else
                 {
-                    if (lg.CheckLogin(UserName, PassWord))
-                    {
-                        MainWindow mainWindow = new MainWindow();
-                        mainWindow.Tag = UserName;
-                        loginWd.Close();
-                        mainWindow.ShowDialog();
-                    }
+                    lg = new LoginDB();
+                    PassWord = loginWd._password.Password;
+                    if (PassWord == "") 
+                        MessageBox.Show("Please enter password !", "Message", MessageBoxButton.OK, MessageBoxImage.Information);
                     else
                     {
-                        MessageBox.Show("Username or password incorrect", "Message", MessageBoxButton.OK, MessageBoxImage.Information);
+                        if (lg.CheckLogin(UserName, PassWord))
+                        {
+                            MainWindow mainWindow = new MainWindow();
+                            mainWindow.Tag = UserName;
+                            loginWd.Close();
+                            mainWindow.ShowDialog();
+                        }
+                        else
+                        {
+                            MessageBox.Show("Username or password incorrect", "Message", MessageBoxButton.OK, MessageBoxImage.Information);
+                        }
                     }
                 }
             }

@@ -165,55 +165,63 @@ namespace SQLiteDemo.MVVM.ViewModels
         {
             if (obj is Views.AddUpdateTeacherView wd)
             {
-                if (Mode == "Add")
+                if (TID_tb == null || TName_tb == null || SelectedFaculty == null || TDOB_dp == null || TAddress_tb == null || TPhone_tb == null)
                 {
-                    if (teacherDBConnecter.CheckExist(TID_tb))
-                    {
-                        MessageBox.Show(TID_tb + " is already available on the database", "Message", MessageBoxButton.OK, MessageBoxImage.Information);
-                    }
-                    else
-                    {
-                        Teacher item = new Teacher(TID_tb, TName_tb, SelectedFaculty, TDOB_dp.Date.ToString("dd-MM-yyyy"), TAddress_tb, TPhone_tb);
-
-                        if (teacherDBConnecter.CreateTeacher(item))
-                        {
-                            MessageBox.Show("Save Succseccful", "Message", MessageBoxButton.OK, MessageBoxImage.Information);
-                            wd.Tag = "Save";
-                            wd.Close();
-                        }
-                        else
-                        {
-                            MessageBox.Show("Can't Create Teacher", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                        }
-                    }
+                    MessageBox.Show("Please enter all the information","Message",MessageBoxButton.OK,MessageBoxImage.Information);
                 }
-                else //Mode == Update
+                else
                 {
-                    if (teacherDBConnecter.CheckExist(TID_tb))
+                    if (Mode == "Add")
                     {
-                        Teacher item = new Teacher(TID_tb, TName_tb, SelectedFaculty, TDOB_dp.Date.ToString("dd-MM-yyyy"), TAddress_tb, TPhone_tb);
-
-                        if (teacherDBConnecter.UpdateTeacher(item))
+                        if (teacherDBConnecter.CheckExist(TID_tb))
                         {
-                            MessageBox.Show("Save Succseccful", "Message", MessageBoxButton.OK, MessageBoxImage.Information);
-                            wd.Tag = "Save";
-                            wd.Close();
+                            MessageBox.Show(TID_tb + " is already available on the database", "Message", MessageBoxButton.OK, MessageBoxImage.Information);
                         }
                         else
                         {
-                            MessageBox.Show("Can't Save Teacher", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                            TPhone_tb = wd.tPhone_tb.Text;
+                            Teacher item = new Teacher(TID_tb, TName_tb, SelectedFaculty, TDOB_dp.Date.ToString("dd-MM-yyyy"), TAddress_tb, TPhone_tb);
+
+                            if (teacherDBConnecter.CreateTeacher(item))
+                            {
+                                MessageBox.Show("Save Succseccful", "Message", MessageBoxButton.OK, MessageBoxImage.Information);
+                                wd.Tag = "Save";
+                                wd.Close();
+                            }
+                            else
+                            {
+                                MessageBox.Show("Can't Create Teacher", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                            }
                         }
                     }
-                    else
+                    else //Mode == Update
                     {
-                        MessageBox.Show(TID_tb + " isn't available on the database", "Message", MessageBoxButton.OK, MessageBoxImage.Information);
+                        if (teacherDBConnecter.CheckExist(TID_tb))
+                        {
+                            Teacher item = new Teacher(TID_tb, TName_tb, SelectedFaculty, TDOB_dp.Date.ToString("dd-MM-yyyy"), TAddress_tb, TPhone_tb);
+
+                            if (teacherDBConnecter.UpdateTeacher(item))
+                            {
+                                MessageBox.Show("Save Succseccful", "Message", MessageBoxButton.OK, MessageBoxImage.Information);
+                                wd.Tag = "Save";
+                                wd.Close();
+                            }
+                            else
+                            {
+                                MessageBox.Show("Can't Save Teacher", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                            }
+                        }
+                        else
+                        {
+                            MessageBox.Show(TID_tb + " isn't available on the database", "Message", MessageBoxButton.OK, MessageBoxImage.Information);
+                        }
                     }
                 }
             }
         }
         private bool CanSave()
         {
-            return (TID_tb != null && TName_tb != null && SelectedFaculty != null && TDOB_dp != null && TAddress_tb != null && TPhone_tb != null) ;
+            return true; //(TID_tb != null && TName_tb != null && SelectedFaculty != null && TDOB_dp != null && TAddress_tb != null && TPhone_tb != null) ;
         }
 
         public VfxCommand CloseWindowCommand { get; set; }

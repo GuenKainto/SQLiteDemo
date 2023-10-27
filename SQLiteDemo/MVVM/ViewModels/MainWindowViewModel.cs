@@ -66,7 +66,7 @@ namespace SQLiteDemo.MVVM.ViewModels
             {
                 LoginView loginView = new LoginView();
                 loginView.ShowDialog();
-                wd.Hide();
+                wd.Close();
             }
         }
         #endregion

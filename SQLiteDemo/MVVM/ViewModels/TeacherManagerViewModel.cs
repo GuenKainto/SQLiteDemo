@@ -68,16 +68,13 @@ namespace SQLiteDemo.MVVM.ViewModels
         public VfxCommand SearchCommand { get; set; }
         private void OnSearch(object obj)
         {
-            if (obj is Views.TeacherManagerView)
+            if (obj is Views.TeacherManagerView wd)
             {
+                Search_tb = wd._search_tb.Text;
                 ListTeacher.Clear();
                 ListTeacher = teacherDBConnecter.SearchTeacher(Search_tb);
                 OnPropertyChanged("ListTeacher");
             }
-        }
-        private bool CanSearch()
-        {
-            return Search_tb != null;
         }
 
         public VfxCommand AddCommand { get; set; }
@@ -85,6 +82,8 @@ namespace SQLiteDemo.MVVM.ViewModels
         {
             if (obj is Views.TeacherManagerView)
             {
+                Search_tb = "";
+                OnPropertyChanged("ListTeacher");
                 AddUpdateTeacherView addWd = new AddUpdateTeacherView();
                 addWd.Tag = "Add";
                 addWd.ShowDialog();

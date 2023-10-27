@@ -63,7 +63,7 @@
 
         <!--Label-->
         <Label Grid.Row="0"
-               Content="Faculty Manager"/>
+               Content="Teacher Manager"/>
         
         <!--Form-->
         <Grid Grid.Row="1">
