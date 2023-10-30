@@ -144,7 +144,7 @@ namespace SQLiteDemo.MVVM.ViewModels
                 MessageBoxResult rs = MessageBox.Show("Are you sure you want to delete "+SelectedFaculty.Fac,"Message",MessageBoxButton.YesNo,MessageBoxImage.Question);
                 if(rs == MessageBoxResult.Yes)
                 {
-                    if (SelectedFaculty.NoTeacher == 0 && SelectedFaculty.NoClass == 0 && SelectedFaculty.NoStudent == 0)
+                    if (SelectedFaculty.NoTeacher > 0 || SelectedFaculty.NoClass > 0 || SelectedFaculty.NoStudent > 0)
                     {
                         MessageBox.Show("There are still students, classes, teachers in the faculty", "Warning", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
@@ -202,6 +202,10 @@ namespace SQLiteDemo.MVVM.ViewModels
             Faculty_tb = "";
             ListFaculty.Clear();
             ListFaculty = facDB.GetAllFac();
+            foreach(Faculty item in ListFaculty) // get Number of Student, Teacher, Class in Faculty in database
+            {
+                item.SetNumber();
+            }
             OnPropertyChanged("ListFaculty");
         }
     }

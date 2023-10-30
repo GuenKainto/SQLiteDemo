@@ -2,6 +2,7 @@
 using System;
 using System.Collections.ObjectModel;
 using System.Data.SQLite;
+using System.Windows;
 
 namespace SQLiteDemo.DAO
 {
@@ -44,13 +45,20 @@ namespace SQLiteDemo.DAO
 
             try
             {
+                string tempFac;
                 dtc.createConection();
+
+                if (sFaculty == null)
+                {
+                    tempFac = "";
+                }
+                else tempFac = sFaculty.Fac;
 
                 string querry = "SELECT * FROM Class WHERE SClass LIKE @sClass AND Faculty LIKE @sFaculty";
                 SQLiteCommand cmd = new SQLiteCommand(querry, dtc._con);
-                cmd.CommandText = querry;   
+                cmd.CommandText = querry;
                 cmd.Parameters.AddWithValue("@sClass", "%" + sClass + "%");
-                cmd.Parameters.AddWithValue("@sFaculty", "%" + sFaculty + "%");
+                cmd.Parameters.AddWithValue("@sFaculty", "%" + tempFac + "%");
                 using (SQLiteDataReader reader = cmd.ExecuteReader())
                 {
                     while (reader.Read())
@@ -58,7 +66,7 @@ namespace SQLiteDemo.DAO
                         string sclass = reader.GetString(0);
                         string fac = reader.GetString(1);
                         Faculty sfaculty = new Faculty(fac);
-                        Class item = new Class(sclass,sfaculty);
+                        Class item = new Class(sclass, sfaculty);
                         temp.Add(item);
                     }
                 }
@@ -153,7 +161,7 @@ namespace SQLiteDemo.DAO
             {
                 dtc.createConection();
 
-                string querry = "SELECT COUNT(*) FROM Student WHERE Class = @sclass";
+                string querry = "SELECT COUNT(*) FROM Student WHERE SClass = @sclass";
                 SQLiteCommand cmd = new SQLiteCommand(querry, dtc._con);
                 cmd.CommandText = querry;
                 cmd.Parameters.AddWithValue("@sclass", SClass);

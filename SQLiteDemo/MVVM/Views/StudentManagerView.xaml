@@ -5,14 +5,174 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:SQLiteDemo.MVVM.Views"
              xmlns:viewModels ="clr-namespace:SQLiteDemo.MVVM.ViewModels"
+             xmlns:behaviors="http://schemas.microsoft.com/xaml/behaviors"
              mc:Ignorable="d" Background="White" FontSize="20"
              Name="_this"
              d:DesignHeight="720" d:DesignWidth="1024">
     <UserControl.DataContext>
         <viewModels:StudentManagerViewModel/>
     </UserControl.DataContext>
-    
+
+    <behaviors:Interaction.Triggers>
+        <behaviors:EventTrigger EventName="Loaded">
+            <behaviors:InvokeCommandAction Command="{Binding LoadedCommand}"
+                                           CommandParameter="{Binding ElementName=_this}">
+            </behaviors:InvokeCommandAction>
+        </behaviors:EventTrigger>
+    </behaviors:Interaction.Triggers>
+
+    <UserControl.Resources>
+        <!--TextBox-->
+        <Style x:Key="TextBoxWithBorder" TargetType="TextBox">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Border Background="White" BorderBrush="Black"
+                                BorderThickness="2" CornerRadius="10">
+                            <ScrollViewer x:Name="PART_ContentHost" />
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!--Button Style-->
+        <Style x:Key="ButtonWithBorder" TargetType="Button">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="White" BorderBrush="Black" 
+                                BorderThickness="3" CornerRadius="10">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+        </Style>
+
+    </UserControl.Resources>
+
     <Grid>
-        <Label Content="Student"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="5*"/>
+        </Grid.RowDefinitions>
+
+        <!--Label-->
+        <Label Grid.Row="0"
+               Content="Student Manager"/>
+
+        <!--Form-->
+        <Grid Grid.Row="1">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <!--Search-->
+                <StackPanel Grid.Column="0" Orientation="Horizontal"
+                            Margin="30 10 0 0" HorizontalAlignment="Left"
+                            VerticalAlignment="Top">
+                    <Grid>
+                        <TextBox Width="250" Height="40"
+                                 Name="_search_tb"
+                                 VerticalAlignment="Center"
+                                 HorizontalAlignment="Left"
+                                 Style="{StaticResource TextBoxWithBorder}"
+                                 Text="{Binding Search_tb}"/>
+                        <TextBlock IsHitTestVisible="False" 
+                                   Text="Enter faculty,ID or name..." 
+                                   VerticalAlignment="Center" 
+                                   HorizontalAlignment="Left" 
+                                   Margin="10,0,0,0" 
+                                   Foreground="DarkGray">
+                            <TextBlock.Style>
+                                <Style TargetType="{x:Type TextBlock}">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Text, 
+                                                 ElementName=_search_tb}" 
+                                                 Value="">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+                    </Grid>
+
+                    <Button Margin="5"
+                            Width="40" Height="40"
+                            IsDefault="True"
+                            Style="{StaticResource ButtonWithBorder}"
+                            Command="{Binding SearchCommand}"
+                            CommandParameter="{Binding ElementName=_this}">
+                        <Image Source="/Images/Icons/search.png" 
+                                Width="24" Height="24" />
+                    </Button>
+                </StackPanel>
+
+                <!--Button-->
+                <StackPanel Grid.Column="1" Orientation="Horizontal"
+                        Margin="0 50 30 10" HorizontalAlignment="Right">
+                    <Button Content="Add" Width="100" Margin="5"
+                        Style="{StaticResource ButtonWithBorder}"
+                        Command="{Binding AddCommand}"
+                        CommandParameter="{Binding ElementName=_this}"/>
+                    <Button Content="Delete" Width="100" Margin="5"
+                        Style="{StaticResource ButtonWithBorder}"
+                        Command="{Binding DeleteCommand}"
+                        CommandParameter="{Binding ElementName=_this}"/>
+                    <Button Content="Show" Width="100" Margin="5"
+                        Style="{StaticResource ButtonWithBorder}"
+                        Command="{Binding ShowCommand}"
+                        CommandParameter="{Binding ElementName=_this}"/>
+                    <Button Content="Update" Width="100" Margin="5"
+                        Style="{StaticResource ButtonWithBorder}"
+                        Command="{Binding UpdateCommand}"
+                        CommandParameter="{Binding ElementName=_this}"/>
+                </StackPanel>
+
+            </Grid>
+        </Grid>
+
+        <!--DataGrid-->
+        <Grid Grid.Row="2">
+            <DataGrid Grid.Row="1" 
+                      ItemsSource="{Binding ListStudent}"
+                      SelectedItem="{Binding SelectedStudent}"
+                      AutoGenerateColumns="False"
+                      IsReadOnly="True"
+                      Margin="30 0 30 30">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="ID" 
+                                        Width="*"
+                                        Binding="{Binding SID}"/>
+                    <DataGridTextColumn Header="Name"
+                                        Width="3*"
+                                        Binding="{Binding SName}"/>
+                    <DataGridTextColumn Header="Class"
+                                        Width="2*"
+                                        Binding="{Binding SClass.SClass}"/>
+                    <DataGridTextColumn Header="Faculty"
+                                        Width="2*"
+                                        Binding="{Binding SClass.SFaculty.Fac}"/>
+                    <DataGridTextColumn Header="Date of birth"
+                                        Width="3*"
+                                        Binding="{Binding SDOB}"/>
+                    <DataGridTextColumn Header="Address"
+                                        Width="3*"
+                                        Binding="{Binding SAddress}"/>
+                    <DataGridTextColumn Header="Phone"
+                                        Width="3*"
+                                        Binding="{Binding SPhone}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+
     </Grid>
 </UserControl>

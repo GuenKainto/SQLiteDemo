@@ -43,16 +43,16 @@ namespace SQLiteDemo.MVVM.ViewModels
             }
         }
 
-        private string _searchClasss_tb;
-        public string SearchClasss_tb
+        private string _searchClass_tb;
+        public string SearchClass_tb
         {
-            get => _searchClasss_tb;
+            get => _searchClass_tb;
             set
             {
-                if(_searchClasss_tb != value)
+                if(_searchClass_tb != value)
                 {
-                    _searchClasss_tb = value;
-                    OnPropertyChanged(nameof(SearchClasss_tb));
+                    _searchClass_tb = value;
+                    OnPropertyChanged(nameof(SearchClass_tb));
                 }
             }
         }
@@ -102,7 +102,7 @@ namespace SQLiteDemo.MVVM.ViewModels
                     Class temp = new Class(classView.sclass_tb.Text , SelectedFaculty_cb);
                     if (ClassDBConnecter.CheckExist(temp))
                     {
-                        MessageBox.Show("Class " + SClass_tb + " is already in faculty " + SelectedFaculty_cb.Fac, "Message", MessageBoxButton.OK, MessageBoxImage.Information);
+                        MessageBox.Show("Class " + SClass_tb + " is already have", "Message", MessageBoxButton.OK, MessageBoxImage.Information);
                     }
                     else
                     {
@@ -153,8 +153,7 @@ namespace SQLiteDemo.MVVM.ViewModels
         private void OnSearch(object obj)
         {
             ListClass.Clear();
-            ListClass = ClassDBConnecter.SearchClass(SearchClasss_tb, SelectedFaculty_cb);
-            Console.WriteLine(SearchClasss_tb + SelectedFaculty_cb.Fac +  ListClass.Count.ToString());
+            ListClass = ClassDBConnecter.SearchClass(SearchClass_tb, SearchFaculty_cb);
             OnPropertyChanged(nameof(ListClass));
         }
         private bool CanSearch()
@@ -221,6 +220,10 @@ namespace SQLiteDemo.MVVM.ViewModels
             SelectedFaculty_cb = null;
             ListClass.Clear();
             ListClass = ClassDBConnecter.GetAllClass();
+            foreach (Class item in ListClass)
+            {
+                item.SetNoStudent();
+            }
             OnPropertyChanged(nameof(ListClass));
 
         }

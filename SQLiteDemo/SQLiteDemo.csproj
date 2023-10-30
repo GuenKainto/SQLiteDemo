@@ -77,6 +77,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="MVVM\Views\AddUpdateStudentView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MVVM\Views\AddUpdateTeacherView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -101,6 +105,7 @@
     <Compile Include="DAO\DatabaseConnection.cs" />
     <Compile Include="DAO\FacultyDB.cs" />
     <Compile Include="DAO\LoginDB.cs" />
+    <Compile Include="DAO\StudentDB.cs" />
     <Compile Include="DAO\TeacherDB.cs" />
     <Compile Include="MVVM\Command\VfxCommand.cs" />
     <Compile Include="MVVM\Models\BaseNotifyPropertyChanged.cs" />
@@ -108,11 +113,15 @@
     <Compile Include="MVVM\Models\Faculty.cs" />
     <Compile Include="MVVM\Models\Student.cs" />
     <Compile Include="MVVM\Models\Teacher.cs" />
+    <Compile Include="MVVM\ViewModels\AddUpdateStudentViewModel.cs" />
     <Compile Include="MVVM\ViewModels\AddUpdateTeacherViewModel.cs" />
     <Compile Include="MVVM\ViewModels\ClassManagerViewModel.cs" />
     <Compile Include="MVVM\ViewModels\FacultyManagerViewModel.cs" />
     <Compile Include="MVVM\ViewModels\StudentManagerViewModel.cs" />
     <Compile Include="MVVM\ViewModels\TeacherManagerViewModel.cs" />
+    <Compile Include="MVVM\Views\AddUpdateStudentView.xaml.cs">
+      <DependentUpon>AddUpdateStudentView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MVVM\Views\AddUpdateTeacherView.xaml.cs">
       <DependentUpon>AddUpdateTeacherView.xaml</DependentUpon>
     </Compile>

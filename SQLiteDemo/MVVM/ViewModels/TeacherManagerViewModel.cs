@@ -109,7 +109,7 @@ namespace SQLiteDemo.MVVM.ViewModels
                     }
                     else
                     {
-                        MessageBox.Show("Can't Delete Faculty", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        MessageBox.Show("Can't Delete Teacher", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                 }
             }

@@ -138,7 +138,7 @@ namespace SQLiteDemo.MVVM.ViewModels
 
                             wd.tID_tb.IsReadOnly = true;
                             wd.tName_tb.IsReadOnly = true;
-                            wd.tFaculty_cb.IsReadOnly = true;
+                            wd.tFaculty_cb.IsEnabled = true;
                             wd.tDOB_dp.IsEnabled = false;
                             wd.tAddress_tb.IsReadOnly = true;
                             wd.tPhone_tb.IsReadOnly = true;
@@ -271,7 +271,7 @@ namespace SQLiteDemo.MVVM.ViewModels
             {
                 TDOB_dp = result;
             }
-            else Console.WriteLine("Can convert String to DateTime.");
+            else Console.WriteLine("Can't convert String to DateTime.");
             TAddress_tb = temp.TAddress;
             TPhone_tb = temp.TPhone;
         }

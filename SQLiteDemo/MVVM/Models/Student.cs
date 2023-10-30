@@ -36,8 +36,8 @@ namespace SQLiteDemo.MVVM.Models
             }
         }
 
-        private string _sClass;
-        public string SClass
+        private Class _sClass;
+        public Class SClass
         {
             get => _sClass;
             set
@@ -94,14 +94,14 @@ namespace SQLiteDemo.MVVM.Models
 
         public Student() { }
 
-        public Student(string sID, string sName, string sClass, string sPhone, string sAddress, string sDOB)
-        {
+        public Student(string sID, string sName, Class sClass, string sDOB, string sPhone, string sAddress) // We will get Faculty in Class.SFaculty
+        { 
             SID = sID;
             SName = sName;
             SClass = sClass;
+            SDOB = sDOB;
             SPhone = sPhone;
             SAddress = sAddress;
-            SDOB = sDOB;
         }
     }
 }

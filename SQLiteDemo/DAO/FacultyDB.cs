@@ -34,7 +34,6 @@ namespace SQLiteDemo.DAO
                     {
                         string fac = reader.GetString(0);
                         Faculty item = new Faculty(fac);
-                        item.SetNumber();
                         temp.Add(item);
                     }
                 }
