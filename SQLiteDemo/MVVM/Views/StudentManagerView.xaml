@@ -78,14 +78,14 @@
                             Margin="30 10 0 0" HorizontalAlignment="Left"
                             VerticalAlignment="Top">
                     <Grid>
-                        <TextBox Width="250" Height="40"
+                        <TextBox Width="175" Height="40"
                                  Name="_search_tb"
                                  VerticalAlignment="Center"
                                  HorizontalAlignment="Left"
                                  Style="{StaticResource TextBoxWithBorder}"
                                  Text="{Binding Search_tb}"/>
                         <TextBlock IsHitTestVisible="False" 
-                                   Text="Enter faculty,ID or name..." 
+                                   Text="ID or name..." 
                                    VerticalAlignment="Center" 
                                    HorizontalAlignment="Left" 
                                    Margin="10,0,0,0" 
@@ -95,8 +95,8 @@
                                     <Setter Property="Visibility" Value="Collapsed"/>
                                     <Style.Triggers>
                                         <DataTrigger Binding="{Binding Text, 
-                                                 ElementName=_search_tb}" 
-                                                 Value="">
+                                                     ElementName=_search_tb}" 
+                                                     Value="">
                                             <Setter Property="Visibility" Value="Visible"/>
                                         </DataTrigger>
                                     </Style.Triggers>
@@ -104,15 +104,79 @@
                             </TextBlock.Style>
                         </TextBlock>
                     </Grid>
+                    
+                    <Border BorderBrush="Black" BorderThickness="2"
+                            CornerRadius="10" Height="40"
+                            Margin="10 0 0 0">
+                        <Grid>
+                            <ComboBox Name = "faculty_cb"
+                                      Width="100" Height="40"
+                                      ItemsSource="{Binding ListFaculty_cb}"
+                                      SelectedItem="{Binding SearchFaculty_cb , Mode=TwoWay}"
+                                      DisplayMemberPath="Fac"
+                                      IsEditable="True"/>
+                            <TextBlock IsHitTestVisible="False" 
+                                       Text="Faculty..." 
+                                       VerticalAlignment="Center" 
+                                       HorizontalAlignment="Left" 
+                                       Margin="5,0,0,0" 
+                                       Foreground="DarkGray">
+                                <TextBlock.Style>
+                                    <Style TargetType="{x:Type TextBlock}">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Text, 
+                                                         ElementName=faculty_cb}" 
+                                                         Value="">
+                                                <Setter Property="Visibility" Value="Visible"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+                        </Grid>
+                    </Border>
+
+                    <Border BorderBrush="Black" BorderThickness="2"
+                            CornerRadius="10" Height="40"
+                            Margin="10 0 0 0">
+                        <Grid>
+                            <ComboBox Name = "class_cb"
+                                      Width="100" Height="40"
+                                      ItemsSource="{Binding ListClass_cb}"
+                                      SelectedItem="{Binding SearchClass_cb , Mode=TwoWay}"
+                                      DisplayMemberPath="SClass"
+                                      IsEditable="True"/>
+                            <TextBlock IsHitTestVisible="False" 
+                                       Text="Class..." 
+                                       VerticalAlignment="Center" 
+                                       HorizontalAlignment="Left" 
+                                       Margin="5,0,0,0" 
+                                       Foreground="DarkGray">
+                                <TextBlock.Style>
+                                    <Style TargetType="{x:Type TextBlock}">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Text, 
+                                                         ElementName=class_cb}" 
+                                                         Value="">
+                                                <Setter Property="Visibility" Value="Visible"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+                        </Grid>
+                    </Border>
 
                     <Button Margin="5"
-                            Width="40" Height="40"
-                            IsDefault="True"
-                            Style="{StaticResource ButtonWithBorder}"
-                            Command="{Binding SearchCommand}"
-                            CommandParameter="{Binding ElementName=_this}">
+                        Width="40" Height="40"
+                        IsDefault="True"
+                        Style="{StaticResource ButtonWithBorder}"
+                        Command="{Binding SearchCommand}"
+                        CommandParameter="{Binding ElementName=_this}">
                         <Image Source="/Images/Icons/search.png" 
-                                Width="24" Height="24" />
+                            Width="24" Height="24" />
                     </Button>
                 </StackPanel>
 

@@ -31,7 +31,7 @@ namespace SQLiteDemo.MVVM.ViewModels
                 {
                     _search_tb = value;
                     OnPropertyChanged(nameof(Search_tb));
-                    SearchCommand.RaiseCanExecuteChanged(); ///BUG
+                    SearchCommand.RaiseCanExecuteChanged(); //BUG
                 } 
             }
         }

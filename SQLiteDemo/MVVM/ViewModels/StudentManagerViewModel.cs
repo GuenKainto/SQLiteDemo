@@ -9,6 +9,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Media.Media3D;
+using System.Windows.Navigation;
 
 namespace SQLiteDemo.MVVM.ViewModels
 {
@@ -16,7 +18,40 @@ namespace SQLiteDemo.MVVM.ViewModels
     {
         #region properties
         private StudentDB studentDBConnection;
+        private FacultyDB facultyDBConnection;
+        private ClassDB classDBConnection;
         public ObservableCollection<Student> ListStudent { get; set; }
+        public ObservableCollection<Faculty> ListFaculty_cb { get; set; }
+        public ObservableCollection<Class> ListClass_cb { get; set; }
+
+        private Faculty _searchFaculty;
+        public Faculty SearchFaculty_cb
+        {
+            get => _searchFaculty;
+            set
+            {
+                if(_searchFaculty != value)
+                {
+                    _searchFaculty = value;
+                    OnPropertyChanged(nameof(SearchFaculty_cb));
+                    LoadClassComboBox();
+                }
+            }
+        }
+
+        private Class _searchClass;
+        public Class SearchClass_cb
+        {
+            get => _searchClass;
+            set
+            {
+                if (_searchClass != value)
+                {
+                    _searchClass = value;
+                    OnPropertyChanged(nameof(SearchClass_cb));
+                }
+            }
+        }
 
         private Student _selectedStudent;
         public Student SelectedStudent
@@ -65,7 +100,9 @@ namespace SQLiteDemo.MVVM.ViewModels
         {
             if (obj  is Views.StudentManagerView)
             {
-
+                ListStudent.Clear();
+                ListStudent = studentDBConnection.SearchStudent(Search_tb,SearchFaculty_cb,SearchClass_cb);
+                OnPropertyChanged(nameof(ListStudent));
             }
         }
 
@@ -152,6 +189,8 @@ namespace SQLiteDemo.MVVM.ViewModels
 
         private void Init_Model()
         {
+            facultyDBConnection = new FacultyDB();
+            classDBConnection = new ClassDB();
             studentDBConnection = new StudentDB();
             ListStudent = new ObservableCollection<Student>();
         }
@@ -169,9 +208,17 @@ namespace SQLiteDemo.MVVM.ViewModels
 
         private void LoadData()
         {
+            ListFaculty_cb = facultyDBConnection.GetAllFac();
+            OnPropertyChanged(nameof(ListFaculty_cb));
             ListStudent.Clear();
             ListStudent = studentDBConnection.GetAllStudent();
             OnPropertyChanged(nameof(ListStudent));
+        }
+
+        private void LoadClassComboBox()
+        {
+            ListClass_cb = classDBConnection.SearchClass("", SearchFaculty_cb);
+            OnPropertyChanged(nameof(ListClass_cb));
         }
     }
 }

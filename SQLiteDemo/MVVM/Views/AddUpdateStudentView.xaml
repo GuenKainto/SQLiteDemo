@@ -103,23 +103,23 @@
                                Content="Faculty : "/>
                         <Border BorderBrush="Black" BorderThickness="2" 
                                 CornerRadius="10"
-                                Width="90" Height="40" >
+                                Width="95" Height="40" >
                             <ComboBox Name="sFaculty_cb"
-                                      Width="90" Height="40" 
+                                      Width="95" Height="40" 
                                       ItemsSource="{Binding ListFaculty_cb}"
                                       DisplayMemberPath="Fac"
                                       SelectedItem="{Binding SelectedFaculty, Mode=TwoWay}"/>
                         </Border>
                     </StackPanel>
 
-                    <StackPanel Margin="20 0 0 0">
+                    <StackPanel Margin="10 0 0 0">
                         <Label VerticalAlignment="Center"
                                Content="Class : "/>
                         <Border BorderBrush="Black" BorderThickness="2" 
                                 CornerRadius="10"
-                                Width="90" Height="40" >
+                                Width="95" Height="40" >
                             <ComboBox Name="sClass_cb"
-                                      Width="90" Height="40" 
+                                      Width="95" Height="40" 
                                       ItemsSource="{Binding ListClass_cb}"
                                       DisplayMemberPath="SClass"
                                       SelectedItem="{Binding SelectedClass, Mode=TwoWay}"/>

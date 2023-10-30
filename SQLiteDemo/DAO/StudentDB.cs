@@ -47,8 +47,8 @@ namespace SQLiteDemo.DAO
             return temp;
         }
 
-        /*
-        public ObservableCollection<Student> SearchStudent(string searchText)
+        
+        public ObservableCollection<Student> SearchStudent(string searchText,Faculty searchFaculty , Class searchClass)
         {
             ObservableCollection<Student> temp = new ObservableCollection<Student>();
             if (searchText != null)
@@ -57,28 +57,42 @@ namespace SQLiteDemo.DAO
                 {
                     dtc.createConection();
 
+                    string tempFac;
+                    string tempClass;
+
+                    if (searchFaculty == null) tempFac = "";
+                    else tempFac = searchFaculty.Fac;
+
+                    if (searchClass == null) tempClass = "";
+                    else tempClass = searchClass.SClass;
+
+
                     string querry = "SELECT * FROM Student " +
                                     "INNER JOIN Class ON Student.SClass = Class.SClass " +
-                                    "WHERE SID = @searchText " +
-                                    "OR SName LIKE @searchText " +
-                                    "OR Faculty LIKE @searchText " +
-                                    "OR SClass LIKE @searchText ";
+                                    "WHERE SID LIKE @searchText " +
+                                    "AND SName LIKE @searchText " +
+                                    "AND Class.Faculty LIKE @searchFaculty " +
+                                    "AND Student.SClass LIKE @searchClass ";
                     SQLiteCommand cmd = new SQLiteCommand(querry, dtc._con);
                     cmd.CommandText = querry;
                     cmd.Parameters.AddWithValue("@searchText", "%" + searchText + "%");
+                    cmd.Parameters.AddWithValue("@searchClass", "%" + tempClass + "%");
+                    cmd.Parameters.AddWithValue("@searchFaculty", "%" + tempFac + "%");
+
                     using (SQLiteDataReader reader = cmd.ExecuteReader())
                     {
                         while (reader.Read())
                         {
-                            Teacher item = new Teacher();
-                            item.TID = reader.GetString(0);
-                            item.TName = reader.GetString(1);
-                            string fac = reader.GetString(2);
-                            item.TFaculty = new Faculty(fac);
-                            item.TDOB = reader.GetString(3);
-                            item.TAddress = reader.GetString(4);
-                            item.TPhone = reader.GetString(5);
-                            temp.Add(item);
+                            string SID = reader.GetString(0);
+                            string SName = reader.GetString(1);
+                            string SDOB = reader.GetString(3);
+                            string SPhone = reader.GetString(4);
+                            string SAddress = reader.GetString(5);
+                            string cla = reader.GetString(6);
+                            string fac = reader.GetString(7);
+                            Faculty SFaculty = new Faculty(fac);
+                            Class SClass = new Class(cla, SFaculty);
+                            temp.Add(new Student(SID, SName, SClass, SDOB, SPhone, SAddress));
                         }
                     }
                     dtc.closeConnection();
@@ -91,9 +105,9 @@ namespace SQLiteDemo.DAO
             }
             else
             {
-                return GetAllTeacher();
+                return GetAllStudent();
             }
-        }*/
+        }
 
         public Student GetStudent(string sID)
         {
