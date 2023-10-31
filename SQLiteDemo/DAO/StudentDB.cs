@@ -2,7 +2,6 @@
 using System;
 using System.Collections.ObjectModel;
 using System.Data.SQLite;
-using System.Windows;
 
 namespace SQLiteDemo.DAO
 {
@@ -69,8 +68,8 @@ namespace SQLiteDemo.DAO
 
                     string querry = "SELECT * FROM Student " +
                                     "INNER JOIN Class ON Student.SClass = Class.SClass " +
-                                    "WHERE SID LIKE @searchText " +
-                                    "AND SName LIKE @searchText " +
+                                    "WHERE (SID LIKE @searchText " +
+                                    "OR SName LIKE @searchText) " +
                                     "AND Class.Faculty LIKE @searchFaculty " +
                                     "AND Student.SClass LIKE @searchClass ";
                     SQLiteCommand cmd = new SQLiteCommand(querry, dtc._con);

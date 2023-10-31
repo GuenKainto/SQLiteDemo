@@ -1,6 +1,7 @@
 ﻿using SQLiteDemo.DAO;
 using SQLiteDemo.MVVM.Command;
 using SQLiteDemo.MVVM.Models;
+using SQLiteDemo.MVVM.Views;
 using System;
 using System.Collections.ObjectModel;
 using System.Windows;
@@ -172,11 +173,10 @@ namespace SQLiteDemo.MVVM.ViewModels
                 }
                 else
                 {
-                    /*
-                     Show WINDOW LIST STUDENT IN CLASS
-                     
-                     */
-                    
+                    StudentInClassView studentInClassView = new StudentInClassView();
+                    studentInClassView.Title ="Class :" + SelectedClass.SClass;
+                    studentInClassView.Tag = SelectedClass;
+                    studentInClassView.ShowDialog();
                 }
             }
         }

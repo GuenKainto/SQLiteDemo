@@ -1,0 +1,241 @@
+﻿<Window x:Class="SQLiteDemo.MVVM.Views.StudentInClassView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SQLiteDemo.MVVM.Views"
+        xmlns:viewModels="clr-namespace:SQLiteDemo.MVVM.ViewModels"
+        xmlns:views ="clr-namespace:SQLiteDemo.MVVM.Views"
+        xmlns:behaviors="http://schemas.microsoft.com/xaml/behaviors"
+        mc:Ignorable="d" WindowStartupLocation="CenterScreen"
+        Title="Class :" Name="_this" FontSize="20"
+        d:DesignHeight="720" d:DesignWidth="1024">
+    <Window.DataContext>
+        <viewModels:StudentInClassViewModel/>
+    </Window.DataContext>
+
+    <behaviors:Interaction.Triggers>
+        <behaviors:EventTrigger EventName="Loaded">
+            <behaviors:InvokeCommandAction Command="{Binding LoadedCommand}"
+                                           CommandParameter="{Binding ElementName=_this}">
+            </behaviors:InvokeCommandAction>
+        </behaviors:EventTrigger>
+    </behaviors:Interaction.Triggers>
+
+    <Window.Resources>
+        <!--TextBox-->
+        <Style x:Key="TextBoxWithBorder" TargetType="TextBox">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Border Background="White" BorderBrush="Black"
+                        BorderThickness="2" CornerRadius="10">
+                            <ScrollViewer x:Name="PART_ContentHost" />
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!--Button Style-->
+        <Style x:Key="ButtonWithBorder" TargetType="Button">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="White" BorderBrush="Black" 
+                        BorderThickness="3" CornerRadius="10">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+        </Style>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="5*"/>
+        </Grid.RowDefinitions>
+
+        <!--Label-->
+        <Label Grid.Row="0"
+           Content="Student Manager"/>
+
+        <!--Form-->
+        <Grid Grid.Row="1">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <!--Search-->
+                <StackPanel Grid.Column="0" Orientation="Horizontal"
+                        Margin="30 10 0 0" HorizontalAlignment="Left"
+                        VerticalAlignment="Top">
+                    <Grid>
+                        <TextBox Width="175" Height="40"
+                             Name="_search_tb"
+                             VerticalAlignment="Center"
+                             HorizontalAlignment="Left"
+                             Style="{StaticResource TextBoxWithBorder}"
+                             Text="{Binding Search_tb}"/>
+                        <TextBlock IsHitTestVisible="False" 
+                               Text="ID or name..." 
+                               VerticalAlignment="Center" 
+                               HorizontalAlignment="Left" 
+                               Margin="10,0,0,0" 
+                               Foreground="DarkGray">
+                            <TextBlock.Style>
+                                <Style TargetType="{x:Type TextBlock}">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Text, 
+                                                 ElementName=_search_tb}" 
+                                                 Value="">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+                    </Grid>
+
+                    <Border BorderBrush="Black" BorderThickness="2"
+                        CornerRadius="10" Height="40"
+                        Margin="10 0 0 0">
+                        <Grid>
+                            <ComboBox Name = "faculty_cb"
+                                  Width="100" Height="40"
+                                  ItemsSource="{Binding ListFaculty_cb}"
+                                  SelectedItem="{Binding SearchFaculty_cb , Mode=TwoWay}"
+                                  DisplayMemberPath="Fac"
+                                  IsEditable="True"/>
+                            <TextBlock IsHitTestVisible="False" 
+                                   Text="Faculty..." 
+                                   VerticalAlignment="Center" 
+                                   HorizontalAlignment="Left" 
+                                   Margin="5,0,0,0" 
+                                   Foreground="DarkGray">
+                                <TextBlock.Style>
+                                    <Style TargetType="{x:Type TextBlock}">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Text, 
+                                                     ElementName=faculty_cb}" 
+                                                     Value="">
+                                                <Setter Property="Visibility" Value="Visible"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+                        </Grid>
+                    </Border>
+
+                    <Border BorderBrush="Black" BorderThickness="2"
+                        CornerRadius="10" Height="40"
+                        Margin="10 0 0 0">
+                        <Grid>
+                            <ComboBox Name = "class_cb"
+                                  Width="100" Height="40"
+                                  ItemsSource="{Binding ListClass_cb}"
+                                  SelectedItem="{Binding SearchClass_cb , Mode=TwoWay}"
+                                  DisplayMemberPath="SClass"
+                                  IsEditable="True"/>
+                            <TextBlock IsHitTestVisible="False" 
+                                   Text="Class..." 
+                                   VerticalAlignment="Center" 
+                                   HorizontalAlignment="Left" 
+                                   Margin="5,0,0,0" 
+                                   Foreground="DarkGray">
+                                <TextBlock.Style>
+                                    <Style TargetType="{x:Type TextBlock}">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Text, 
+                                                     ElementName=class_cb}" 
+                                                     Value="">
+                                                <Setter Property="Visibility" Value="Visible"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+                        </Grid>
+                    </Border>
+
+                    <Button Margin="5"
+                    Width="40" Height="40"
+                    IsDefault="True"
+                    Style="{StaticResource ButtonWithBorder}"
+                    Command="{Binding SearchCommand}"
+                    CommandParameter="{Binding ElementName=_this}">
+                        <Image Source="/Images/Icons/search.png" 
+                        Width="24" Height="24" />
+                    </Button>
+                </StackPanel>
+
+                <!--Button-->
+                <StackPanel Grid.Column="1" Orientation="Horizontal"
+                    Margin="0 50 30 10" HorizontalAlignment="Right">
+                    <Button Content="Add" Width="100" Margin="5"
+                    Style="{StaticResource ButtonWithBorder}"
+                    Command="{Binding AddCommand}"
+                    CommandParameter="{Binding ElementName=_this}"/>
+                    <Button Content="Delete" Width="100" Margin="5"
+                    Style="{StaticResource ButtonWithBorder}"
+                    Command="{Binding DeleteCommand}"
+                    CommandParameter="{Binding ElementName=_this}"/>
+                    <Button Content="Show" Width="100" Margin="5"
+                    Style="{StaticResource ButtonWithBorder}"
+                    Command="{Binding ShowCommand}"
+                    CommandParameter="{Binding ElementName=_this}"/>
+                    <Button Content="Update" Width="100" Margin="5"
+                    Style="{StaticResource ButtonWithBorder}"
+                    Command="{Binding UpdateCommand}"
+                    CommandParameter="{Binding ElementName=_this}"/>
+                </StackPanel>
+
+            </Grid>
+        </Grid>
+
+        <!--DataGrid-->
+        <Grid Grid.Row="2">
+            <DataGrid Grid.Row="1" 
+                  ItemsSource="{Binding ListStudent}"
+                  SelectedItem="{Binding SelectedStudent}"
+                  AutoGenerateColumns="False"
+                  IsReadOnly="True"
+                  Margin="30 0 30 30">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="ID" 
+                                    Width="*"
+                                    Binding="{Binding SID}"/>
+                    <DataGridTextColumn Header="Name"
+                                    Width="3*"
+                                    Binding="{Binding SName}"/>
+                    <DataGridTextColumn Header="Class"
+                                    Width="2*"
+                                    Binding="{Binding SClass.SClass}"/>
+                    <DataGridTextColumn Header="Faculty"
+                                    Width="2*"
+                                    Binding="{Binding SClass.SFaculty.Fac}"/>
+                    <DataGridTextColumn Header="Date of birth"
+                                    Width="3*"
+                                    Binding="{Binding SDOB}"/>
+                    <DataGridTextColumn Header="Address"
+                                    Width="3*"
+                                    Binding="{Binding SAddress}"/>
+                    <DataGridTextColumn Header="Phone"
+                                    Width="3*"
+                                    Binding="{Binding SPhone}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+    </Grid>
+</Window>

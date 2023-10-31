@@ -46,43 +46,36 @@ namespace SQLiteDemo.DAO
         public ObservableCollection<Teacher> SearchTeacher(string searchText)
         {
             ObservableCollection<Teacher> temp = new ObservableCollection<Teacher>();
-            if (searchText != null)
+            try
             {
-                try
-                {
-                    dtc.createConection();
+                dtc.createConection();
 
-                    string querry = "SELECT * FROM Teacher WHERE TID = @searchText OR TName LIKE @searchText OR Faculty LIKE @searchText ";
-                    SQLiteCommand cmd = new SQLiteCommand(querry, dtc._con);
-                    cmd.CommandText = querry;
-                    cmd.Parameters.AddWithValue("@searchText", "%" + searchText + "%");
-                    using (SQLiteDataReader reader = cmd.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            Teacher item = new Teacher();
-                            item.TID = reader.GetString(0);
-                            item.TName = reader.GetString(1);
-                            string fac = reader.GetString(2);
-                            item.TFaculty = new Faculty(fac);
-                            item.TDOB = reader.GetString(3);
-                            item.TAddress = reader.GetString(4);
-                            item.TPhone = reader.GetString(5);
-                            temp.Add(item);
-                        }
-                    }
-                    dtc.closeConnection();
-                }
-                catch (Exception ex)
+                string querry = "SELECT * FROM Teacher WHERE TID LIKE @searchText OR TName LIKE @searchText OR Faculty LIKE @searchText ";
+                SQLiteCommand cmd = new SQLiteCommand(querry, dtc._con);
+                cmd.CommandText = querry;
+                cmd.Parameters.AddWithValue("@searchText", "%" + searchText + "%");
+                using (SQLiteDataReader reader = cmd.ExecuteReader())
                 {
-                    Console.WriteLine("Error_Search_Teacher :" + ex.Message);
+                    while (reader.Read())
+                    {
+                        Teacher item = new Teacher();
+                        item.TID = reader.GetString(0);
+                        item.TName = reader.GetString(1);
+                        string fac = reader.GetString(2);
+                        item.TFaculty = new Faculty(fac);
+                        item.TDOB = reader.GetString(3);
+                        item.TAddress = reader.GetString(4);
+                        item.TPhone = reader.GetString(5);
+                        temp.Add(item);
+                    }
                 }
-                return temp;
+                dtc.closeConnection();
             }
-            else
+            catch (Exception ex)
             {
-                return GetAllTeacher();
+                Console.WriteLine("Error_Search_Teacher :" + ex.Message);
             }
+            return temp;
         }
 
         public Teacher GetTeacher(string tID)

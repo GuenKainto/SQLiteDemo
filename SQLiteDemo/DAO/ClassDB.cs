@@ -39,6 +39,43 @@ namespace SQLiteDemo.DAO
             return temp;
         }
 
+        public Class GetClass(string sClass)
+        {
+            Class rs = new Class();
+            try
+            {
+                if (dtc._con.State == System.Data.ConnectionState.Closed)
+                {
+                    dtc.createConection();
+                }
+
+                string querry = "SELECT * FROM Class WHERE SClass = @sClass";
+                SQLiteCommand cmd = new SQLiteCommand(querry, dtc._con);
+                cmd.CommandText = querry;
+                cmd.Parameters.AddWithValue("@sClass", sClass);
+                using (SQLiteDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        /*string sclass = reader.GetString(0);
+                        string fac = reader.GetString(1);
+                        Faculty sfaculty = new Faculty(fac);
+                        rs = new Class(sclass, sfaculty);*/
+
+                        rs.SClass = reader.GetString(0);
+                        string fac = reader.GetString(1);
+                        rs.SFaculty = new Faculty(fac);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error_Search_Class :" + ex.Message);
+            }
+            finally { dtc.closeConnection(); }
+            return rs;
+        }
+
         public ObservableCollection<Class> SearchClass (string sClass, Faculty sFaculty)
         {
             ObservableCollection< Class> temp = new ObservableCollection<Class>();

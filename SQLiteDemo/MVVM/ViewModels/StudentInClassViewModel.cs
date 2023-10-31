@@ -1,4 +1,5 @@
-﻿using SQLiteDemo.DAO;
+﻿using Microsoft.Xaml.Behaviors.Layout;
+using SQLiteDemo.DAO;
 using SQLiteDemo.MVVM.Command;
 using SQLiteDemo.MVVM.Models;
 using SQLiteDemo.MVVM.Views;
@@ -9,12 +10,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Media.Media3D;
-using System.Windows.Navigation;
 
 namespace SQLiteDemo.MVVM.ViewModels
 {
-    internal class StudentManagerViewModel : BindableBase
+    internal class StudentInClassViewModel : BindableBase
     {
         #region properties
         private StudentDB studentDBConnection;
@@ -24,13 +23,27 @@ namespace SQLiteDemo.MVVM.ViewModels
         public ObservableCollection<Faculty> ListFaculty_cb { get; set; }
         public ObservableCollection<Class> ListClass_cb { get; set; }
 
+        private Class _classTag;
+        public Class ClassTag
+        {
+            get => _classTag;
+            set
+            {
+                if (_classTag != value)
+                {
+                    _classTag = value;
+                    OnPropertyChanged(nameof(ClassTag));
+                }
+            }
+        }
+
         private Faculty _searchFaculty;
         public Faculty SearchFaculty_cb
         {
             get => _searchFaculty;
             set
             {
-                if(_searchFaculty != value)
+                if (_searchFaculty != value)
                 {
                     _searchFaculty = value;
                     OnPropertyChanged(nameof(SearchFaculty_cb));
@@ -90,18 +103,24 @@ namespace SQLiteDemo.MVVM.ViewModels
         public VfxCommand LoadedCommand { get; set; }
         private void OnLoaded(object obj)
         {
-            if(obj is Views.StudentManagerView)
+            if (obj is Views.StudentInClassView wd)
             {
+                if (wd.Tag is Class classTag)
+                {
+                    ClassTag = classTag;
+                }
                 LoadData();
+                wd.faculty_cb.IsEnabled = false;
+                wd.class_cb.IsEnabled=false;
             }
         }
         public VfxCommand SearchCommand { get; set; }
         private void OnSearch(object obj)
         {
-            if (obj  is Views.StudentManagerView)
+            if (obj is Views.StudentInClassView)
             {
                 ListStudent.Clear();
-                ListStudent = studentDBConnection.SearchStudent(Search_tb,SearchFaculty_cb,SearchClass_cb);
+                ListStudent = studentDBConnection.SearchStudent(Search_tb, SearchFaculty_cb, SearchClass_cb);
                 OnPropertyChanged(nameof(ListStudent));
             }
         }
@@ -109,12 +128,13 @@ namespace SQLiteDemo.MVVM.ViewModels
         public VfxCommand AddCommand { get; set; }
         private void OnAdd(object obj)
         {
-            if (obj is Views.StudentManagerView)
+            if (obj is Views.StudentInClassView)
             {
                 Search_tb = "";
                 OnPropertyChanged("ListStudent");
                 AddUpdateStudentView addWd = new AddUpdateStudentView();
-                addWd.Tag = "Add";
+                addWd.Tag = "Add|"+ClassTag.SClass;
+                
                 addWd.ShowDialog();
                 if (addWd.Tag.ToString() == "Save")
                 {
@@ -123,10 +143,10 @@ namespace SQLiteDemo.MVVM.ViewModels
             }
 
         }
-        public VfxCommand DeleteCommand {  get; set; }
+        public VfxCommand DeleteCommand { get; set; }
         private void OnDelete(object obj)
         {
-            if (obj is Views.StudentManagerView)
+            if (obj is Views.StudentInClassView)
             {
                 MessageBoxResult rs = MessageBox.Show("Are you sure you want to delete " + SelectedStudent.SID + " " + SelectedStudent.SName, "Message", MessageBoxButton.YesNo, MessageBoxImage.Question);
                 if (rs == MessageBoxResult.Yes)
@@ -150,7 +170,7 @@ namespace SQLiteDemo.MVVM.ViewModels
         public VfxCommand ShowCommand { get; set; }
         private void OnShow(object obj)
         {
-            if (obj is Views.StudentManagerView)
+            if (obj is Views.StudentInClassView)
             {
                 AddUpdateStudentView addWd = new AddUpdateStudentView();
                 addWd.Tag = "Show|" + SelectedStudent.SID;
@@ -161,10 +181,10 @@ namespace SQLiteDemo.MVVM.ViewModels
         {
             return SelectedStudent != null;
         }
-        public VfxCommand UpdateCommand {  get; set; }
+        public VfxCommand UpdateCommand { get; set; }
         public void OnUpdate(object obj)
         {
-            if (obj is Views.StudentManagerView)
+            if (obj is Views.StudentInClassView)
             {
                 AddUpdateStudentView addWd = new AddUpdateStudentView();
                 addWd.Tag = "Update|" + SelectedStudent.SID;
@@ -181,7 +201,7 @@ namespace SQLiteDemo.MVVM.ViewModels
         }
         #endregion
 
-        public StudentManagerViewModel()
+        public StudentInClassViewModel()
         {
             Init_Model();
             Init_Command();
@@ -209,8 +229,19 @@ namespace SQLiteDemo.MVVM.ViewModels
         {
             ListFaculty_cb = facultyDBConnection.GetAllFac();
             OnPropertyChanged(nameof(ListFaculty_cb));
+
+            if (ListFaculty_cb.Count > 0)
+            {
+                SearchFaculty_cb = ListFaculty_cb.Where(s => s.Fac == ClassTag.SFaculty.Fac).ToList().SingleOrDefault();
+            }
+
+            if (ListClass_cb.Count > 0)
+            {
+                SearchClass_cb = ListClass_cb.Where(s => s.SClass == ClassTag.SClass).ToList().SingleOrDefault();
+            }
+
             ListStudent.Clear();
-            ListStudent = studentDBConnection.GetAllStudent();
+            ListStudent = studentDBConnection.SearchStudent("",SearchFaculty_cb,SearchClass_cb);
             OnPropertyChanged(nameof(ListStudent));
         }
 

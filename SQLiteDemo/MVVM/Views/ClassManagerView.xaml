@@ -109,13 +109,13 @@
 
                         <StackPanel Margin="10">
                             <Button Content="Add" Width="150" Margin="10"
-                                        Style="{StaticResource ButtonWithBorder}"
-                                        Command="{Binding AddCommand}"
-                                            CommandParameter="{Binding ElementName=_this}"/>
+                                    Style="{StaticResource ButtonWithBorder}"
+                                    Command="{Binding AddCommand}"
+                                        CommandParameter="{Binding ElementName=_this}"/>
                             <Button Content="Delete" Width="150" Margin="10"
-                                        Style="{StaticResource ButtonWithBorder}"
-                                        Command="{Binding DeleteCommand}"
-                                            CommandParameter="{Binding ElementName=_this}"/>
+                                    Style="{StaticResource ButtonWithBorder}"
+                                    Command="{Binding DeleteCommand}"
+                                        CommandParameter="{Binding ElementName=_this}"/>
                             <Button Content="List Student" Width="150" Margin="10"
                                     Style="{StaticResource ButtonWithBorder}"
                                     Command="{Binding ShowCommand}"

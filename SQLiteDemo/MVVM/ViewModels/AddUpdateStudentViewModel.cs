@@ -130,46 +130,61 @@ namespace SQLiteDemo.MVVM.ViewModels
             if (obj is Views.AddUpdateStudentView wd)
             {
                 Mode = wd.Tag.ToString();
-                if (Mode == "Add")
+                string[] parts = Mode.Split('|');
+                if (parts.Length == 1 && Mode == "Add")
                 {
                     wd.Add_Update_Buttones.Visibility = Visibility.Visible;
                     wd.Show_Button.Visibility = Visibility.Collapsed;
                     SDOB_dp = DateTime.Now.Date;
                 }
                 else
-                {   //Mode == "Update|SID" or "Show|SID"
-                    string[] parts = Mode.Split('|');
+                {   //Mode == "Update|SID" or "Show|SID" or "Add|SClass"
+                    Mode = parts[0];
+                    string temp = parts[1]; //SID or SClass
 
-                    if (parts.Length == 2)
+                    if (Mode == "Show")
                     {
-                        Mode = parts[0]; // "Update"
-                        string sSID = parts[1]; // SID
+                        wd.Add_Update_Buttones.Visibility = Visibility.Collapsed;
+                        wd.Show_Button.Visibility = Visibility.Visible;
 
-                        if (Mode == "Show")
+                        wd.sID_tb.IsReadOnly = true;
+                        wd.sName_tb.IsReadOnly = true;
+                        wd.sFaculty_cb.IsEnabled = false;
+                        wd.sClass_cb.IsEnabled = false;
+                        wd.sDOB_dp.IsEnabled = false;
+                        wd.sAddress_tb.IsReadOnly = true;
+                        wd.sPhone_tb.IsReadOnly = true;
+
+                        LoadData(temp);
+                    }
+                    else if (Mode == "Update")//Update
+                    {
+                        wd.Add_Update_Buttones.Visibility = Visibility.Visible;
+                        wd.Show_Button.Visibility = Visibility.Collapsed;
+
+                        wd.sID_tb.IsReadOnly = true;
+
+                        LoadData(temp);
+                    }
+                    else
+                    {
+                        wd.Add_Update_Buttones.Visibility = Visibility.Visible;
+                        wd.Show_Button.Visibility = Visibility.Collapsed;
+                        SDOB_dp = DateTime.Now.Date;
+
+                        Class classStudent = classDBConnection.GetClass(temp);
+
+                        if (ListFaculty_cb.Count > 0)
                         {
-                            wd.Add_Update_Buttones.Visibility = Visibility.Collapsed;
-                            wd.Show_Button.Visibility = Visibility.Visible;
-
-                            wd.sID_tb.IsReadOnly = true;
-                            wd.sName_tb.IsReadOnly = true;
-                            wd.sFaculty_cb.IsEnabled = false;
-                            wd.sClass_cb.IsEnabled = true;
-                            wd.sDOB_dp.IsEnabled = false;
-                            wd.sAddress_tb.IsReadOnly = true;
-                            wd.sPhone_tb.IsReadOnly = true;
-
-                            LoadData(sSID);
+                            SelectedFaculty = ListFaculty_cb.Where(s => s.Fac == classStudent.SFaculty.Fac).ToList().SingleOrDefault();
                         }
-                        else //Update
+                        if (ListClass_cb.Count > 0)
                         {
-                            wd.Add_Update_Buttones.Visibility = Visibility.Visible;
-                            wd.Show_Button.Visibility = Visibility.Collapsed;
-
-                            wd.sID_tb.IsReadOnly = true;
-
-                            LoadData(sSID);
+                            SelectedClass = ListClass_cb.Where(s => s.SClass == classStudent.SClass).ToList().SingleOrDefault();
                         }
 
+                        wd.sFaculty_cb.IsEnabled = false;
+                        wd.sClass_cb.IsEnabled = false;
                     }
                 }
             }
@@ -242,7 +257,7 @@ namespace SQLiteDemo.MVVM.ViewModels
         public VfxCommand CloseWindowCommand { get; set; }
         private void OnCloseWindow(object obj)
         {
-            if (obj is Views.AddUpdateTeacherView wd)
+            if (obj is Views.AddUpdateStudentView wd)
             {
                 wd.Close();
             }

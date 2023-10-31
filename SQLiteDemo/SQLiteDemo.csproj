@@ -117,6 +117,7 @@
     <Compile Include="MVVM\ViewModels\AddUpdateTeacherViewModel.cs" />
     <Compile Include="MVVM\ViewModels\ClassManagerViewModel.cs" />
     <Compile Include="MVVM\ViewModels\FacultyManagerViewModel.cs" />
+    <Compile Include="MVVM\ViewModels\StudentInClassViewModel.cs" />
     <Compile Include="MVVM\ViewModels\StudentManagerViewModel.cs" />
     <Compile Include="MVVM\ViewModels\TeacherManagerViewModel.cs" />
     <Compile Include="MVVM\Views\AddUpdateStudentView.xaml.cs">
@@ -139,6 +140,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="MVVM\Views\StudentInClassView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MVVM\Views\StudentManagerView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -154,6 +159,9 @@
     <Compile Include="MVVM\ViewModels\MainWindowViewModel.cs" />
     <Compile Include="MVVM\Views\LoginView.xaml.cs">
       <DependentUpon>LoginView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MVVM\Views\StudentInClassView.xaml.cs">
+      <DependentUpon>StudentInClassView.xaml</DependentUpon>
     </Compile>
     <Compile Include="MVVM\Views\StudentManagerView.xaml.cs">
       <DependentUpon>StudentManagerView.xaml</DependentUpon>
@@ -183,7 +191,6 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <None Include="DAO\SQLiteDemoDB.db" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
