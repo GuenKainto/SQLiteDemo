@@ -13,33 +13,34 @@ namespace SQLiteDemo.MVVM.ViewModels
     {
         #region properties
         private string Mode;
-        public ObservableCollection<Faculty> ListFaculty_cb { get; set; }
+        public ObservableCollection<Faculty> ListFaculty { get; set; }
         private TeacherDB teacherDBConnecter;
         private FacultyDB facultyDBConnecter;
-        private string _tID_tb;
-        public string TID_tb
+        
+        private string _teacherID;
+        public string TeacherID
         {
-            get => _tID_tb;
+            get => _teacherID;
             set
             {
-                if (_tID_tb != value)
+                if (_teacherID != value)
                 {
-                    _tID_tb = value;
-                    OnPropertyChanged(nameof(TID_tb));
+                    _teacherID = value;
+                    OnPropertyChanged(nameof(TeacherID));
                     SaveCommand.RaiseCanExecuteChanged();
                 }
             }
         }
-        private string _tName_tb;
-        public string TName_tb
+        private string _teacherName;
+        public string TeacherName
         {
-            get => _tName_tb;
+            get => _teacherName;
             set
             {
-                if (_tName_tb != value)
+                if (_teacherName != value)
                 {
-                    _tName_tb = value;
-                    OnPropertyChanged(nameof(TName_tb));
+                    _teacherName = value;
+                    OnPropertyChanged(nameof(TeacherName));
                     SaveCommand.RaiseCanExecuteChanged();
                 }
             }
@@ -58,44 +59,44 @@ namespace SQLiteDemo.MVVM.ViewModels
                 }
             }
         }
-        private DateTime _tDOB_dp;
-        public DateTime TDOB_dp
+        private DateTime _teacherDOB;
+        public DateTime TeacherDOB
         {
-            get => _tDOB_dp;
+            get => _teacherDOB;
             set
             {
-                if (_tDOB_dp != value)
+                if (_teacherDOB != value)
                 {
-                    _tDOB_dp  = value;
-                    OnPropertyChanged(nameof(TDOB_dp));
+                    _teacherDOB = value;
+                    OnPropertyChanged(nameof(TeacherDOB));
                     SaveCommand.RaiseCanExecuteChanged();
                 }
             }
         }
-        private string _tAddress_tb;
-        public string TAddress_tb
+        private string _teacherAddress;
+        public string TeacherAddress
         {
-            get => _tAddress_tb;
+            get => _teacherAddress;
             set
             {
-                if (_tAddress_tb != value)
+                if (_teacherAddress != value)
                 {
-                    _tAddress_tb = value;
-                    OnPropertyChanged(nameof(TAddress_tb));
+                    _teacherAddress = value;
+                    OnPropertyChanged(nameof(TeacherAddress));
                     SaveCommand.RaiseCanExecuteChanged();
                 }
             }
         }
-        private string _tPhone_tb;
-        public string TPhone_tb
+        private string _teacherPhone;
+        public string TeacherPhone
         {
-            get => _tPhone_tb;
+            get => _teacherPhone;
             set
             {
-                if (_tPhone_tb != value)
+                if (_teacherPhone != value)
                 {
-                    _tPhone_tb = value;
-                    OnPropertyChanged(nameof(TPhone_tb));
+                    _teacherPhone = value;
+                    OnPropertyChanged(nameof(TeacherPhone));
                     SaveCommand.RaiseCanExecuteChanged();
                 }
             }
@@ -114,7 +115,7 @@ namespace SQLiteDemo.MVVM.ViewModels
                 {
                     wd.Add_Update_Buttones.Visibility = Visibility.Visible;
                     wd.Show_Button.Visibility = Visibility.Collapsed;
-                    TDOB_dp = DateTime.Now.Date;
+                    TeacherDOB = DateTime.Now.Date;
                 }
                 else
                 {   //Mode == "Update|TID" or "Show|TID"
@@ -130,12 +131,12 @@ namespace SQLiteDemo.MVVM.ViewModels
                             wd.Add_Update_Buttones.Visibility = Visibility.Collapsed;
                             wd.Show_Button.Visibility = Visibility.Visible;
 
-                            wd.tID_tb.IsReadOnly = true;
-                            wd.tName_tb.IsReadOnly = true;
-                            wd.tFaculty_cb.IsEnabled = true;
-                            wd.tDOB_dp.IsEnabled = false;
-                            wd.tAddress_tb.IsReadOnly = true;
-                            wd.tPhone_tb.IsReadOnly = true;
+                            wd.TeacherIdTxb.IsReadOnly = true;
+                            wd.TeacherNameTxb.IsReadOnly = true;
+                            wd.TeacherFacultyCmb.IsEnabled = true;
+                            wd.TeacherDOBDataPicker.IsEnabled = false;
+                            wd.TeacherAddressTxb.IsReadOnly = true;
+                            wd.TeacherPhoneTxb.IsReadOnly = true;
 
                             loadData(sTID);
                         }
@@ -144,7 +145,7 @@ namespace SQLiteDemo.MVVM.ViewModels
                             wd.Add_Update_Buttones.Visibility = Visibility.Visible;
                             wd.Show_Button.Visibility = Visibility.Collapsed;
 
-                            wd.tID_tb.IsReadOnly = true;
+                            wd.TeacherIdTxb.IsReadOnly = true;
 
                             loadData(sTID);
                         }
@@ -159,7 +160,7 @@ namespace SQLiteDemo.MVVM.ViewModels
         {
             if (obj is Views.AddUpdateTeacherView wd)
             {
-                if (TID_tb == null || TName_tb == null || SelectedFaculty == null || TDOB_dp == null || TAddress_tb == null || TPhone_tb == null)
+                if (TeacherID == null || TeacherName == null || SelectedFaculty == null || TeacherDOB == null || TeacherAddress == null || TeacherPhone == null)
                 {
                     MessageBox.Show("Please enter all the information","Message",MessageBoxButton.OK,MessageBoxImage.Information);
                 }
@@ -167,14 +168,14 @@ namespace SQLiteDemo.MVVM.ViewModels
                 {
                     if (Mode == "Add")
                     {
-                        if (teacherDBConnecter.IsExist(TID_tb))
+                        if (teacherDBConnecter.IsExist(TeacherID))
                         {
-                            MessageBox.Show(TID_tb + " is already available on the database", "Message", MessageBoxButton.OK, MessageBoxImage.Information);
+                            MessageBox.Show(TeacherID + " is already available on the database", "Message", MessageBoxButton.OK, MessageBoxImage.Information);
                         }
                         else
                         {
-                            TPhone_tb = wd.tPhone_tb.Text;
-                            Teacher item = new Teacher(TID_tb, TName_tb, SelectedFaculty, TDOB_dp.Date.ToString("dd-MM-yyyy"), TAddress_tb, TPhone_tb);
+                            TeacherPhone = wd.TeacherPhoneTxb.Text;
+                            Teacher item = new Teacher(tID: TeacherID,tName: TeacherName,tFaculty: SelectedFaculty,tDOB: TeacherDOB.Date.ToString("dd-MM-yyyy"),tAddress: TeacherAddress,tPhone: TeacherPhone);
 
                             if (teacherDBConnecter.CreateTeacher(item))
                             {
@@ -190,9 +191,9 @@ namespace SQLiteDemo.MVVM.ViewModels
                     }
                     else //Mode == Update
                     {
-                        if (teacherDBConnecter.IsExist(TID_tb))
+                        if (teacherDBConnecter.IsExist(TeacherID))
                         {
-                            Teacher item = new Teacher(TID_tb, TName_tb, SelectedFaculty, TDOB_dp.Date.ToString("dd-MM-yyyy"), TAddress_tb, TPhone_tb);
+                            Teacher item = new Teacher(tID: TeacherID, tName: TeacherName, tFaculty: SelectedFaculty, tDOB: TeacherDOB.Date.ToString("dd-MM-yyyy"), tAddress: TeacherAddress, tPhone: TeacherPhone);
 
                             if (teacherDBConnecter.UpdateTeacher(item))
                             {
@@ -207,15 +208,11 @@ namespace SQLiteDemo.MVVM.ViewModels
                         }
                         else
                         {
-                            MessageBox.Show(TID_tb + " isn't available on the database", "Message", MessageBoxButton.OK, MessageBoxImage.Information);
+                            MessageBox.Show(TeacherID + " isn't available on the database", "Message", MessageBoxButton.OK, MessageBoxImage.Information);
                         }
                     }
                 }
             }
-        }
-        private bool CanSave()
-        {
-            return true; //(TID_tb != null && TName_tb != null && SelectedFaculty != null && TDOB_dp != null && TAddress_tb != null && TPhone_tb != null) ;
         }
 
         public VfxCommand CloseWindowCommand { get; set; }
@@ -238,7 +235,7 @@ namespace SQLiteDemo.MVVM.ViewModels
         private void Init_Command()
         {
             LoadedCommand = new VfxCommand(OnLoaded, () => true);
-            SaveCommand = new VfxCommand(OnSave, CanSave);
+            SaveCommand = new VfxCommand(OnSave, () => true);
             CloseWindowCommand = new VfxCommand(OnCloseWindow, () => true);
         }
 
@@ -246,28 +243,28 @@ namespace SQLiteDemo.MVVM.ViewModels
         {
             teacherDBConnecter = new TeacherDB();
             facultyDBConnecter = new FacultyDB();
-            ListFaculty_cb = facultyDBConnecter.GetAllFac();
+            ListFaculty = facultyDBConnecter.GetAllFac();
         }
 
         private void loadData(string sTID)
         {
             Teacher temp = teacherDBConnecter.GetTeacher(sTID);
 
-            TID_tb = temp.TID;
-            TName_tb = temp.TName;
+            TeacherID = temp.TID;
+            TeacherName = temp.TName;
 
-            if(ListFaculty_cb.Count > 0)
+            if(ListFaculty.Count > 0)
             {
-                SelectedFaculty = ListFaculty_cb.Where(s=>s.Fac == temp.TFaculty.Fac).ToList().SingleOrDefault();
+                SelectedFaculty = ListFaculty.Where(s=>s.Fac == temp.TFaculty.Fac).ToList().SingleOrDefault();
             }
 
             if (DateTime.TryParseExact(temp.TDOB, "dd-MM-yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime result))
             {
-                TDOB_dp = result;
+                TeacherDOB = result;
             }
             else Console.WriteLine("Can't convert String to DateTime.");
-            TAddress_tb = temp.TAddress;
-            TPhone_tb = temp.TPhone;
+            TeacherAddress = temp.TAddress;
+            TeacherPhone = temp.TPhone;
         }
     }
 }

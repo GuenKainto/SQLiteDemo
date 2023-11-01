@@ -78,23 +78,23 @@
                 <StackPanel Grid.Row="0">
                     <Label VerticalAlignment="Center"
                            Content="Teacher ID : "/>
-                    <TextBox Name="tID_tb"
+                    <TextBox Name="TeacherIdTxb"
                              Width="200" Height="40"
                              VerticalAlignment="Center"
                              HorizontalAlignment="Left"
                              Style="{StaticResource TextBoxWithBorder}"
-                             Text="{Binding TID_tb}"/>
+                             Text="{Binding TeacherID}"/>
                 </StackPanel>
 
                 <StackPanel Grid.Row="1">
                     <Label VerticalAlignment="Center"
                            Content="Teacher name : "/>
-                    <TextBox Name="tName_tb"
+                    <TextBox Name="TeacherNameTxb"
                              Width="200" Height="40"
                              VerticalAlignment="Center"
                              HorizontalAlignment="Left"
                              Style="{StaticResource TextBoxWithBorder}"
-                             Text="{Binding TName_tb}"/>
+                             Text="{Binding TeacherName}"/>
                 </StackPanel>
 
                 <StackPanel Grid.Row="2">
@@ -103,9 +103,9 @@
                     <Border BorderBrush="Black" BorderThickness="2" 
                             CornerRadius="10"
                             Width="200" Height="40" >
-                        <ComboBox Name="tFaculty_cb"
+                        <ComboBox Name="TeacherFacultyCmb"
                                   Width="200" Height="40" 
-                                  ItemsSource="{Binding ListFaculty_cb}"
+                                  ItemsSource="{Binding ListFaculty}"
                                   DisplayMemberPath="Fac"
                                   SelectedItem="{Binding SelectedFaculty, Mode=TwoWay}"/>
                     </Border>
@@ -125,32 +125,32 @@
                            Content="Date of birth : "/>
                     <Border BorderBrush="Black" BorderThickness="2" 
                             CornerRadius="10">
-                        <DatePicker Name="tDOB_dp"
+                        <DatePicker Name="TeacherDOBDataPicker"
                                     Width="200" Height="40" 
-                                    SelectedDate="{Binding TDOB_dp}" />
+                                    SelectedDate="{Binding TeacherDOB}" />
                     </Border>
                 </StackPanel>
 
                 <StackPanel Grid.Row="1">
                     <Label VerticalAlignment="Center"
                            Content="Address : "/>
-                    <TextBox Name="tAddress_tb"
+                    <TextBox Name="TeacherAddressTxb"
                              Width="200" Height="40"
                              VerticalAlignment="Center"
                              HorizontalAlignment="Left"
                              Style="{StaticResource TextBoxWithBorder}"
-                             Text="{Binding TAddress_tb}"/>
+                             Text="{Binding TeacherAddress}"/>
                 </StackPanel>
 
                 <StackPanel Grid.Row="2">
                     <Label VerticalAlignment="Center"
                            Content="Phone : "/>
-                    <TextBox Name="tPhone_tb"
+                    <TextBox Name="TeacherPhoneTxb"
                              Width="200" Height="40"
                              VerticalAlignment="Center"
                              HorizontalAlignment="Left"
                              Style="{StaticResource TextBoxWithBorder}"
-                             Text="{Binding TPhone_tb}"/>
+                             Text="{Binding TeacherPhone}"/>
                 </StackPanel>
 
             </Grid>
