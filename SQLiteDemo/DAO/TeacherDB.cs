@@ -34,12 +34,12 @@ namespace SQLiteDemo.DAO
                         temp.Add(new Teacher(TID,TName,TFaculty,TDOB,TAddress,TPhone));
                     }
                 }
-                dtc.closeConnection();
             }
             catch (Exception ex)
             {
                 Console.WriteLine("Error_Get_All_Teacher :" + ex.Message);
             }
+            finally { dtc.closeConnection(); }
             return temp;
         }
 
@@ -69,12 +69,12 @@ namespace SQLiteDemo.DAO
                         temp.Add(item);
                     }
                 }
-                dtc.closeConnection();
             }
             catch (Exception ex)
             {
                 Console.WriteLine("Error_Search_Teacher :" + ex.Message);
             }
+            finally { dtc.closeConnection(); }
             return temp;
         }
 
@@ -112,7 +112,7 @@ namespace SQLiteDemo.DAO
             return teacher;
         }
 
-        public bool CheckExist(string tid)
+        public bool IsExist(string tid)
         {
             bool rs = false;
             try

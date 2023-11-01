@@ -167,7 +167,7 @@ namespace SQLiteDemo.MVVM.ViewModels
                 {
                     if (Mode == "Add")
                     {
-                        if (teacherDBConnecter.CheckExist(TID_tb))
+                        if (teacherDBConnecter.IsExist(TID_tb))
                         {
                             MessageBox.Show(TID_tb + " is already available on the database", "Message", MessageBoxButton.OK, MessageBoxImage.Information);
                         }
@@ -190,7 +190,7 @@ namespace SQLiteDemo.MVVM.ViewModels
                     }
                     else //Mode == Update
                     {
-                        if (teacherDBConnecter.CheckExist(TID_tb))
+                        if (teacherDBConnecter.IsExist(TID_tb))
                         {
                             Teacher item = new Teacher(TID_tb, TName_tb, SelectedFaculty, TDOB_dp.Date.ToString("dd-MM-yyyy"), TAddress_tb, TPhone_tb);
 

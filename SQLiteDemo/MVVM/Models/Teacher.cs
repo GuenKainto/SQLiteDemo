@@ -46,7 +46,7 @@ namespace SQLiteDemo.MVVM.Models
         }
 
         private string _tDOB;
-        public string TDOB
+        public string TDOB //Teacher Date of Birth
         {
             get => _tDOB;
             set

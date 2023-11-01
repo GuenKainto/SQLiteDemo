@@ -5,7 +5,7 @@ namespace SQLiteDemo.MVVM.Models
     internal class Student : BaseNotifyPropertyChanged
     {
         private string _sID;
-        public string SID
+        public string SID //Student ID
         {
             get => _sID;
             set
@@ -19,7 +19,7 @@ namespace SQLiteDemo.MVVM.Models
         }
 
         private string _sName;
-        public string SName
+        public string SName // Student name
         {
             get => _sName;
             set
@@ -33,7 +33,7 @@ namespace SQLiteDemo.MVVM.Models
         }
 
         private Class _sClass;
-        public Class SClass
+        public Class SClass //Student Class
         {
             get => _sClass;
             set
@@ -47,7 +47,7 @@ namespace SQLiteDemo.MVVM.Models
         }
 
         private string _sPhone;
-        public string SPhone
+        public string SPhone //Student Phone
         {
             get => _sPhone;
             set
@@ -61,7 +61,7 @@ namespace SQLiteDemo.MVVM.Models
         }
 
         private string _sAddress;
-        public string SAddress
+        public string SAddress //Student Address
         {
             get => _sAddress;
             set
@@ -75,7 +75,7 @@ namespace SQLiteDemo.MVVM.Models
         }
 
         private string _sDOB;
-        public string SDOB
+        public string SDOB //Student Date of Birth
         {
             get => _sDOB;
             set

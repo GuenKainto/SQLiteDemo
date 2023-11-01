@@ -100,7 +100,7 @@ namespace SQLiteDemo.MVVM.ViewModels
                 else
                 {
                     Class temp = new Class(classView.sclass_tb.Text , SelectedFaculty_cb);
-                    if (ClassDBConnecter.CheckExist(temp))
+                    if (ClassDBConnecter.IsExist(temp))
                     {
                         MessageBox.Show("Class " + SClass_tb + " is already have", "Message", MessageBoxButton.OK, MessageBoxImage.Information);
                     }

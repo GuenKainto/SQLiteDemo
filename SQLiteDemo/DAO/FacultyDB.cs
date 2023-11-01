@@ -40,7 +40,7 @@ namespace SQLiteDemo.DAO
             return temp;
         } 
 
-        public bool CheckExist(string fac)
+        public bool IsExist(string fac)
         {
             bool rs = false;
             try

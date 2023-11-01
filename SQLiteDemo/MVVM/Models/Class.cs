@@ -34,7 +34,7 @@ namespace SQLiteDemo.MVVM.Models
         }
 
         private int _noStudent = 0;
-        public int NoStudent
+        public int NoStudent //Number of Student
         {
             get => _noStudent;
             set

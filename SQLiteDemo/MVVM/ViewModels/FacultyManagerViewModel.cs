@@ -105,7 +105,7 @@ namespace SQLiteDemo.MVVM.ViewModels
         {
             if (obj is Views.FacultyManagerView)
             {
-                if (facDB.CheckExist(Faculty_tb))
+                if (facDB.IsExist(Faculty_tb))
                 {
                     MessageBox.Show(Faculty_tb + " is already available on the database", "Message", MessageBoxButton.OK, MessageBoxImage.Information);
                 }

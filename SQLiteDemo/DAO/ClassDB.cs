@@ -106,16 +106,16 @@ namespace SQLiteDemo.DAO
                         temp.Add(item);
                     }
                 }
-                dtc.closeConnection();
             }
             catch (Exception ex)
             {
                 Console.WriteLine("Error_Search_Class :" + ex.Message);
             }
+            finally { dtc.closeConnection(); }
             return temp;
         }
 
-        public bool CheckExist(Class item)
+        public bool IsExist(Class item)
         {
             bool rs = false;
             try

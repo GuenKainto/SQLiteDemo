@@ -16,103 +16,103 @@ namespace SQLiteDemo.MVVM.ViewModels
         private StudentDB studentDBConnection { get; set; }
         private FacultyDB facultyDBConnection { get; set; }
         private ClassDB classDBConnection { get; set; }
-        public ObservableCollection<Faculty> ListFaculty_cb { get; set; }
-        public ObservableCollection<Class> ListClass_cb { get; set; }
+        public ObservableCollection<Faculty> ListFaculty { get; set; }
+        public ObservableCollection<Class> ListClass { get; set; }
 
-        private string _sid_tb;
-        public string SID_tb
+        private string _studentId;
+        public string StudentId //tb : TextBox
         {
-            get => _sid_tb;
+            get => _studentId;
             set
             {
-                if (_sid_tb != value)
+                if (_studentId != value)
                 {
-                    _sid_tb = value;
-                    OnPropertyChanged(nameof(SID_tb));
+                    _studentId = value;
+                    OnPropertyChanged(nameof(StudentId));
                 }
             }
         }
 
-        private string _sname_tb;
-        public string SName_tb
+        private string _studentName;
+        public string StudentName
         {
-            get => _sname_tb;
+            get => _studentName;
             set
             {
-                if (_sname_tb != value)
+                if (_studentName != value)
                 {
-                    _sname_tb = value;
-                    OnPropertyChanged(nameof(SName_tb));
+                    _studentName = value;
+                    OnPropertyChanged(nameof(StudentName));
                 }
             }
         }
 
-        private Faculty _faculty_tb;
+        private Faculty _selectedDaculty;
         public Faculty SelectedFaculty
         {
-            get => _faculty_tb;
+            get => _selectedDaculty;
             set
             {
-                if (_faculty_tb != value)
+                if (_selectedDaculty != value)
                 {
-                    _faculty_tb = value;
+                    _selectedDaculty = value;
                     OnPropertyChanged(nameof(SelectedFaculty));
                     LoadClassComboBox();
                 }
             }
         }
 
-        private Class _class_tb;
+        private Class _selectedClass;
         public Class SelectedClass
         {
-            get => _class_tb;
+            get => _selectedClass;
             set
             {
-                if (_class_tb != value)
+                if (_selectedClass != value)
                 {
-                    _class_tb = value;
+                    _selectedClass = value;
                     OnPropertyChanged(nameof(SelectedClass));
                 }
             }
         }
 
-        private DateTime _sDOB_dp;
-        public DateTime SDOB_dp
+        private DateTime _studentDOB;
+        public DateTime StudentDOB //Student Date of Birth
         {
-            get => _sDOB_dp;
+            get => _studentDOB;
             set
             {
-                if (_sDOB_dp != value)
+                if (_studentDOB != value)
                 {
-                    _sDOB_dp = value;
-                    OnPropertyChanged(nameof(SDOB_dp));
+                    _studentDOB = value;
+                    OnPropertyChanged(nameof(StudentDOB));
                 }
             }
         }
 
-        private string _sAddress_tb;
-        public string SAddress_tb
+        private string _studentAddress;
+        public string StudentAddress
         {
-            get => _sAddress_tb;
+            get => _studentAddress;
             set
             {
-                if (_sAddress_tb != value)
+                if (_studentAddress != value)
                 {
-                    _sAddress_tb = value;
-                    OnPropertyChanged(nameof(SAddress_tb));
+                    _studentAddress = value;
+                    OnPropertyChanged(nameof(StudentAddress));
                 }
             }
         }
-        private string _sPhone_tb;
-        public string SPhone_tb
+        private string _studentPhone;
+        public string StudentPhone
         {
-            get => _sPhone_tb;
+            get => _studentPhone;
             set
             {
-                if (_sPhone_tb != value)
+                if (_studentPhone != value)
                 {
-                    _sPhone_tb = value;
-                    OnPropertyChanged(nameof(SPhone_tb));
+                    _studentPhone = value;
+                    OnPropertyChanged(nameof(StudentPhone));
                 }
             }
         }
@@ -121,6 +121,7 @@ namespace SQLiteDemo.MVVM.ViewModels
 
         #region command
         public VfxCommand LoadedCommand { get; set; }
+
         private void OnLoaded(object obj)
         {
             if (obj is Views.AddUpdateStudentView wd)
@@ -131,7 +132,7 @@ namespace SQLiteDemo.MVVM.ViewModels
                 {
                     wd.Add_Update_Buttones.Visibility = Visibility.Visible;
                     wd.Show_Button.Visibility = Visibility.Collapsed;
-                    SDOB_dp = DateTime.Now.Date;
+                    StudentDOB = DateTime.Now.Date;
                 }
                 else
                 {   //Mode == "Update|SID" or "Show|SID" or "Add|SClass"
@@ -143,13 +144,13 @@ namespace SQLiteDemo.MVVM.ViewModels
                         wd.Add_Update_Buttones.Visibility = Visibility.Collapsed;
                         wd.Show_Button.Visibility = Visibility.Visible;
 
-                        wd.sID_tb.IsReadOnly = true;
-                        wd.sName_tb.IsReadOnly = true;
-                        wd.sFaculty_cb.IsEnabled = false;
-                        wd.sClass_cb.IsEnabled = false;
-                        wd.sDOB_dp.IsEnabled = false;
-                        wd.sAddress_tb.IsReadOnly = true;
-                        wd.sPhone_tb.IsReadOnly = true;
+                        wd.StudentIdTxb.IsReadOnly = true;
+                        wd.StudentNameTxb.IsReadOnly = true;
+                        wd.StudentFacultyCmb.IsEnabled = false;
+                        wd.StudentClassCmb.IsEnabled = false;
+                        wd.StudentDOBDatePicker.IsEnabled = false;
+                        wd.StudentAddressTxb.IsReadOnly = true;
+                        wd.StudentPhoneTxb.IsReadOnly = true;
 
                         LoadData(temp);
                     }
@@ -158,7 +159,7 @@ namespace SQLiteDemo.MVVM.ViewModels
                         wd.Add_Update_Buttones.Visibility = Visibility.Visible;
                         wd.Show_Button.Visibility = Visibility.Collapsed;
 
-                        wd.sID_tb.IsReadOnly = true;
+                        wd.StudentIdTxb.IsReadOnly = true;
 
                         LoadData(temp);
                     }
@@ -166,21 +167,21 @@ namespace SQLiteDemo.MVVM.ViewModels
                     {
                         wd.Add_Update_Buttones.Visibility = Visibility.Visible;
                         wd.Show_Button.Visibility = Visibility.Collapsed;
-                        SDOB_dp = DateTime.Now.Date;
+                        StudentDOB = DateTime.Now.Date;
 
                         Class classStudent = classDBConnection.GetClass(temp);
 
-                        if (ListFaculty_cb.Count > 0)
+                        if (ListFaculty.Count > 0)
                         {
-                            SelectedFaculty = ListFaculty_cb.Where(s => s.Fac == classStudent.SFaculty.Fac).ToList().SingleOrDefault();
+                            SelectedFaculty = ListFaculty.Where(s => s.Fac == classStudent.SFaculty.Fac).ToList().SingleOrDefault();
                         }
-                        if (ListClass_cb.Count > 0)
+                        if (ListClass.Count > 0)
                         {
-                            SelectedClass = ListClass_cb.Where(s => s.SClass == classStudent.SClass).ToList().SingleOrDefault();
+                            SelectedClass = ListClass.Where(s => s.SClass == classStudent.SClass).ToList().SingleOrDefault();
                         }
 
-                        wd.sFaculty_cb.IsEnabled = false;
-                        wd.sClass_cb.IsEnabled = false;
+                        wd.StudentFacultyCmb.IsEnabled = false;
+                        wd.StudentClassCmb.IsEnabled = false;
                     }
                 }
             }
@@ -191,7 +192,7 @@ namespace SQLiteDemo.MVVM.ViewModels
         {
             if (obj is Views.AddUpdateStudentView wd)
             {
-                if (SID_tb == null || SName_tb == null || SelectedFaculty == null || SelectedClass == null || SDOB_dp == null || SAddress_tb == null || SPhone_tb == null)
+                if (StudentId == null || StudentName == null || SelectedFaculty == null || SelectedClass == null || StudentDOB == null || StudentAddress == null || StudentPhone == null)
                 {
                     MessageBox.Show("Please enter all the information", "Message", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
@@ -199,14 +200,14 @@ namespace SQLiteDemo.MVVM.ViewModels
                 {
                     if (Mode == "Add")
                     {
-                        if (studentDBConnection.CheckExist(SID_tb))
+                        if (studentDBConnection.IsExist(StudentId))
                         {
-                            MessageBox.Show(SID_tb + " is already available on the database", "Message", MessageBoxButton.OK, MessageBoxImage.Information);
+                            MessageBox.Show(StudentId + " is already available on the database", "Message", MessageBoxButton.OK, MessageBoxImage.Information);
                         }
                         else
                         {
-                            SPhone_tb = wd.sPhone_tb.Text;
-                            Student item = new Student(SID_tb, SName_tb, SelectedClass, SDOB_dp.Date.ToString("dd-MM-yyyy"), SAddress_tb, SPhone_tb);
+                            StudentPhone = wd.StudentPhoneTxb.Text;
+                            Student item = new Student( sID: StudentId,sName: StudentName, sClass: SelectedClass, sDOB: StudentDOB.Date.ToString("dd-MM-yyyy"), sAddress: StudentAddress, sPhone: StudentPhone);
 
                             if (studentDBConnection.CreateStudent(item))
                             {
@@ -222,9 +223,9 @@ namespace SQLiteDemo.MVVM.ViewModels
                     }
                     else //Mode == Update
                     {
-                        if (studentDBConnection.CheckExist(SID_tb))
+                        if (studentDBConnection.IsExist(StudentId))
                         {
-                            Student item = new Student(SID_tb, SName_tb, SelectedClass, SDOB_dp.Date.ToString("dd-MM-yyyy"), SAddress_tb, SPhone_tb);
+                            Student item = new Student(sID: StudentId, sName: StudentName, sClass: SelectedClass, sDOB: StudentDOB.Date.ToString("dd-MM-yyyy"), sAddress: StudentAddress, sPhone: StudentPhone);
 
                             if (studentDBConnection.UpdateStudent(item))
                             {
@@ -239,15 +240,11 @@ namespace SQLiteDemo.MVVM.ViewModels
                         }
                         else
                         {
-                            MessageBox.Show(SID_tb + " isn't available on the database", "Message", MessageBoxButton.OK, MessageBoxImage.Information);
+                            MessageBox.Show(StudentId + " isn't available on the database", "Message", MessageBoxButton.OK, MessageBoxImage.Information);
                         }
                     }
                 }
             }
-        }
-        private bool CanSave()
-        {
-            return true; //(TID_tb != null && TName_tb != null && SelectedFaculty != null && TDOB_dp != null && TAddress_tb != null && TPhone_tb != null) ;
         }
 
         public VfxCommand CloseWindowCommand { get; set; }
@@ -269,7 +266,7 @@ namespace SQLiteDemo.MVVM.ViewModels
         private void Init_Command()
         {
             LoadedCommand = new VfxCommand(OnLoaded, () => true);
-            SaveCommand = new VfxCommand(OnSave, CanSave);
+            SaveCommand = new VfxCommand(OnSave, () => true);
             CloseWindowCommand = new VfxCommand(OnCloseWindow, () => true);
         }
 
@@ -278,37 +275,37 @@ namespace SQLiteDemo.MVVM.ViewModels
             studentDBConnection = new StudentDB();    
             facultyDBConnection = new FacultyDB();
             classDBConnection = new ClassDB();
-            ListFaculty_cb = facultyDBConnection.GetAllFac();
-            ListClass_cb = classDBConnection.SearchClass("",SelectedFaculty);
+            ListFaculty = facultyDBConnection.GetAllFac();
+            ListClass = classDBConnection.SearchClass("",SelectedFaculty);
         }
         private void LoadData(string SID)
         {
             Student temp = studentDBConnection.GetStudent(SID);
 
-            SID_tb = temp.SID;
-            SName_tb = temp.SName;
+            StudentId = temp.SID;
+            StudentName = temp.SName;
 
-            if (ListFaculty_cb.Count > 0)
+            if (ListFaculty.Count > 0)
             {
-                SelectedFaculty = ListFaculty_cb.Where(s => s.Fac == temp.SClass.SFaculty.Fac).ToList().SingleOrDefault();
+                SelectedFaculty = ListFaculty.Where(s => s.Fac == temp.SClass.SFaculty.Fac).ToList().SingleOrDefault();
             }
-            if (ListClass_cb.Count > 0)
+            if (ListClass.Count > 0)
             {
-                SelectedClass = ListClass_cb.Where(s => s.SClass == temp.SClass.SClass).ToList().SingleOrDefault();
+                SelectedClass = ListClass.Where(s => s.SClass == temp.SClass.SClass).ToList().SingleOrDefault();
             }
 
             if (DateTime.TryParseExact(temp.SDOB, "dd-MM-yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime result))
             {
-                SDOB_dp = result;
+                StudentDOB = result;
             }
             else Console.WriteLine("Can't convert String to DateTime.");
-            SAddress_tb = temp.SAddress;
-            SPhone_tb = temp.SPhone;
+            StudentAddress = temp.SAddress;
+            StudentPhone = temp.SPhone;
         }
         private void LoadClassComboBox()
         {
-            ListClass_cb = classDBConnection.SearchClass("", SelectedFaculty);
-            OnPropertyChanged(nameof(ListClass_cb));
+            ListClass = classDBConnection.SearchClass("", SelectedFaculty);
+            OnPropertyChanged(nameof(ListClass));
         }
     }
 }

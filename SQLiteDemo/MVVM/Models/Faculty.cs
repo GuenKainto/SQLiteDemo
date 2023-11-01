@@ -7,7 +7,7 @@ namespace SQLiteDemo.MVVM.Models
         private FacultyDB facDB = new FacultyDB(); 
 
         private string _fac;
-        public string Fac
+        public string Fac //Faculty
         {
             get => _fac;
             set
@@ -20,7 +20,7 @@ namespace SQLiteDemo.MVVM.Models
             }
         }
         private int _noStudent = 0;
-        public int NoStudent
+        public int NoStudent // Number of Student
         {
             get => _noStudent;
             set
@@ -31,7 +31,7 @@ namespace SQLiteDemo.MVVM.Models
         }
 
         private int _noTeacher = 0;
-        public int NoTeacher
+        public int NoTeacher // Number of Teacher
         {
             get => _noTeacher;
             set
@@ -42,7 +42,7 @@ namespace SQLiteDemo.MVVM.Models
         }
 
         private int _noClass = 0;
-        public int NoClass
+        public int NoClass // Number of Class
         {
             get => _noClass;
             set

@@ -94,12 +94,12 @@ namespace SQLiteDemo.DAO
                             temp.Add(new Student(SID, SName, SClass, SDOB, SPhone, SAddress));
                         }
                     }
-                    dtc.closeConnection();
                 }
                 catch (Exception ex)
                 {
                     Console.WriteLine("Error_Search_Teacher :" + ex.Message);
                 }
+                finally { dtc.closeConnection(); }
                 return temp;
             }
             else
@@ -147,7 +147,7 @@ namespace SQLiteDemo.DAO
             return student;
         }
 
-        public bool CheckExist(string sid)
+        public bool IsExist(string sid)
         {
             bool rs = false;
             try
