@@ -109,7 +109,7 @@ namespace SQLiteDemo.MVVM.ViewModels
             {
                 if (facDBConnection.IsExist(FacultyName))
                 {
-                    MessageBox.Show(FacultyName + " is already available on the database", "Message", MessageBoxButton.OK, MessageBoxImage.Information);
+                    MessageBox.Show($"{FacultyName} is already available on the database", "Message", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
                 else
                 {
@@ -135,7 +135,7 @@ namespace SQLiteDemo.MVVM.ViewModels
         {
             if (obj is Views.FacultyManagerView)
             {
-                MessageBoxResult rs = MessageBox.Show("Are you sure you want to delete "+SelectedFaculty.Fac,"Message",MessageBoxButton.YesNo,MessageBoxImage.Question);
+                MessageBoxResult rs = MessageBox.Show($"Are you sure you want to delete {SelectedFaculty.Fac}","Message",MessageBoxButton.YesNo,MessageBoxImage.Question);
                 if(rs == MessageBoxResult.Yes)
                 {
                     if (SelectedFaculty.NoTeacher > 0 || SelectedFaculty.NoClass > 0 || SelectedFaculty.NoStudent > 0)

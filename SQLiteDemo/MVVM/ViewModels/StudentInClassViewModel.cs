@@ -143,7 +143,7 @@ namespace SQLiteDemo.MVVM.ViewModels
         {
             if (obj is Views.StudentInClassView)
             {
-                MessageBoxResult rs = MessageBox.Show("Are you sure you want to delete " + SelectedStudent.SID + " " + SelectedStudent.SName, "Message", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                MessageBoxResult rs = MessageBox.Show($"Are you sure you want to delete {SelectedStudent.SID}-{SelectedStudent.SName}", "Message", MessageBoxButton.YesNo, MessageBoxImage.Question);
                 if (rs == MessageBoxResult.Yes)
                 {
                     if (studentDBConnection.DeleteStudent(SelectedStudent))

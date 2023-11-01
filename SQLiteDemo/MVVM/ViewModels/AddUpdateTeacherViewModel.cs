@@ -170,7 +170,7 @@ namespace SQLiteDemo.MVVM.ViewModels
                     {
                         if (teacherDBConnecter.IsExist(TeacherID))
                         {
-                            MessageBox.Show(TeacherID + " is already available on the database", "Message", MessageBoxButton.OK, MessageBoxImage.Information);
+                            MessageBox.Show($"{TeacherID} is already available on the database", "Message", MessageBoxButton.OK, MessageBoxImage.Information);
                         }
                         else
                         {
@@ -208,7 +208,7 @@ namespace SQLiteDemo.MVVM.ViewModels
                         }
                         else
                         {
-                            MessageBox.Show(TeacherID + " isn't available on the database", "Message", MessageBoxButton.OK, MessageBoxImage.Information);
+                            MessageBox.Show($"{TeacherID} isn't available on the database", "Message", MessageBoxButton.OK, MessageBoxImage.Information);
                         }
                     }
                 }

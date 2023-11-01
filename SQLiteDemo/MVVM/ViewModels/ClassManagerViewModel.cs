@@ -102,7 +102,7 @@ namespace SQLiteDemo.MVVM.ViewModels
                     Class temp = new Class(classView.sclass_tb.Text , SelectedFaculty);
                     if (ClassDBConnecter.IsExist(temp))
                     {
-                        MessageBox.Show("Class " + ClassName + " is already have", "Message", MessageBoxButton.OK, MessageBoxImage.Information);
+                        MessageBox.Show($"Class {ClassName} is already have", "Message", MessageBoxButton.OK, MessageBoxImage.Information);
                     }
                     else
                     {
@@ -128,7 +128,7 @@ namespace SQLiteDemo.MVVM.ViewModels
                 }
                 else
                 {
-                    MessageBoxResult rs = MessageBox.Show("Are you sure you want to delete " + SelectedClass.SClass + " in " + SelectedClass.SFaculty.Fac, "Message", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                    MessageBoxResult rs = MessageBox.Show($"Are you sure you want to delete {SelectedClass.SClass}  in {SelectedClass.SFaculty.Fac}", "Message", MessageBoxButton.YesNo, MessageBoxImage.Question);
                     if (rs == MessageBoxResult.Yes)
                     {
                         if (SelectedClass.NoStudent != 0)
