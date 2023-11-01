@@ -142,20 +142,64 @@
 
                     <StackPanel Orientation="Horizontal" Grid.Column="0" 
                                 HorizontalAlignment="Left">
-                        <Label Content="Class:"/>
-                        <TextBox Height="35" Width="100"
-                                 Style="{StaticResource TextBoxWithBorder}"
-                                 Text="{Binding SearchClass}"/>
+                        <Grid>
+                            <TextBox Name="SearchTxb"
+                                     Height="35" Width="150"
+                                     Style="{StaticResource TextBoxWithBorder}"
+                                     Text="{Binding SearchClass}"/>
+                            <TextBlock IsHitTestVisible="False" 
+                                       Text="Enter class..." 
+                                       VerticalAlignment="Center" 
+                                       HorizontalAlignment="Left" 
+                                       Margin="10,0,0,0" 
+                                       Foreground="DarkGray">
+                                <TextBlock.Style>
+                                    <Style TargetType="{x:Type TextBlock}">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Text, 
+                                                         ElementName=SearchTxb}" 
+                                                         Value="">
+                                                <Setter Property="Visibility" Value="Visible"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+                        </Grid>
 
-                        <Label Content="Faculty:" Margin="0,0,0,0"/>
-                        <Border BorderBrush="Black" BorderThickness="2"
+                        <Border Margin="20,0,0,0"
+                                BorderBrush="Black" BorderThickness="2"
                                 CornerRadius="10" Height="35">
-                            <ComboBox Width="100" Height="35"
-                                      ItemsSource="{Binding ListFaculty}"
-                                      SelectedItem="{Binding SearchFaculty , Mode=TwoWay}"
-                                      DisplayMemberPath="Fac"
-                                      IsEditable="True">
-                            </ComboBox>
+                            <Grid>
+                                <ComboBox Name="FacultyCmB"
+                                          Width="100" Height="35"
+                                          ItemsSource="{Binding ListFaculty}"
+                                          SelectedItem="{Binding SearchFaculty , Mode=TwoWay}"
+                                          DisplayMemberPath="Fac"
+                                          IsEditable="True">
+                                </ComboBox>
+                                <TextBlock IsHitTestVisible="False" 
+                                           Text="Faculty..." 
+                                           VerticalAlignment="Center" 
+                                           HorizontalAlignment="Left" 
+                                           Margin="5,0,0,0" 
+                                           Foreground="DarkGray">
+                                    <TextBlock.Style>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Text, 
+                                                             ElementName=FacultyCmB}" 
+                                                             Value="">
+                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                            </Grid>
+                            
                         </Border>
                     </StackPanel>
 
