@@ -14,11 +14,11 @@ namespace SQLiteDemo.MVVM.ViewModels
         private FacultyDB facultyDBConnection;
         private ClassDB classDBConnection;
         public ObservableCollection<Student> ListStudent { get; set; }
-        public ObservableCollection<Faculty> ListFaculty_cb { get; set; }
-        public ObservableCollection<Class> ListClass_cb { get; set; }
+        public ObservableCollection<Faculty> ListFaculty { get; set; }
+        public ObservableCollection<Class> ListClass { get; set; }
 
         private Faculty _searchFaculty;
-        public Faculty SearchFaculty_cb
+        public Faculty SearchFaculty
         {
             get => _searchFaculty;
             set
@@ -26,14 +26,14 @@ namespace SQLiteDemo.MVVM.ViewModels
                 if(_searchFaculty != value)
                 {
                     _searchFaculty = value;
-                    OnPropertyChanged(nameof(SearchFaculty_cb));
+                    OnPropertyChanged(nameof(SearchFaculty));
                     LoadClassComboBox();
                 }
             }
         }
 
         private Class _searchClass;
-        public Class SearchClass_cb
+        public Class SearchClass
         {
             get => _searchClass;
             set
@@ -41,7 +41,7 @@ namespace SQLiteDemo.MVVM.ViewModels
                 if (_searchClass != value)
                 {
                     _searchClass = value;
-                    OnPropertyChanged(nameof(SearchClass_cb));
+                    OnPropertyChanged(nameof(SearchClass));
                 }
             }
         }
@@ -63,16 +63,16 @@ namespace SQLiteDemo.MVVM.ViewModels
             }
         }
 
-        private string _search_tb;
-        public string Search_tb
+        private string _search;
+        public string Search
         {
-            get => _search_tb;
+            get => _search;
             set
             {
-                if (_search_tb != value)
+                if (_search != value)
                 {
-                    _search_tb = value;
-                    OnPropertyChanged(nameof(Search_tb));
+                    _search = value;
+                    OnPropertyChanged(nameof(Search));
                 }
             }
         }
@@ -94,7 +94,7 @@ namespace SQLiteDemo.MVVM.ViewModels
             if (obj  is Views.StudentManagerView)
             {
                 ListStudent.Clear();
-                ListStudent = studentDBConnection.SearchStudent(Search_tb,SearchFaculty_cb,SearchClass_cb);
+                ListStudent = studentDBConnection.SearchStudent(searchText: Search,searchFaculty: SearchFaculty, searchClass: SearchClass);
                 OnPropertyChanged(nameof(ListStudent));
             }
         }
@@ -104,7 +104,7 @@ namespace SQLiteDemo.MVVM.ViewModels
         {
             if (obj is Views.StudentManagerView)
             {
-                Search_tb = "";
+                Search = "";
                 OnPropertyChanged("ListStudent");
                 AddUpdateStudentView addWd = new AddUpdateStudentView();
                 addWd.Tag = "Add";
@@ -200,8 +200,8 @@ namespace SQLiteDemo.MVVM.ViewModels
 
         private void LoadData()
         {
-            ListFaculty_cb = facultyDBConnection.GetAllFac();
-            OnPropertyChanged(nameof(ListFaculty_cb));
+            ListFaculty = facultyDBConnection.GetAllFac();
+            OnPropertyChanged(nameof(ListFaculty));
             ListStudent.Clear();
             ListStudent = studentDBConnection.GetAllStudent();
             OnPropertyChanged(nameof(ListStudent));
@@ -209,8 +209,8 @@ namespace SQLiteDemo.MVVM.ViewModels
 
         private void LoadClassComboBox()
         {
-            ListClass_cb = classDBConnection.SearchClass("", SearchFaculty_cb);
-            OnPropertyChanged(nameof(ListClass_cb));
+            ListClass = classDBConnection.SearchClass("", SearchFaculty);
+            OnPropertyChanged(nameof(ListClass));
         }
     }
 }

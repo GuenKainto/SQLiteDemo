@@ -9,6 +9,9 @@ namespace SQLiteDemo.MVVM.ViewModels
     internal class FacultyManagerViewModel : BindableBase
     {
         #region properties
+        private FacultyDB facDBConnection;
+        public ObservableCollection<Faculty> ListFaculty { get; set; }
+
         private string _faculty;
         public string Faculty
         {
@@ -80,23 +83,22 @@ namespace SQLiteDemo.MVVM.ViewModels
             }
         }
 
-        private string _faculty_tb;
-        public string Faculty_tb
+        private string _facultyName;
+        public string FacultyName
         {
-            get => _faculty_tb;
+            get => _facultyName;
             set
             {
-                if (_faculty_tb != value)
+                if (_facultyName != value)
                 {
-                    _faculty_tb = value;
-                    OnPropertyChanged(nameof(Faculty_tb));
+                    _facultyName = value;
+                    OnPropertyChanged(nameof(FacultyName));
                     AddCommand.RaiseCanExecuteChanged();
                 }
             }
         }
 
-        private FacultyDB facDB;
-        public ObservableCollection<Faculty> ListFaculty { get; set; }
+
         #endregion
 
         #region command
@@ -105,16 +107,16 @@ namespace SQLiteDemo.MVVM.ViewModels
         {
             if (obj is Views.FacultyManagerView)
             {
-                if (facDB.IsExist(Faculty_tb))
+                if (facDBConnection.IsExist(FacultyName))
                 {
-                    MessageBox.Show(Faculty_tb + " is already available on the database", "Message", MessageBoxButton.OK, MessageBoxImage.Information);
+                    MessageBox.Show(FacultyName + " is already available on the database", "Message", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
                 else
                 {
-                    if (facDB.CreateFaculty(Faculty_tb))
+                    if (facDBConnection.CreateFaculty(FacultyName))
                     {
-                        Faculty_tb = null;
-                        loadData();
+                        FacultyName = null;
+                        LoadData();
                     }
                     else
                     {
@@ -126,7 +128,7 @@ namespace SQLiteDemo.MVVM.ViewModels
         }
         private bool CanAdd()
         {
-            return Faculty_tb != null;
+            return FacultyName != null;
         }
         public VfxCommand DeleteCommand { get; set; }
         private void OnDelete(object obj)
@@ -142,10 +144,10 @@ namespace SQLiteDemo.MVVM.ViewModels
                     }
                     else
                     {
-                        if (facDB.DeleteFaculty(SelectedFaculty.Fac))
+                        if (facDBConnection.DeleteFaculty(SelectedFaculty.Fac))
                         {
                             MessageBox.Show("Delete Successful", "Message", MessageBoxButton.OK, MessageBoxImage.Information);
-                            loadData();
+                            LoadData();
                         }
                         else
                         {
@@ -165,7 +167,7 @@ namespace SQLiteDemo.MVVM.ViewModels
         {
             if(obj is Views.FacultyManagerView)
             {
-                loadData();
+                LoadData();
             }
         }
         #endregion
@@ -178,7 +180,7 @@ namespace SQLiteDemo.MVVM.ViewModels
 
         private void Init_Model()
         {
-            facDB = new FacultyDB();
+            facDBConnection = new FacultyDB();
             ListFaculty = new ObservableCollection<Faculty>();
         }
 
@@ -189,11 +191,11 @@ namespace SQLiteDemo.MVVM.ViewModels
             DeleteCommand = new VfxCommand(OnDelete, CanDelete);
         }
 
-        private void loadData()
+        private void LoadData()
         {
-            Faculty_tb = "";
+            FacultyName = "";
             ListFaculty.Clear();
-            ListFaculty = facDB.GetAllFac();
+            ListFaculty = facDBConnection.GetAllFac();
             foreach(Faculty item in ListFaculty) // get Number of Student, Teacher, Class in Faculty in database
             {
                 item.SetNumber();

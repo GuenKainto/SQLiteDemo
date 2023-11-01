@@ -14,17 +14,17 @@ namespace SQLiteDemo.MVVM.ViewModels
         private TeacherDB teacherDBConnecter;
         public ObservableCollection<Teacher> ListTeacher { get; set; }
         
-        private string _search_tb;
+        private string _search;
 
-        public string Search_tb
+        public string Search
         {
-            get => _search_tb; 
+            get => _search; 
             set 
             {
-                if(_search_tb != value)
+                if(_search != value)
                 {
-                    _search_tb = value;
-                    OnPropertyChanged(nameof(Search_tb));
+                    _search = value;
+                    OnPropertyChanged(nameof(Search));
                     SearchCommand.RaiseCanExecuteChanged(); //BUG
                 } 
             }
@@ -64,9 +64,9 @@ namespace SQLiteDemo.MVVM.ViewModels
         {
             if (obj is Views.TeacherManagerView wd)
             {
-                Search_tb = wd._search_tb.Text;
+                Search = wd.SearchTxb.Text;
                 ListTeacher.Clear();
-                ListTeacher = teacherDBConnecter.SearchTeacher(Search_tb);
+                ListTeacher = teacherDBConnecter.SearchTeacher(Search);
                 OnPropertyChanged("ListTeacher");
             }
         }
@@ -76,7 +76,7 @@ namespace SQLiteDemo.MVVM.ViewModels
         {
             if (obj is Views.TeacherManagerView)
             {
-                Search_tb = "";
+                Search = "";
                 OnPropertyChanged("ListTeacher");
                 AddUpdateTeacherView addWd = new AddUpdateTeacherView();
                 addWd.Tag = "Add";

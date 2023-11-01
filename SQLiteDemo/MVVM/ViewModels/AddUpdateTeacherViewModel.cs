@@ -138,7 +138,7 @@ namespace SQLiteDemo.MVVM.ViewModels
                             wd.TeacherAddressTxb.IsReadOnly = true;
                             wd.TeacherPhoneTxb.IsReadOnly = true;
 
-                            loadData(sTID);
+                            LoadData(sTID);
                         }
                         else //Update
                         {
@@ -147,7 +147,7 @@ namespace SQLiteDemo.MVVM.ViewModels
 
                             wd.TeacherIdTxb.IsReadOnly = true;
 
-                            loadData(sTID);
+                            LoadData(sTID);
                         }
 
                     }
@@ -246,7 +246,7 @@ namespace SQLiteDemo.MVVM.ViewModels
             ListFaculty = facultyDBConnecter.GetAllFac();
         }
 
-        private void loadData(string sTID)
+        private void LoadData(string sTID)
         {
             Teacher temp = teacherDBConnecter.GetTeacher(sTID);
 

@@ -79,11 +79,11 @@
                             VerticalAlignment="Top">
                     <Grid>
                         <TextBox Width="250" Height="40"
-                             Name="_search_tb"
+                             Name="SearchTxb"
                              VerticalAlignment="Center"
                              HorizontalAlignment="Left"
                              Style="{StaticResource TextBoxWithBorder}"
-                             Text="{Binding Search_tb}"/>
+                             Text="{Binding Search}"/>
                         <TextBlock IsHitTestVisible="False" 
                                    Text="Enter faculty,ID or name..." 
                                    VerticalAlignment="Center" 
@@ -95,7 +95,7 @@
                                     <Setter Property="Visibility" Value="Collapsed"/>
                                     <Style.Triggers>
                                         <DataTrigger Binding="{Binding Text, 
-                                                     ElementName=_search_tb}" 
+                                                     ElementName=SearchTxb}" 
                                                      Value="">
                                             <Setter Property="Visibility" Value="Visible"/>
                                         </DataTrigger>

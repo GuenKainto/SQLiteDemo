@@ -49,14 +49,14 @@ namespace SQLiteDemo.MVVM.ViewModels
         {
             if (obj is Views.LoginView loginWd)
             {
-                if(loginWd._password.Password == null)
+                if(loginWd.Password.Password == null)
                 {
                     MessageBox.Show("Please enter the Password","Message",MessageBoxButton.OK, MessageBoxImage.Information);
                 }
                 else
                 {
                     lg = new LoginDB();
-                    PassWord = loginWd._password.Password;
+                    PassWord = loginWd.Password.Password;
                     if (PassWord == "") 
                         MessageBox.Show("Please enter password !", "Message", MessageBoxButton.OK, MessageBoxImage.Information);
                     else
@@ -87,7 +87,7 @@ namespace SQLiteDemo.MVVM.ViewModels
             if(obj is Views.LoginView loginWd)
             {
                 UserName = "";
-                loginWd._password.Password = "";
+                loginWd.Password.Password = "";
             }
         }
 
@@ -96,8 +96,8 @@ namespace SQLiteDemo.MVVM.ViewModels
         {
             if(obj is Views.LoginView loginWd)
             {
-                if (loginWd._password.Password == "") loginWd._placeholder_tblock.Visibility = Visibility.Visible;
-                else loginWd._placeholder_tblock.Visibility = Visibility.Collapsed;
+                if (loginWd.Password.Password == "") loginWd.PlaceholderTBlock.Visibility = Visibility.Visible;
+                else loginWd.PlaceholderTBlock.Visibility = Visibility.Collapsed;
             }
         }
         #endregion

@@ -79,11 +79,11 @@
                             VerticalAlignment="Top">
                     <Grid>
                         <TextBox Width="175" Height="40"
-                                 Name="_search_tb"
+                                 Name="SearchTxb"
                                  VerticalAlignment="Center"
                                  HorizontalAlignment="Left"
                                  Style="{StaticResource TextBoxWithBorder}"
-                                 Text="{Binding Search_tb}"/>
+                                 Text="{Binding Search}"/>
                         <TextBlock IsHitTestVisible="False" 
                                    Text="ID or name..." 
                                    VerticalAlignment="Center" 
@@ -95,7 +95,7 @@
                                     <Setter Property="Visibility" Value="Collapsed"/>
                                     <Style.Triggers>
                                         <DataTrigger Binding="{Binding Text, 
-                                                     ElementName=_search_tb}" 
+                                                     ElementName=SearchTxb}" 
                                                      Value="">
                                             <Setter Property="Visibility" Value="Visible"/>
                                         </DataTrigger>
@@ -109,10 +109,10 @@
                             CornerRadius="10" Height="40"
                             Margin="10 0 0 0">
                         <Grid>
-                            <ComboBox Name = "faculty_cb"
+                            <ComboBox Name = "FacultyCmB"
                                       Width="100" Height="40"
-                                      ItemsSource="{Binding ListFaculty_cb}"
-                                      SelectedItem="{Binding SearchFaculty_cb , Mode=TwoWay}"
+                                      ItemsSource="{Binding ListFaculty}"
+                                      SelectedItem="{Binding SearchFaculty , Mode=TwoWay}"
                                       DisplayMemberPath="Fac"
                                       IsEditable="True"/>
                             <TextBlock IsHitTestVisible="False" 
@@ -126,7 +126,7 @@
                                         <Setter Property="Visibility" Value="Collapsed"/>
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding Text, 
-                                                         ElementName=faculty_cb}" 
+                                                         ElementName=FacultyCmB}" 
                                                          Value="">
                                                 <Setter Property="Visibility" Value="Visible"/>
                                             </DataTrigger>
@@ -141,10 +141,10 @@
                             CornerRadius="10" Height="40"
                             Margin="10 0 0 0">
                         <Grid>
-                            <ComboBox Name = "class_cb"
+                            <ComboBox Name = "ClassCmB"
                                       Width="100" Height="40"
-                                      ItemsSource="{Binding ListClass_cb}"
-                                      SelectedItem="{Binding SearchClass_cb , Mode=TwoWay}"
+                                      ItemsSource="{Binding ListClass}"
+                                      SelectedItem="{Binding SearchClass, Mode=TwoWay}"
                                       DisplayMemberPath="SClass"
                                       IsEditable="True"/>
                             <TextBlock IsHitTestVisible="False" 
@@ -158,7 +158,7 @@
                                         <Setter Property="Visibility" Value="Collapsed"/>
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding Text, 
-                                                         ElementName=class_cb}" 
+                                                         ElementName=ClassCmB}" 
                                                          Value="">
                                                 <Setter Property="Visibility" Value="Visible"/>
                                             </DataTrigger>

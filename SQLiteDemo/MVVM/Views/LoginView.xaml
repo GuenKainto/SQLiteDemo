@@ -106,7 +106,7 @@
                                   Width="300"  Height="40"
                                   VerticalAlignment="Center"
                                   HorizontalAlignment="Left" 
-                                  x:Name="_username" 
+                                  x:Name="Username" 
                                   Margin="5"
                                   Text="{Binding UserName, Mode=TwoWay,
                                          UpdateSourceTrigger=PropertyChanged}"/>
@@ -121,7 +121,7 @@
                                         <Setter Property="Visibility" Value="Collapsed"/>
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding Text, 
-                                                         ElementName=_username}" 
+                                                         ElementName=Username}" 
                                                          Value="">
                                                 <Setter Property="Visibility" Value="Visible"/>
                                             </DataTrigger>
@@ -142,7 +142,7 @@
                                          Width="300"  Height="40"
                                          VerticalAlignment="Center"
                                          HorizontalAlignment="Left" 
-                                         x:Name="_password" 
+                                         x:Name="Password" 
                                          Margin="5">
                                 <behaviors:Interaction.Triggers>
                                     <behaviors:EventTrigger EventName="PasswordChanged">
@@ -153,7 +153,7 @@
                             </PasswordBox>
                             <TextBlock IsHitTestVisible="False" 
                                        Text="Password" 
-                                       Name="_placeholder_tblock"
+                                       Name="PlaceholderTBlock"
                                        VerticalAlignment="Center" 
                                        HorizontalAlignment="Left" 
                                        Margin="10,0,0,0" 

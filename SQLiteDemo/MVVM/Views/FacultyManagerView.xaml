@@ -93,7 +93,7 @@
                             <Label Content="Faculty : "/>
                             <TextBox Width="200"
                                      Style="{StaticResource TextBoxWithBorder}"
-                                     Text="{Binding Faculty_tb}"/>
+                                     Text="{Binding FacultyName}"/>
                         </StackPanel>
                     </StackPanel>
                 </Grid>

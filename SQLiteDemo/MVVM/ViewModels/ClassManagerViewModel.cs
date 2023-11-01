@@ -109,7 +109,7 @@ namespace SQLiteDemo.MVVM.ViewModels
                         if (ClassDBConnecter.CreateClass(temp))
                         {
                             MessageBox.Show("Successful", "Message", MessageBoxButton.OK, MessageBoxImage.Information);
-                            loadData();
+                            LoadData();
                         }
                         else MessageBox.Show("Can't create Class", "Message", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
@@ -140,7 +140,7 @@ namespace SQLiteDemo.MVVM.ViewModels
                             if (ClassDBConnecter.DeleteClass(SelectedClass))
                             {
                                 MessageBox.Show("Successful", "Message", MessageBoxButton.OK, MessageBoxImage.Information);
-                                loadData();
+                                LoadData();
                             }
                             else MessageBox.Show("Can't delete this class", "Message", MessageBoxButton.OK, MessageBoxImage.Error);
                         }
@@ -185,7 +185,7 @@ namespace SQLiteDemo.MVVM.ViewModels
         {
             if (obj is Views.ClassManagerView classView)
             {
-                loadData();
+                LoadData();
             }
         }
         
@@ -213,7 +213,7 @@ namespace SQLiteDemo.MVVM.ViewModels
             ListFaculty = FacultyDBConnecter.GetAllFac();
         }
 
-        private void loadData()
+        private void LoadData()
         {
             ClassName = null;
             SelectedFaculty = null;
