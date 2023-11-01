@@ -89,17 +89,17 @@
                                 <TextBox x:Name="sclass_tb"
                                          Width="200"
                                          Style="{StaticResource TextBoxWithBorder}"
-                                         Text="{Binding SClass_tb}"/>
+                                         Text="{Binding ClassName}"/>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal"
-                                            HorizontalAlignment="Center"
-                                            Margin="10">
+                                        HorizontalAlignment="Center"
+                                        Margin="10">
                                 <Label Content="Faculty         :"/>
                                 <Border BorderBrush="Black" BorderThickness="2"
-                                            CornerRadius="10">
+                                        CornerRadius="10">
                                     <ComboBox Width="200"
-                                              ItemsSource="{Binding ListFaculty_cb}"
-                                              SelectedItem="{Binding SelectedFaculty_cb , Mode=TwoWay}"
+                                              ItemsSource="{Binding ListFaculty}"
+                                              SelectedItem="{Binding SelectedFaculty , Mode=TwoWay}"
                                               DisplayMemberPath="Fac"
                                               IsEditable="True">
                                     </ComboBox>
@@ -145,14 +145,14 @@
                         <Label Content="Class:"/>
                         <TextBox Height="35" Width="100"
                                  Style="{StaticResource TextBoxWithBorder}"
-                                 Text="{Binding SearchClass_tb}"/>
+                                 Text="{Binding SearchClass}"/>
 
                         <Label Content="Faculty:" Margin="0,0,0,0"/>
                         <Border BorderBrush="Black" BorderThickness="2"
                                 CornerRadius="10" Height="35">
                             <ComboBox Width="100" Height="35"
-                                      ItemsSource="{Binding ListFaculty_cb}"
-                                      SelectedItem="{Binding SearchFaculty_cb , Mode=TwoWay}"
+                                      ItemsSource="{Binding ListFaculty}"
+                                      SelectedItem="{Binding SearchFaculty , Mode=TwoWay}"
                                       DisplayMemberPath="Fac"
                                       IsEditable="True">
                             </ComboBox>

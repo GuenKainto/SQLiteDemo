@@ -13,7 +13,7 @@ namespace SQLiteDemo.MVVM.ViewModels
         private ClassDB ClassDBConnecter = new ClassDB();
         private FacultyDB FacultyDBConnecter = new FacultyDB();
         public ObservableCollection<Class> ListClass { get; set; }
-        public ObservableCollection<Faculty> ListFaculty_cb { get; set; }
+        public ObservableCollection<Faculty> ListFaculty { get; set; }
 
         private Class _selectedClass;
         public Class SelectedClass
@@ -29,58 +29,58 @@ namespace SQLiteDemo.MVVM.ViewModels
             }
         }
 
-        private Faculty _selectedFaculty_cb;
-        public Faculty SelectedFaculty_cb
+        private Faculty _selectedFaculty;
+        public Faculty SelectedFaculty
         {
-            get => _selectedFaculty_cb;
+            get => _selectedFaculty;
             set
             {
-                if(_selectedFaculty_cb != value)
+                if(_selectedFaculty != value)
                 {
-                    _selectedFaculty_cb = value;
-                    OnPropertyChanged(nameof(SelectedFaculty_cb));
+                    _selectedFaculty = value;
+                    OnPropertyChanged(nameof(SelectedFaculty));
                 }
             }
         }
 
-        private string _searchClass_tb;
-        public string SearchClass_tb
+        private string _searchClass;
+        public string SearchClass
         {
-            get => _searchClass_tb;
+            get => _searchClass;
             set
             {
-                if(_searchClass_tb != value)
+                if(_searchClass != value)
                 {
-                    _searchClass_tb = value;
-                    OnPropertyChanged(nameof(SearchClass_tb));
+                    _searchClass = value;
+                    OnPropertyChanged(nameof(SearchClass));
                 }
             }
         }
 
-        private Faculty _searchFaculty_cb;
-        public Faculty SearchFaculty_cb
+        private Faculty _searchFaculty;
+        public Faculty SearchFaculty
         {
-            get => _searchFaculty_cb;
+            get => _searchFaculty;
             set
             {
-                if(_searchFaculty_cb != value)
+                if(_searchFaculty != value)
                 {
-                    _searchFaculty_cb = value;
-                    OnPropertyChanged(nameof(_searchFaculty_cb));
+                    _searchFaculty = value;
+                    OnPropertyChanged(nameof(_searchFaculty));
                 }
             }
         }
 
-        private string _sclass_tb;
-        public string SClass_tb
+        private string _className;
+        public string ClassName
         {
-            get => _sclass_tb;
+            get => _className;
             set
             {
-                if(_sclass_tb != value)
+                if(_className != value)
                 {
-                    _sclass_tb = value;
-                    OnPropertyChanged(nameof(SClass_tb));
+                    _className = value;
+                    OnPropertyChanged(nameof(ClassName));
                 }
             }
         }
@@ -93,16 +93,16 @@ namespace SQLiteDemo.MVVM.ViewModels
             
             if(obj is Views.ClassManagerView classView)
             {   
-                if(classView.sclass_tb.Text == null || SelectedFaculty_cb == null)
+                if(classView.sclass_tb.Text == null || SelectedFaculty == null)
                 {
                     MessageBox.Show("Please enter full information", "Message", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
                 else
                 {
-                    Class temp = new Class(classView.sclass_tb.Text , SelectedFaculty_cb);
+                    Class temp = new Class(classView.sclass_tb.Text , SelectedFaculty);
                     if (ClassDBConnecter.IsExist(temp))
                     {
-                        MessageBox.Show("Class " + SClass_tb + " is already have", "Message", MessageBoxButton.OK, MessageBoxImage.Information);
+                        MessageBox.Show("Class " + ClassName + " is already have", "Message", MessageBoxButton.OK, MessageBoxImage.Information);
                     }
                     else
                     {
@@ -153,7 +153,7 @@ namespace SQLiteDemo.MVVM.ViewModels
         private void OnSearch(object obj)
         {
             ListClass.Clear();
-            ListClass = ClassDBConnecter.SearchClass(SearchClass_tb, SearchFaculty_cb);
+            ListClass = ClassDBConnecter.SearchClass(SearchClass, SearchFaculty);
             OnPropertyChanged(nameof(ListClass));
         }
         private bool CanSearch()
@@ -209,14 +209,14 @@ namespace SQLiteDemo.MVVM.ViewModels
         private void InitModel()
         {
             ListClass = new ObservableCollection<Class>();
-            ListFaculty_cb = new ObservableCollection<Faculty>();
-            ListFaculty_cb = FacultyDBConnecter.GetAllFac();
+            ListFaculty = new ObservableCollection<Faculty>();
+            ListFaculty = FacultyDBConnecter.GetAllFac();
         }
 
         private void loadData()
         {
-            SClass_tb = null;
-            SelectedFaculty_cb = null;
+            ClassName = null;
+            SelectedFaculty = null;
             ListClass.Clear();
             ListClass = ClassDBConnecter.GetAllClass();
             foreach (Class item in ListClass)
