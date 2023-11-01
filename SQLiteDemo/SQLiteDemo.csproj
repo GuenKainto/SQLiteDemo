@@ -102,7 +102,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="DAO\ClassDB.cs" />
-    <Compile Include="DAO\DatabaseConnection.cs" />
+    <Compile Include="DAO\DatabaseConnection.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
     <Compile Include="DAO\FacultyDB.cs" />
     <Compile Include="DAO\LoginDB.cs" />
     <Compile Include="DAO\StudentDB.cs" />
@@ -191,15 +193,21 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <Content Include="SQLiteDemoDB.db" />
+    <None Include="SQLiteDemoDB.sqbpro" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\Avata\smallest.jpg" />
+    <Resource Include="Images\Avata\smallest.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\Icons\search.png" />
+    <Resource Include="Images\Icons\search.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

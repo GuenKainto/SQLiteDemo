@@ -12,7 +12,7 @@ namespace SQLiteDemo.DAO
         public SQLiteConnection _con = new SQLiteConnection();
         public void createConection()
         {
-            string _strConnect = @"Data Source=D:\[Study]\.NET\NET_Programming\SQLiteDemo\SQLiteDemoDB.db;Version=3;";
+            string _strConnect = @"Data Source=D:\[Study]\.NET\NET_Programming\SQLiteDemo\SQLiteDemo\SQLiteDemoDB.db;Version=3;";
             _con.ConnectionString = _strConnect;
             try
             {
