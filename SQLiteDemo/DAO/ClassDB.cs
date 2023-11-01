@@ -2,7 +2,6 @@
 using System;
 using System.Collections.ObjectModel;
 using System.Data.SQLite;
-using System.Windows;
 
 namespace SQLiteDemo.DAO
 {

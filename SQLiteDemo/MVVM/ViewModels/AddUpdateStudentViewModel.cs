@@ -2,13 +2,9 @@
 using SQLiteDemo.MVVM.Command;
 using SQLiteDemo.MVVM.Models;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Linq;
-using System.Net.Http.Headers;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace SQLiteDemo.MVVM.ViewModels

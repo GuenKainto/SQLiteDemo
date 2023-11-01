@@ -1,5 +1,4 @@
-﻿using System;
-using SQLiteDemo.MVVM.Command;
+﻿using SQLiteDemo.MVVM.Command;
 using SQLiteDemo.MVVM.Models;
 using SQLiteDemo.MVVM.Views;
 

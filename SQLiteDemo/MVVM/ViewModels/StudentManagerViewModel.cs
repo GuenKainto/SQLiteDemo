@@ -2,15 +2,8 @@
 using SQLiteDemo.MVVM.Command;
 using SQLiteDemo.MVVM.Models;
 using SQLiteDemo.MVVM.Views;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Media.Media3D;
-using System.Windows.Navigation;
 
 namespace SQLiteDemo.MVVM.ViewModels
 {

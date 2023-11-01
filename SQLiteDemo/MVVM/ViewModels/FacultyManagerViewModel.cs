@@ -1,16 +1,8 @@
 ﻿using SQLiteDemo.DAO;
 using SQLiteDemo.MVVM.Command;
 using SQLiteDemo.MVVM.Models;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics.Eventing.Reader;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Data;
 
 namespace SQLiteDemo.MVVM.ViewModels
 {

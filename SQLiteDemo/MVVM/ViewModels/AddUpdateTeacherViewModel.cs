@@ -2,16 +2,10 @@
 using SQLiteDemo.MVVM.Command;
 using SQLiteDemo.MVVM.Models;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Data.Entity.Core.Metadata.Edm;
-using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
 
 namespace SQLiteDemo.MVVM.ViewModels
 {

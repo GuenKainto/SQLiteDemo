@@ -1,5 +1,4 @@
-﻿using System.Security;
-using System.Windows;
+﻿using System.Windows;
 using SQLiteDemo.DAO;
 using SQLiteDemo.MVVM.Command;
 using SQLiteDemo.MVVM.Models;

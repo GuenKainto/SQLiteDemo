@@ -1,14 +1,9 @@
-﻿using Microsoft.Xaml.Behaviors.Layout;
-using SQLiteDemo.DAO;
+﻿using SQLiteDemo.DAO;
 using SQLiteDemo.MVVM.Command;
 using SQLiteDemo.MVVM.Models;
 using SQLiteDemo.MVVM.Views;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace SQLiteDemo.MVVM.ViewModels

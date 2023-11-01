@@ -2,7 +2,6 @@
 using SQLiteDemo.MVVM.Command;
 using SQLiteDemo.MVVM.Models;
 using SQLiteDemo.MVVM.Views;
-using System;
 using System.Collections.ObjectModel;
 using System.Windows;
 

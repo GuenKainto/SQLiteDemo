@@ -3,13 +3,7 @@ using SQLiteDemo.MVVM.Command;
 using SQLiteDemo.MVVM.Models;
 using SQLiteDemo.MVVM.Views;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Data;
-using System.Data.Entity.Core.Metadata.Edm;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace SQLiteDemo.MVVM.ViewModels
