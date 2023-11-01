@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Data.SQLite;
+using System.IO;
+using System.Windows;
 
 namespace SQLiteDemo.DAO
 {
@@ -8,7 +10,9 @@ namespace SQLiteDemo.DAO
         public SQLiteConnection _con = new SQLiteConnection();
         public void createConection()
         {
-            string _strConnect = @"Data Source=D:\[Study]\.NET\NET_Programming\SQLiteDemo\SQLiteDemo\SQLiteDemoDB.db;Version=3;";
+            string projectFolderPath = Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory);
+            string filePath = Path.Combine(projectFolderPath, "SQLiteDemoDB.db");
+            string _strConnect = $"Data Source={filePath};Version=3;";
             _con.ConnectionString = _strConnect;
             try
             {
